@@ -11,7 +11,7 @@ function App() {
       .then((res) => res.json())
       .then((data) => setData(data.message));
   }, []);
-  
+  /*
   return (
     <div className="App">
       <header className="App-header">
@@ -20,13 +20,13 @@ function App() {
       </header>
     </div>
   );
-  /*
+  */
   return (
     <div className="App">
       <Header/>
     </div>
   );
-    */
+    
 }
 
 export default App;
