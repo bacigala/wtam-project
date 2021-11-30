@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "./assets/logo.svg";
+import "./Header.css";
 
 class Header extends React.Component {
     
@@ -22,8 +23,8 @@ class Header extends React.Component {
             </div>
             <nav>
                 <ul>
-                    <li><a href="">Môj kalendár </a></li>
-                    <li><a class="active" href="">Vyhladať gym </a></li>
+                    <li><a class="active" href="">Môj kalendár </a></li>
+                    <li><a href="">Vyhladať gym </a></li>
                     <li><a href="">Tréneri </a></li>
                     <li><a href="">Profil </a></li>
                 </ul>
