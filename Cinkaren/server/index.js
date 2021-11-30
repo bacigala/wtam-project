@@ -1,27 +1,41 @@
+
+//
+//  SETUP
+//
+
+// load modules
 const path = require('path');
 const express = require("express");
+const db = require("./db-connector");
+const dbUser = require("./db-user");
 
-//Mozmeme mu dat aj nejaky port ak nie je tak default je 3001
+// specify port (default 3001)
 const PORT = process.env.PORT || 3001;
 
-//Vyuzivame NodeJs Express
+// we use NodeJs Express
 const app = express();
 
-// Have Node serve the files for our built React app
+// have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-//req - co dostanes od requestu
-//res - co posles spat (posielame json so so stringom message)
-app.get("/api", (req, res) => {
-    res.json({ message: "Hello from server!" });
-});
 
-// All other GET requests not handled before will return our React app
+// 
+//  REQUEST API - ROUTING TO MODULES
+//
+
+// user
+app.post("/api/user/verify", dbUser.verify);
+app.post("/api/user/create", dbUser.create);
+app.post("/api/user/modify", dbUser.modify);
+app.post("/api/user/delete", dbUser.delete);
+
+// all other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
   });
 
-//Musi byt posledne
+
+// start the server 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
