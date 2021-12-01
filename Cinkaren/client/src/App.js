@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import Calendar from "./Calendar";
 import Header from "./Header";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -15,7 +16,14 @@ function App() {
   return (
     <div className="App">
       <Header/>
-      <Calendar/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="" element={<p>TODO MAIN PAGE</p>}/>
+          <Route path="/signin" element={<p>TODO SIGN IN</p>}/>
+          <Route path="/signup" element={<p>TODO SIGN UP</p>}/>
+          <Route path="/kalendar" element={<Calendar/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
     

@@ -74,7 +74,7 @@ const DayScaleCell = withStyles(styles, 'DayScaleCell')((
 const Content = withStyles(style, { name: 'Content' })(({
     children, appointmentData, classes, ...restProps
   }) => (
-    <div>
+    <div className="popup">
         <h2>{appointmentData.title}</h2>
         <h3>{appointmentData.gym}</h3>
         <ul>

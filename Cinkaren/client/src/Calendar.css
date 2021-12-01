@@ -1,3 +1,21 @@
 .calendar {
     height: calc(100vh - 205px);
 }
+
+.popup {
+    height: 500px !important;
+    width: 800px !important; 
+    min-width: 800px !important;
+    max-width: 800px !important;
+}
+
+.Layout-popover-734 {
+    width: 800px !important; 
+    min-width: 800px !important;
+    max-width: 800px !important;
+}
+
+h2 {
+    background-color: green;
+    border-radius: 25px 0px 25px 0px;
+}
