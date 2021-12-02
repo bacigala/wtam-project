@@ -21,6 +21,9 @@ function App() {
           <Route path="" element={<p>TODO MAIN PAGE</p>}/>
           <Route path="/signin" element={<p>TODO SIGN IN</p>}/>
           <Route path="/signup" element={<p>TODO SIGN UP</p>}/>
+          <Route path="/search" element={<p>TODO SEARCH</p>}/>
+          <Route path="/treners" element={<p>NOT IN THE SCOPE OF ROUND 2</p>}/>
+          <Route path="/profil" element={<p>NOT IN THE SCOPE OF ROUND 2</p>}/>
           <Route path="/kalendar" element={<Calendar/>}/>
         </Routes>
       </BrowserRouter>
