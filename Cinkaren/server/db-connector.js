@@ -14,20 +14,17 @@ exports.getConnection = function() {
         password: "Yq6X[jXf&1"
     });
     connection.connect(function(err) {
-        console.log( !err ? "connected" : "not connected");
+        //console.log( !err ? "connected" : "not connected");
         if (err) throw err;
     });
     return connection;
 }
 
 exports.query = function(statement, cb) {
-    connection = db.getConnection();
+    connection = this.getConnection();
     connection.query(statement, function(err, rows, fields) {
-        if (err) {
-            cb(null);
-            return;
-        }
-        cb(rows);
+        if (err) throw err;
+        cb(err ? null : rows.length === 0 ? null : rows);
       });
     connection.end();
 }

@@ -6,6 +6,7 @@
 // load modules
 const path = require('path');
 const express = require("express");
+var bodyParser = require('body-parser');
 const db = require("./db-connector");
 const dbUser = require("./db-user");
 
@@ -18,13 +19,16 @@ const app = express();
 // have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
+// Create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
 
 // 
 //  REQUEST API - ROUTING TO MODULES
 //
 
 // user
-app.post("/api/user/verify", dbUser.verify);
+app.post("/api/user/verify", urlencodedParser, dbUser.verify);
 app.post("/api/user/create", dbUser.create);
 app.post("/api/user/modify", dbUser.modify);
 app.post("/api/user/delete", dbUser.delete);

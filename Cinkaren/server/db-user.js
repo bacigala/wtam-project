@@ -3,6 +3,7 @@
 //  DB HANDLER FOR TABLE USER ACCOUNTS
 //
 
+const { sha256 } = require("js-sha256");
 const db = require("./db-connector");
 
 // /api/user/verify
@@ -10,13 +11,16 @@ exports.verify = function(req, res) {
     data = req.body;
     username = data.username;
     password = data.password;
-    db.query('SELECT * FROM user WHERE username = "' + username + '" AND password = "' + password + '"', function(rows) {
+    db.query('SELECT * FROM user WHERE username = "' + username + '" AND password = "' + sha256(password) + '"', function(rows) {
         if (rows === null) {
-            res.json({ error: "Nesprávne meno alebo heslo." });
+            res.json({
+                user : null,
+            });
             return;
         }
-
-        res.json({ user: rows[0] });
+        res.json({
+            user : rows[0],
+        });
     });
 }
 
