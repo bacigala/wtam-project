@@ -14,17 +14,18 @@
 - ak sa podari: {"success":true,"message":"Profil bol úspešne vytvorený."}
 
 ### Uprava profilu
-- request: POST na /api/user/update {key : value z tabulky user, key2 : value2, ... }
-	{
-		username : "Janci",
-		password : "heslo",
-		newData	 : {
-									username : "novy_nick",
-									password : "nove_heslo"
-									...
-								}	
-	}
-	
+- request: POST na /api/user/update
+```
+		{
+			username : "Janci",
+			password : "heslo",
+			newData	 : {
+										username : "novy_nick",
+										password : "nove_heslo"
+										...
+									}	
+		}
+```
 - ak sa nepodari: {"success":false,"message":"Profil sa nepodarilo upraviť."}
 - ak sa podari: {"success":true,"message":"Profil bol úspešne upravený."}
 
