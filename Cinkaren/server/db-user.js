@@ -11,7 +11,7 @@ exports.verify = function(req, res) {
     data = req.body;
     username = data.username;
     password = data.password;
-    db.query('SELECT * FROM user WHERE username = "' + username + '" AND password = "' + sha256(password) + '"', function(rows) {
+    db.query('SELECT * FROM user WHERE username = "' + username + '" AND password = "' + password + '"', function(rows) {
         if (rows === null) {
             res.json({
                 user : null,
@@ -24,30 +24,41 @@ exports.verify = function(req, res) {
     });
 }
 
-// /api/user/create
-exports.create = function(req, res) {
-    user = req.body['user'];
+// /api/user/insert
+exports.insert = function(req, res) {
+    user = req.body;
 
     // verify the same user does not exist
     db.query('SELECT * FROM user WHERE username = "' + user['username'] + '"', function(rows) {
         if (rows !== null) {
-            res.json({ error: "Používateľské meno je už obsadené." });
+            res.json({ 
+                success : false,
+                message : "Používateľské meno je už obsadené."
+            });
             return;
         }
+
+        // insert new user
+        statement = 'INSERT INTO user SET ';
+        for (let x in user) {
+            statement  +=  x + "='" + user[x] + "', ";
+        }
+        statement = statement.substring(0, statement.length - 2);
+
+        db.query(statement , function(rows) {
+            if (rows !== null) {
+                res.json({
+                    success : true,
+                    message : "Profil bol úspešne vytvorený."
+                });
+            } else {
+                res.json({
+                    success : false,
+                    message : "Profil sa nepodarilo vytvoriť."
+                });
+            }
+        });
     });
-
-
-    statement = 'INSERT INTO user SET ';
-    for (let x in user) {
-        statement  +=  x + '="' + user[x] + '"';
-    }
-
-    connection = db.getConnection();
-    connection.query(statement, function(err, rows, fields) {
-        if (err) throw err;
-        res.json({ message: "Používateľské konto bolo vytvorené." });
-      });
-    connection.end();
 }
 
 // /api/user/modify
