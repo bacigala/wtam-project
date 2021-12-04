@@ -11,7 +11,7 @@ exports.verify = function(req, res) {
     data = req.body;
     username = data.username;
     password = data.password;
-    db.query('SELECT * FROM user WHERE username = "' + username + '" AND password = "' + password + '"', function(rows) {
+    db.query('SELECT * FROM user WHERE username = "' + username + '" AND password = "' + password + '" AND active=1', function(rows) {
         if (rows === null) {
             res.json({
                 user : null,
@@ -61,34 +61,41 @@ exports.insert = function(req, res) {
     });
 }
 
-// /api/user/modify
-exports.modify = function(req, res) {
-    oldUser = req.body['oldUser'];
-    newUser = req.body['newUser'];
+// /api/user/update
+exports.update = function(req, res) {
+    username = req.body.username;
+    password = req.body.password;
+    newData = req.body.newData;
 
-    statement = 'UPDATE user SET ';
-    for (let x in newUser) {
-        statement  +=  x + '="' + user[x] + '"';
+    //todo: check vstupu
+    if (newData === null || newData === undefined || !newData.length) {
+        res.json({
+            success : true,
+            message : "Profil nebol upravený."
+        });
+        return;
     }
-    statement += ' WHERE username = "' + oldUser['username'] + '"';
 
-    connection = db.getConnection();
-    connection.query(statement, function(err, rows, fields) {
-        if (err) throw err;
-        res.json({ message: "Používateľské konto bolo upravené." });
-      });
-    connection.end();
-}
+    // build query
+    statement = 'UPDATE user SET ';
+    for (let x in newData) {
+        statement  +=  x + "='" + newData[x] + "', ";
+    }
+    statement = statement.substring(0, statement.length - 2);
+    statement += ' WHERE username="' + username + '" AND password="' + password + '"';
 
-// /api/user/delete
-exports.delete = function(req, res) {
-    user = req.body['user'];
-    statement = ' DELETE FROM user WHERE username = "' + user['username'] + '"';
-
-    connection = db.getConnection();
-    connection.query(statement, function(err, rows, fields) {
-        if (err) throw err;
-        res.json({ message: "Používateľské konto bolo odstránené." });
-      });
-    connection.end();
+    // execute query
+    db.query(statement , function(rows) {
+        if (rows !== null) {
+            res.json({
+                success : true,
+                message : "Profil bol úspešne upravený."
+            });
+        } else {
+            res.json({
+                success : false,
+                message : "Profil sa nepodarilo upraviť."
+            });
+        }
+    });
 }

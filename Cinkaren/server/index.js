@@ -30,8 +30,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 // user
 app.post("/api/user/verify", urlencodedParser, dbUser.verify);
 app.post("/api/user/insert", urlencodedParser, dbUser.insert);
-app.post("/api/user/update", dbUser.modify);
-app.post("/api/user/delete", dbUser.delete);
+app.post("/api/user/update", urlencodedParser, dbUser.update);
 
 // all other GET requests not handled before will return our React app
 app.get('*', (req, res) => {

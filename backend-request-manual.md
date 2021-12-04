@@ -2,7 +2,7 @@
 
 ## Pouzivatel
 
-### Overenie loginu
+### Overenie loginu (prihlasenie)
 - request: POST na /api/user/verify { username: 'janci', password: 'sha 256 hash hesla' }
 - response ak sa neoveri: {"user":null}
 - response ak sa uspesne overi: namiesto null JSON zaznamu v DB tabulka user
@@ -13,3 +13,20 @@
 - ak sa nepodari: {"success":false,"message":"Používateľské meno je už obsadené."}
 - ak sa podari: {"success":true,"message":"Profil bol úspešne vytvorený."}
 
+### Uprava profilu
+- request: POST na /api/user/update {key : value z tabulky user, key2 : value2, ... }
+	{
+		username : "Janci",
+		password : "heslo",
+		newData	 : {
+									username : "novy_nick",
+									password : "nove_heslo"
+									...
+								}	
+	}
+	
+- ak sa nepodari: {"success":false,"message":"Profil sa nepodarilo upraviť."}
+- ak sa podari: {"success":true,"message":"Profil bol úspešne upravený."}
+
+### Odstranenie profilu
+- upravte profil, nastavte active="0"
