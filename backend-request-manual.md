@@ -102,3 +102,51 @@
 ```
 - ak zadanym parametrom nevyhovuje ziadny trening, pole _events_ je prazdne
 - tiez moze byt prazdne pole _users_ ak nikto nie je prihlaseny alebo _categories_ ak trening nie je zaradeny
+
+
+## Event / Trening
+
+### Prihlasenie sa na trening
+- request: POST na /api/event/signin {"userId" : 1, eventId : 1}
+- response: JSON {result : true}
+
+### Odhlasenie sa z treningu
+- request: POST na /api/event/signin {"userId" : 1, eventId : 1}
+- response: JSON {result : true}
+
+### Vytvorenie treningu
+- request: POST na /api/event/create
+```
+{
+	gym_id : 1, // *povinne*, musi byt realne gym_id (foreign key)
+	trainer_id : 1, // *povinne*, musi byt realne user_id (foreign key)
+	name : "Trening s Jancim",
+	location : "Posilka vlavo",
+	from_datetime : 2021-12-05 13:45:00,
+	to_datetime: 2021-12-05 14:50:00,
+	max_participants : 20,
+	plan : ["rozcvicka","miesenie","strecing"]	
+}
+```
+- response: JSON {result : true}
+
+### Uprava treningu
+- request: POST na /api/event/modify
+```
+{
+	id = 1, // jedine *povinne*, ostatne volitelne
+	name : "Trening s Jancim",
+	gym_id : 1,
+	location : "Posilka vlavo",
+	from_datetime : 2021-12-05 13:45:00,
+	to_datetime: 2021-12-05 14:50:00,
+	trainer_id : 1,
+	max_participants : 20,
+	plan : ["rozcvicka","miesenie","strecing"]	
+}
+```
+- response: JSON {result : true}
+
+### Odstranenie treningu
+- *request:* POST na /api/event/delete {"id" : 1}
+- *response:* JSON {result : true}
