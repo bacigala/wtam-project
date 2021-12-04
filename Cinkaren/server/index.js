@@ -7,8 +7,8 @@
 const path = require('path');
 const express = require("express");
 var bodyParser = require('body-parser');
-const db = require("./db-connector");
 const dbUser = require("./db-user");
+const dbCalendar = require("./db-calendar");
 
 // specify port (default 3001)
 const PORT = process.env.PORT || 3001;
@@ -31,6 +31,9 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.post("/api/user/verify", urlencodedParser, dbUser.verify);
 app.post("/api/user/insert", urlencodedParser, dbUser.insert);
 app.post("/api/user/update", urlencodedParser, dbUser.update);
+
+// calsendar
+app.post("/api/calendar", urlencodedParser, dbCalendar.select);
 
 // all other GET requests not handled before will return our React app
 app.get('*', (req, res) => {

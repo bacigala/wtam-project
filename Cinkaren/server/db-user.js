@@ -3,7 +3,6 @@
 //  DB HANDLER FOR TABLE USER ACCOUNTS
 //
 
-const { sha256 } = require("js-sha256");
 const db = require("./db-connector");
 
 // /api/user/verify
