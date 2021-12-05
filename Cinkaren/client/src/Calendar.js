@@ -14,6 +14,8 @@ import {
 import moment from 'moment';
 import 'moment/locale/sk'
 import { withStyles } from '@material-ui/core/styles';
+import Cookies from 'universal-cookie';
+
 
 const style = ({ palette }) => ({
   });
@@ -139,8 +141,10 @@ class Calendar extends React.Component {
             currentDate: moment(),
         };
         this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
-        this.updateInterval = 60000;
-    }
+        this.updateInterval = 60000; 
+        this.cookies = new Cookies();
+        console.log(this.cookies.getAll());
+    } 
     /*
     componentDidMount() {
       fetch('/api/calendar?from=2021-12-01 12:00:00&to=2021-12-25 12:00:00')
