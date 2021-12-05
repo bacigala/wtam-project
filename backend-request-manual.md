@@ -176,3 +176,84 @@
 ### Odstranenie treningu
 - *request:* POST na /api/event/delete {"id" : 1}
 - *response:* JSON {result : true}
+
+
+## Achievements (uspechy)
+
+### Pridanie uspechu
+- **request** posli JSON nizsie cez POST na `/api/achievement/create`
+	```
+	{
+	  trainer_id = 1, // foreign key v tabulke user
+	  sportsman_id = 1, // foreign key v tabulke user
+	  name : "Mrtvy tah",
+	  value : "20kg"
+	}
+	```
+- **response** JSON
+	```
+	{
+	  success : true
+	}
+	```
+
+### Uprava uspechu
+- **request** posli JSON nizsie cez POST na `/api/achievement/modify`
+	```
+	{
+	  id = 1, // ID uspechu, jedine povinne
+	  trainer_id = 1, // foreign key v tabulke user
+	  sportsman_id = 1, // foreign key v tabulke user
+	  name : "Mrtvy tah",
+	  value : "30kg"
+	}
+	```
+	- povinny je len key `id`, ostatne pridavame len ak sa ma zmenit im pridelena hodnota
+- **response** JSON
+	```
+	{
+	  success : true
+	}
+	```
+	
+### Odstranenie uspechu
+- **request** posli JSON nizsie cez POST na `/api/achievement/delete`
+	```
+	{
+	  id = 1, // ID uspechu
+	}
+	```
+- **response** JSON
+	```
+	{
+	  success : true
+	}
+	```
+ 
+ ### Achievement list pre pouzivatela
+ - **request** posli JSON nizsie cez POST na `/api/achievement/list`
+	```
+	{
+	  user_id = 1,
+	}
+	```
+- **response** JSON
+	```
+	{
+	  achievements : [
+	    {
+		  id = 1, // ID uspechu
+		  trainer_id = 1, // foreign key v tabulke user
+	      sportsman_id = 1, // foreign key v tabulke user
+	      name : "Mrtvy tah",
+	      value : "30kg"	
+		},
+		{
+		  ...
+		},
+		...
+	  ]
+	}
+	```
+	- pouzivatel bez uspechov -> `{achievements : []}`
+	- neexistujuce *user_id* v request -> `{achievements : []}`
