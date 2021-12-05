@@ -32,6 +32,32 @@
 ### Odstranenie profilu
 - upravte profil, nastavte active="0"
 
+### Nacitanie profilu
+ - napriklad pri kliknuti na profil v zozname prihlasenych
+ - **request:** POST na `/api/user/profile`
+	JSON {id : 3}
+ - **response:**
+	```
+	{
+		"user": {
+			"id":1,
+			"name":"Demeter",
+			"surname":"Veselý",
+			"username":"demeter1",
+			"birth_date":"1999-01-02T23:00:00.000Z", // v DB je to len DATE
+			"registration_date":"2021-06-30T22:00:00.000Z", // v DB je to len DATE
+			"last_login_timestamp":"2021-11-23T16:43:48.000Z",
+			"email":"demeter.vesely@uniba.sk",
+			"workplace_id":2,
+			"active":1,
+			"private":0
+		}
+	}
+	```
+	- *hash hesla* v response nie je
+	- *active* je vzdy *1*, neaktivne profily su skryte
+	- *private* je vzdy *0*, neverejne profily su skryte
+
 
 ## Training list pre kalendar
 - nacitanie dat pre kalendar (podla kriterii)
@@ -111,7 +137,7 @@
 - response: JSON {result : true}
 
 ### Odhlasenie sa z treningu
-- request: POST na /api/event/signin {"userId" : 1, eventId : 1}
+- request: POST na /api/event/signout {"userId" : 1, eventId : 1}
 - response: JSON {result : true}
 
 ### Vytvorenie treningu

@@ -5,6 +5,21 @@
 
 const db = require("./db-connector");
 
+// /api/user/profile
+exports.profile = function(req, res) {
+    profileId = req.body.id;
+    db.query('SELECT * FROM user WHERE id = "' + profileId + '" AND private <> TRUE AND active=1', function(rows) {
+        // do not include password hash in the result
+        if (rows !== null) {
+            delete(rows[0].password);
+        }
+        
+        res.json({
+            user : rows === null ? null : rows[0]
+        });
+    });
+}
+
 // /api/user/verify
 exports.verify = function(req, res) {
     data = req.body;

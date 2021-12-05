@@ -36,6 +36,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 //
 
 // user
+app.post("/api/user/profile", urlencodedParser, dbUser.profile);
 app.post("/api/user/verify", urlencodedParser, dbUser.verify);
 app.post("/api/user/insert", urlencodedParser, dbUser.insert);
 app.post("/api/user/update", urlencodedParser, dbUser.update);
