@@ -348,10 +348,10 @@ Each event can be added to multiple categories.
 	```
 	
 ### Get current category list
- - **REQUEST**
+ - **REQUEST**\
 	POST na `/api/category/list`
 
-- **response**
+- **response**\
 	JSON
 	```
 	{
@@ -364,6 +364,41 @@ Each event can be added to multiple categories.
 	    {
 	      ...
 	    }
+	    ...
+	  ]
+	}
+	```
+	
+## Gym
+
+### Search for gyms / get specific gym
+ - **REQUEST**\
+	 - JSON cez POST na `/api/gym/search`
+	 - all keys are optional
+	```
+	{
+	  id : 1, // response will contain this gym only (if it exists)
+	  name : "Gym",
+	  address : "Bratis",
+	  email : "gym@topgyms.com",
+	  phone : "1233221"
+	}
+	```
+- **response**\
+	JSON
+	```
+	{
+	  gyms : [
+	    {
+		  id : 1,
+		  name : "strong gym",
+		  address : "Pristavna 8, 854 02 Bratislava",
+		  email : "emanuel@fmfi.sk",
+		  phone : "090x 123 123"
+		},
+		{
+		  ...
+		}
 	    ...
 	  ]
 	}

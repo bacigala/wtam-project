@@ -7,6 +7,7 @@
 const path = require('path');
 const express = require("express");
 var bodyParser = require('body-parser');
+const dbGym = require("./db-gym");
 const dbUser = require("./db-user");
 const dbEvent = require("./db-event");
 const dbCalendar = require("./db-calendar");
@@ -66,6 +67,9 @@ app.post("/api/achievement/create", urlencodedParser, dbAchievement.create);
 app.post("/api/achievement/modify", urlencodedParser, dbAchievement.modify);
 app.post("/api/achievement/delete", urlencodedParser, dbAchievement.delete);
 app.post("/api/achievement/list", urlencodedParser, dbAchievement.list);
+
+// gym
+app.post("/api/gym/search", urlencodedParser, dbGym.search);
 
 // all other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
