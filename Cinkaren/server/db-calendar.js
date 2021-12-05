@@ -10,6 +10,8 @@ const db = require("./db-connector");
 exports.select = function(req, res) {
     reqData = req.body;
 
+    console.log(`POST request calendar: ${JSON.stringify(req.body)}`);
+
     // build query
     statement = "WITH category_list AS (\
         SELECT \
@@ -39,8 +41,8 @@ exports.select = function(req, res) {
                   event.id AS 'id'\
                 , event.name AS 'name'\
                 , event.location AS 'location'\
-                , event.from_datetime AS 'from'\
-                , event.to_datetime AS 'to'\
+                , event.from_datetime AS 'startDate'\
+                , event.to_datetime AS 'endDate'\
                 , event.max_participants AS 'max_participants'\
                 , event.plan AS 'plan'\
                 , category_list.categories \

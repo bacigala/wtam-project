@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 const dbUser = require("./db-user");
 const dbCalendar = require("./db-calendar");
 const dbEvent = require("./db-event");
+var morgan = require('morgan')
 
 // specify port (default 3001)
 const PORT = process.env.PORT || 3001;
@@ -17,8 +18,14 @@ const PORT = process.env.PORT || 3001;
 // we use NodeJs Express
 const app = express();
 
+app.use(morgan('combined'))
+
 // have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+app.use(express.urlencoded({ extended: true }))
+
+app.use(express.json());
 
 // Create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });

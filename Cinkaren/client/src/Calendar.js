@@ -11,8 +11,6 @@ import {
   TodayButton,
   CurrentTimeIndicator
 } from '@devexpress/dx-react-scheduler-material-ui';
-import IconButton from '@material-ui/core/IconButton';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment';
 import 'moment/locale/sk'
 import { withStyles } from '@material-ui/core/styles';
@@ -74,7 +72,7 @@ const DayScaleCell = withStyles(styles, 'DayScaleCell')((
     children, appointmentData, classes, ...restProps
   }) => (
     <AppointmentTooltip.Header {...restProps} className="headerPopup">
-      <h2 className="title">{appointmentData.title}</h2>
+      <h2 className="title">{appointmentData.name}</h2>
     </AppointmentTooltip.Header>
   ));
 
@@ -82,7 +80,7 @@ const Content = withStyles(style, { name: 'Content' })(({
     children, appointmentData, classes, ...restProps
   }) => (
     <div className="popup">
-        <h3 className="gymName">{appointmentData.gym}</h3>
+        <h3 className="gymName">{appointmentData.gym_name}</h3>
         <div className="plan">
           <p>Tréningový plán</p>
           <ul className="list">
@@ -92,14 +90,14 @@ const Content = withStyles(style, { name: 'Content' })(({
         <div className="entered">
           <p>Prihlásený</p>
           <ul className="list">
-              {appointmentData.prihlaseny.map(e => <li>{e}</li>)}
+              {appointmentData.users.map(e => <li>{e.name + " " + e.surname}</li>)}
           </ul>
         </div>
         <div className="trainer">
           <div className="imageWrapper">
             <img src="./logo192.png"/>
           </div>
-          <p>{appointmentData.trener}</p>
+          <p>{appointmentData.trainer_name + " " + appointmentData.trainer_surname} </p>
           <a href="/profile"><button>Profil</button></a>
         </div>
         <p className="day">{getDayFromDateString(appointmentData.startDate, true)}</p>
@@ -110,32 +108,63 @@ const Content = withStyles(style, { name: 'Content' })(({
     </div>
   ));
 
+const CustomAppointment = ({ style, ...restProps }) => {
+  return (
+    <Appointments.Appointment
+      {...restProps}
+      style={{ ...style, backgroundColor: "green" }}
+      className="CLASS_ROOM2"
+    />
+  );
+};
+  
+const AppointmentContent = ({ style, ...restProps }) => {
+  return (
+    <Appointments.AppointmentContent {...restProps}>
+      <div className={restProps.container}>
+        <p className="appointment_name">{restProps.data.name}</p>
+        <p className="appointment_from">Od: {getTimeFromDateString(restProps.data.from)}</p>
+        <p className="appointment_to">Do:{getTimeFromDateString(restProps.data.to)}</p>
+      </div>
+    </Appointments.AppointmentContent>
+  );
+};
+
 class Calendar extends React.Component {
     
     constructor(props) {
         super(props);
         this.state = {
             appointments: [],
-            currentDate: '2021-11-30',
+            currentDate: moment(),
         };
         this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
         this.updateInterval = 60000;
     }
-
+    /*
     componentDidMount() {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ from: "2021-11-05 12:12:12", to: "2022-12-20 12:12:12"})
-      };
-      fetch('/api/calendar', requestOptions)
+      fetch('/api/calendar?from=2021-12-01 12:00:00&to=2021-12-25 12:00:00')
         .then(response => response.json())
         .then(data => this.setState({appointments: data}));
+    }*/
+
+    componentDidMount() {
+      fetch('/api/calendar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            from: "2021-12-01 12:00:00",
+            to: "2021-12-25 12:00:00",
+          })
+        }).then(response => response.json())
+        .then(data => this.setState({appointments: data.events}));
     }
         
     render() {
         const { appointments, currentDate } = this.state;
-        console.log(this.state);
+        console.log(appointments);
         return (
             <section className="calendar">
                 <Scheduler data={appointments}>                       
@@ -148,7 +177,10 @@ class Calendar extends React.Component {
                     <Toolbar />
                     <DateNavigator />
                     <TodayButton />
-                    <Appointments />
+                    <Appointments 
+                      appointmentComponent={CustomAppointment}
+                      appointmentContentComponent={AppointmentContent}
+                    />
                     <AppointmentTooltip
                         headerComponent={Header}
                         contentComponent={Content}
