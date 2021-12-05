@@ -66,9 +66,8 @@
 - request: POST na /api/calendar
 ```
 {
-	from : "2021-01-01 12:12:12",   // povinny udaj
-	to : "2021-01-01 12:12:12",	// povinny udaj
-	
+	from : "2021-01-01 12:12:12",   // volitelne
+	to : "2021-01-01 12:12:12",	// volitelne
 	username : "Janci",	// volitele, treningy len daneho pouzivatela (kde je prihlseny)
 	trainer_id : 9, // volitelne, len treningy, ktore vedie dany trener
 	gym_id : 2,	// volitelne, len treningy v danom gyme
@@ -176,3 +175,231 @@
 ### Odstranenie treningu
 - *request:* POST na /api/event/delete {"id" : 1}
 - *response:* JSON {result : true}
+
+
+## Achievements (uspechy)
+
+### Pridanie uspechu
+- **request** posli JSON nizsie cez POST na `/api/achievement/create`
+	```
+	{
+	  trainer_id = 1, // foreign key v tabulke user
+	  sportsman_id = 1, // foreign key v tabulke user
+	  name : "Mrtvy tah",
+	  value : "20kg"
+	}
+	```
+- **response** JSON
+	```
+	{
+	  success : true
+	}
+	```
+
+### Uprava uspechu
+- **request** posli JSON nizsie cez POST na `/api/achievement/modify`
+	```
+	{
+	  id = 1, // ID uspechu, jedine povinne
+	  trainer_id = 1, // foreign key v tabulke user
+	  sportsman_id = 1, // foreign key v tabulke user
+	  name : "Mrtvy tah",
+	  value : "30kg"
+	}
+	```
+	- povinny je len key `id`, ostatne pridavame len ak sa ma zmenit im pridelena hodnota
+- **response** JSON
+	```
+	{
+	  success : true
+	}
+	```
+	
+### Odstranenie uspechu
+- **request** posli JSON nizsie cez POST na `/api/achievement/delete`
+	```
+	{
+	  id = 1, // ID uspechu
+	}
+	```
+- **response** JSON
+	```
+	{
+	  success : true
+	}
+	```
+ 
+ ### Achievement list pre pouzivatela
+ - **REQUEST**
+	JSON cez POST na `/api/achievement/list`
+	```
+	{
+	  user_id = 1,
+	}
+	```
+- **RESPONSE**
+	JSON
+	```
+	{
+	  achievements : [
+	    {
+	      id = 1, // ID uspechu
+	      trainer_id = 1, // foreign key v tabulke user
+	      sportsman_id = 1, // foreign key v tabulke user
+	      name : "Mrtvy tah",
+	      value : "30kg"	
+	    },
+	    {
+	      ...
+	    },
+	    ...
+	  ]
+	}
+	```
+	- pouzivatel bez uspechov -> `{achievements : []}`
+	- neexistujuce *user_id* v request -> `{achievements : []}`
+
+## Event categories
+Each event can be added to multiple categories.
+
+### Create a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/create`
+	```
+	{
+	  name : "Silový",
+	  color : "abcd45" // HEX
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
+	}
+	```
+
+### Modify a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/modify`
+	```
+	{
+	  id : 1, // required, ID of category to be modified
+	  name : "Silový", // optional
+	  color : "abcd45" // optional
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
+	}
+	```
+
+### Delete a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/delete`
+	```
+	{
+	  id : 1, // required, ID of category to be deleted
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
+	}
+	```
+
+### Add an event to a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/add`
+	```
+	{
+	  event_id : 1, // required
+	  category_id : 1, // required
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
+	}
+	```
+
+### Remove an event from a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/remove`
+	```
+	{
+	  event_id : 1, // required
+	  category_id : 1, // required
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
+	}
+	```
+	
+### Get current category list
+ - **REQUEST**\
+	POST na `/api/category/list`
+
+- **response**\
+	JSON
+	```
+	{
+	  categories : [
+	    {
+		  id : 1,
+		  name : "konicny",
+		  color : "AABB77" // HEX
+	    },
+	    {
+	      ...
+	    }
+	    ...
+	  ]
+	}
+	```
+	
+## Gym
+
+### Search for gyms / get specific gym
+ - **REQUEST**\
+	 - JSON cez POST na `/api/gym/search`
+	 - all keys are optional
+	```
+	{
+	  id : 1, // response will contain this gym only (if it exists)
+	  name : "Gym",
+	  address : "Bratis",
+	  email : "gym@topgyms.com",
+	  phone : "1233221"
+	}
+	```
+- **response**\
+	JSON
+	```
+	{
+	  gyms : [
+	    {
+		  id : 1,
+		  name : "strong gym",
+		  address : "Pristavna 8, 854 02 Bratislava",
+		  email : "emanuel@fmfi.sk",
+		  phone : "090x 123 123"
+		},
+		{
+		  ...
+		}
+	    ...
+	  ]
+	}
+	```

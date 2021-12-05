@@ -63,8 +63,7 @@ exports.select = function(req, res) {
                     JOIN user AS trainer ON (event.trainer_id = trainer.id) \
                     JOIN gym ON (event.gym_id = gym.id) \
             WHERE \
-                event.from_datetime >= '" + reqData.from + "' \
-                AND event.to_datetime <= '" + reqData.to + "' \
+                TRUE \
             ";
 
     // optional arguments for event search
@@ -76,6 +75,11 @@ exports.select = function(req, res) {
         statement += " AND gym.id = '" + reqData.gym_id + "'";
     if ("category_id" in reqData)
         statement += " AND category.id = '" + reqData.category_id + "'";
+    if ("from" in reqData)
+        statement += " AND event.from_datetime >= '" + reqData.from + "'";
+    if ("to" in reqData)
+        statement += " AND event.to_datetime <= '" + reqData.to + "'";
+
 
     // execute query
     db.query(statement, function(rows) {
