@@ -26,6 +26,7 @@ function App() {
           <Route path="/trainers" element={<p>NOT IN THE SCOPE OF ROUND 2</p>}/>
           <Route path="/profile" element={<p>NOT IN THE SCOPE OF ROUND 2</p>}/>
           <Route path="/mycalendar" element={<Calendar/>}/>
+          <Route path="/calendar" element={<Calendar/>}/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -3,19 +3,195 @@
 }
 
 .popup {
-    height: 500px !important;
-    width: 800px !important; 
-    min-width: 800px !important;
-    max-width: 800px !important;
+    height: 600px !important;
+    width: 700px !important; 
+    min-width: 700px !important;
+    max-width: 700px !important;
+    display: grid;
+}
+
+.headerPopup {
+    display: grid !important;
+}
+
+.Header-flexContainer-761 {
+    grid-column: 2/ 2;
+    grid-row: 1 / 1;
+}
+
+.title {
+    margin-bottom: 0;
+    background-color: green;
+    text-align: center;
+    color: white;
+    width: 350px;
+    margin: 10px 255px 12px 25px;
+    border-radius: 25px 0px 25px 0px;
+    -moz-box-shadow:    0 5px 5px -2px gray;
+    -webkit-box-shadow: 0 5px 5px -2px gray;
+    box-shadow:         0 5px 5px -2px gray;
+    text-align: center;
+    font-weight: bold;
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
 }
 
 .Layout-popover-734 {
-    width: 800px !important; 
-    min-width: 800px !important;
-    max-width: 800px !important;
+    width: 700px !important; 
+    min-width: 700px !important;
+    max-width: 700px !important;
 }
 
-h2 {
+.gymName, .plan, .entered {
     background-color: green;
+    text-align: center;
+    color: white;
+    width: 350px;
+    margin: 0 0 12px 25px;
     border-radius: 25px 0px 25px 0px;
+    -moz-box-shadow:    0 5px 5px -2px gray;
+    -webkit-box-shadow: 0 5px 5px -2px gray;
+    box-shadow:         0 5px 5px -2px gray;
+}
+
+.day, .from, .to, .date, .trainer {
+    background-color: green;
+    text-align: center;
+    color: white;
+    width: 200px;
+    margin: 0 0 12px 0;
+    border-radius: 25px 0px 25px 0px;
+    -moz-box-shadow:    0 5px 5px -2px gray;
+    -webkit-box-shadow: 0 5px 5px -2px gray;
+    box-shadow:         0 5px 5px -2px gray;
+}
+
+.day, .from, .to, .date {
+    font-size: 20px;
+    height: 30px;
+}
+
+.gymName {
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+}
+
+.plan {
+    grid-column: 1 / 1;
+    grid-row: 2 / 2;
+}
+
+.entered {
+    grid-column: 1 / 1;
+    grid-row: 3 / 8;
+}
+
+.trainer {
+    grid-column: 2 / 2;
+    grid-row: 2 / 2;
+    height: 250px;
+}
+
+.day {
+    grid-column: 2 / 2;
+    grid-row: 3 / 3;
+}
+
+.date {
+    grid-column: 2 / 2;
+    grid-row: 4 / 4;
+}
+
+.from {
+    grid-column: 2 / 2;
+    grid-row: 5 / 5;
+}
+
+.to {
+    grid-column: 2 / 2;
+    grid-row: 6 / 6;
+}
+
+.sign {
+    grid-column: 2 / 2;
+    grid-row: 7 / 7;
+}
+.plan, .entered {
+    height: 250px;
+}
+
+.plan p, .entered p {
+    margin-top: 2.5px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.list {
+    color: black;
+    background-color: white;
+    margin: 10px 10px 10px 10px; 
+    height: calc(240px - 10px - 24px - 30px);
+    overflow: auto;
+    top: 50%;
+    padding: 5px;
+    -moz-box-shadow:    inset 3px 3px 3px gray;
+    -webkit-box-shadow: inset 3px 3px 3px gray;
+    box-shadow:         inset 3px 3px 3px gray;
+}
+
+.list li {
+    background-color: green;
+    color: white;
+    text-align: center;
+    list-style: none;
+    margin-top: 10px;
+    border-radius: 25px 0px 25px 0px;
+}
+
+.trainer .imageWrapper {
+    background-color: white;
+    height: 125px;
+    border-radius: 25px 0px 25px 0px;
+    margin: 20px 20px 15px 20px;
+}
+
+.trainer .imageWrapper img {
+    width: 150px;
+    height: 115px;
+    margin: 5px;
+    border-radius: 25px 0px 25px 0px;
+}
+
+.trainer p {
+    color: white;
+    font-size: 20px;
+    margin: 10px 0 10px 0;
+}
+
+.trainer button {
+    background-color: white;
+    border-radius: 90px;
+    border-color: black;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    width: 130px;
+    -moz-box-shadow:    0 1px 10px -2px black;
+    -webkit-box-shadow: 0 1px 10px -2px black;
+    box-shadow:         0 1px 10px -2px black;
+}
+
+.sign button{
+    height: 30px;
+    background-color: green;
+    border-radius: 90px;
+    border-color: green;
+    color: white;
+    font-size: 20px;
+    width: 130px;
+    margin-left: 37px;
+    -moz-box-shadow:    0 5px 5px -2px gray;
+    -webkit-box-shadow: 0 5px 5px -2px gray;
+    box-shadow:         0 5px 5px -2px gray;
 }

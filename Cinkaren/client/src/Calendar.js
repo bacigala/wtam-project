@@ -11,33 +11,13 @@ import {
   TodayButton,
   CurrentTimeIndicator
 } from '@devexpress/dx-react-scheduler-material-ui';
+import IconButton from '@material-ui/core/IconButton';
+import MoreIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment';
 import 'moment/locale/sk'
 import { withStyles } from '@material-ui/core/styles';
 
 const style = ({ palette }) => ({
-    icon: {
-      color: palette.action.active,
-    },
-    textCenter: {
-      textAlign: 'center',
-    },
-    firstRoom: {
-      background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/Lobby-4.jpg)',
-    },
-    secondRoom: {
-      background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-4.jpg)',
-    },
-    thirdRoom: {
-      background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-0.jpg)',
-    },
-    header: {
-      height: '260px',
-      backgroundSize: 'cover',
-    },
-    commandButton: {
-      backgroundColor: 'rgba(255,255,255,0.65)',
-    },
   });
 
 const formatTimeScaleDate = date => moment(date).format('HH:mm');
@@ -47,11 +27,31 @@ const TimeScaleLabel = (
   ) => <WeekView.TimeScaleLabel {...restProps} formatDate={formatTimeScaleDate} />;
 
 const formatDayScaleDate = (date, options) => {
-    moment.locale('sk');
-    const momentDate = moment(date);
     const { weekday } = options;
-    return momentDate.format(weekday ? 'dddd' : 'D');
+    return getDayFromDateString(date, weekday);
 };
+
+const getDayFromDateString = (date, weekday) => {
+  moment.locale('sk');
+  const momentDate = moment(date);
+  if(weekday) {
+    const day = momentDate.format('dddd'); 
+    return day.charAt(0).toUpperCase() + day.slice(1);
+  }
+  return momentDate.format('D');
+}
+
+const getTimeFromDateString = (date) => {
+  moment.locale('sk');
+  const momentDate = moment(date);
+  return momentDate.format('LT');
+}
+
+const getDateFromDateString = (date) => {
+  moment.locale('sk');
+  const momentDate = moment(date);
+  return momentDate.format('l');
+}
 
 const styles = {
     dayScaleCell: {
@@ -70,19 +70,43 @@ const DayScaleCell = withStyles(styles, 'DayScaleCell')((
     />
   ));
 
+  const Header = withStyles(style, { name: 'Header' })(({
+    children, appointmentData, classes, ...restProps
+  }) => (
+    <AppointmentTooltip.Header {...restProps} className="headerPopup">
+      <h2 className="title">{appointmentData.title}</h2>
+    </AppointmentTooltip.Header>
+  ));
 
 const Content = withStyles(style, { name: 'Content' })(({
     children, appointmentData, classes, ...restProps
   }) => (
     <div className="popup">
-        <h2>{appointmentData.title}</h2>
-        <h3>{appointmentData.gym}</h3>
-        <ul>
-            {appointmentData.plan.map(e => <li>{e}</li>)}
-        </ul>
-        <ul>
-            {appointmentData.prihlaseny.map(e => <li>{e}</li>)}
-        </ul>
+        <h3 className="gymName">{appointmentData.gym}</h3>
+        <div className="plan">
+          <p>Tréningový plán</p>
+          <ul className="list">
+              {appointmentData.plan.map(e => <li>{e}</li>)}
+          </ul>
+        </div>
+        <div className="entered">
+          <p>Prihlásený</p>
+          <ul className="list">
+              {appointmentData.prihlaseny.map(e => <li>{e}</li>)}
+          </ul>
+        </div>
+        <div className="trainer">
+          <div className="imageWrapper">
+            <img src="./logo192.png"/>
+          </div>
+          <p>{appointmentData.trener}</p>
+          <a href="/profile"><button>Profil</button></a>
+        </div>
+        <p className="day">{getDayFromDateString(appointmentData.startDate, true)}</p>
+        <p className="date">Dátum: {getDateFromDateString(appointmentData.startDate)}</p>
+        <p className="from">Od: {getTimeFromDateString(appointmentData.startDate)}</p>
+        <p className="to">Do: { getTimeFromDateString(appointmentData.endDate)}</p>
+        <a href="/" className="sign"><button>Prihlásiť</button></a>
     </div>
   ));
 
@@ -90,37 +114,34 @@ class Calendar extends React.Component {
     
     constructor(props) {
         super(props);
-        this.schedulerData = [
-            { startDate: '2021-11-30T09:45', 
-              endDate: '2021-11-30T11:00', 
-              title: 'Meeting' , 
-              gym: "Top Gym",
-              plan: ["Rozcvicka", "Nohy", "Kondicka"], 
-              prihlaseny: ["Rado", "Jozo"],
-              trener: "trener1"},
-            { startDate: '2021-11-30T12:00', 
-              endDate: '2021-11-30T13:30', 
-              title: 'Go to a gym' , 
-              gym: "Strong Gym", 
-              plan: ["Rozcvicka", "Biceps", "Triceps", "Prsia"], 
-              prihlaseny: ["Rado", "Jozo"],
-              trener: "trener2"},
-        ];
         this.state = {
-            data: this.schedulerData,
+            appointments: [],
             currentDate: '2021-11-30',
         };
         this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
         this.updateInterval = 60000;
     }
+
+    componentDidMount() {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ from: "2021-11-05 12:12:12", to: "2022-12-20 12:12:12"})
+      };
+      fetch('/api/calendar', requestOptions)
+        .then(response => response.json())
+        .then(data => this.setState({appointments: data}));
+    }
         
     render() {
-        const { data, currentDate } = this.state;
+        const { appointments, currentDate } = this.state;
+        console.log(this.state);
         return (
             <section className="calendar">
-                <Scheduler data={data}>                       
+                <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>
                     <WeekView
+                        displayName="Môj kalendár"
                         timeScaleLabelComponent={TimeScaleLabel}
                         dayScaleCellComponent={DayScaleCell}
                     />
@@ -129,6 +150,7 @@ class Calendar extends React.Component {
                     <TodayButton />
                     <Appointments />
                     <AppointmentTooltip
+                        headerComponent={Header}
                         contentComponent={Content}
                         showCloseButton
                     />

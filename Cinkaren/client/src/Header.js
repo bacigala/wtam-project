@@ -36,7 +36,7 @@ class Header extends React.Component {
                 </a>
                 {this.logInOutButton()}
                 <svg xmlns="http://www.w3.org/2000/svg">
-                    <path fill="white" d="M 1600 200 Q 150 150 0 0 L 1600 0 L 1600 600 Q 450 600 300 500 Z"/>
+                    <path fill="white" d="M 1600 100 Q 150 150 0 0 L 1600 0 L 1600 600 Q 450 600 300 500 Z"/>
                 </svg>
             </div>
             <nav>
