@@ -14,7 +14,6 @@ exports.getConnection = function() {
         password: "Yq6X[jXf&1"
     });
     connection.connect(function(err) {
-        //console.log( !err ? "connected" : "not connected");
         if (err) throw err;
     });
     return connection;
@@ -23,7 +22,7 @@ exports.getConnection = function() {
 exports.query = function(statement, cb) {
     connection = this.getConnection();
     connection.query(statement, function(err, rows, fields) {
-        if (err) throw err;
+        if (err) console.log(err);
         cb(err ? null : rows.length === 0 ? null : rows);
       });
     connection.end();

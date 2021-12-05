@@ -9,6 +9,7 @@ const express = require("express");
 var bodyParser = require('body-parser');
 const dbUser = require("./db-user");
 const dbCalendar = require("./db-calendar");
+const dbEvent = require("./db-event");
 
 // specify port (default 3001)
 const PORT = process.env.PORT || 3001;
@@ -32,8 +33,15 @@ app.post("/api/user/verify", urlencodedParser, dbUser.verify);
 app.post("/api/user/insert", urlencodedParser, dbUser.insert);
 app.post("/api/user/update", urlencodedParser, dbUser.update);
 
-// calsendar
+// calendar
 app.post("/api/calendar", urlencodedParser, dbCalendar.select);
+
+// event
+app.post("/api/event/signin", urlencodedParser, dbEvent.signIn);
+app.post("/api/event/signout", urlencodedParser, dbEvent.signOut);
+app.post("/api/event/create", urlencodedParser, dbEvent.create);
+app.post("/api/event/modify", urlencodedParser, dbEvent.modify);
+app.post("/api/event/delete", urlencodedParser, dbEvent.delete);
 
 // all other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
