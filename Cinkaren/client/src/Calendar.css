@@ -36,7 +36,7 @@
     grid-row: 1 / 1;
 }
 
-.Layout-popover-734 {
+.Layout-popover-734, .jss393 {
     width: 700px !important; 
     min-width: 700px !important;
     max-width: 700px !important;
@@ -165,7 +165,7 @@
 
 .trainer p {
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     margin: 10px 0 10px 0;
 }
 
@@ -182,7 +182,7 @@
     box-shadow:         0 1px 10px -2px black;
 }
 
-.sign button{
+.sign {
     height: 30px;
     background-color: green;
     border-radius: 90px;
@@ -197,6 +197,27 @@
 }
 
 .appointment_name {
-    font-size: 20px;
+    font-size: 16px;
+    margin-bottom: 0;
+    margin-top: 2px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.appointment_time_from, .appointment_time_to, .appointment_trainer {
+    font-size: 14px;
+    margin-bottom: 0;
+    margin-top: 2px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.appointment {
+    overflow: auto;
     text-align: center;
+}
+
+.calendar_name {
+    position: absolute;
+    left: 45%;
 }

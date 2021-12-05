@@ -15,138 +15,191 @@ import moment from 'moment';
 import 'moment/locale/sk'
 import { withStyles } from '@material-ui/core/styles';
 
-const style = ({ palette }) => ({
-  });
-
-const formatTimeScaleDate = date => moment(date).format('HH:mm');
-
-const TimeScaleLabel = (
-    { formatDate, ...restProps },
-  ) => <WeekView.TimeScaleLabel {...restProps} formatDate={formatTimeScaleDate} />;
-
-const formatDayScaleDate = (date, options) => {
-    const { weekday } = options;
-    return getDayFromDateString(date, weekday);
-};
-
-const getDayFromDateString = (date, weekday) => {
-  moment.locale('sk');
-  const momentDate = moment(date);
-  if(weekday) {
-    const day = momentDate.format('dddd'); 
-    return day.charAt(0).toUpperCase() + day.slice(1);
-  }
-  return momentDate.format('D');
-}
-
-const getTimeFromDateString = (date) => {
-  moment.locale('sk');
-  const momentDate = moment(date);
-  return momentDate.format('LT');
-}
-
-const getDateFromDateString = (date) => {
-  moment.locale('sk');
-  const momentDate = moment(date);
-  return momentDate.format('l');
-}
-
-const styles = {
-    dayScaleCell: {
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-    },
-  };
-
-const DayScaleCell = withStyles(styles, 'DayScaleCell')((
-    { formatDate, classes, ...restProps },
-  ) => (
-    <WeekView.DayScaleCell
-      {...restProps}
-      formatDate={formatDayScaleDate}
-      className={classes.dayScaleCell}
-    />
-  ));
-
-  const Header = withStyles(style, { name: 'Header' })(({
-    children, appointmentData, classes, ...restProps
-  }) => (
-    <AppointmentTooltip.Header {...restProps} className="headerPopup">
-      <h2 className="title">{appointmentData.name}</h2>
-    </AppointmentTooltip.Header>
-  ));
-
-const Content = withStyles(style, { name: 'Content' })(({
-    children, appointmentData, classes, ...restProps
-  }) => (
-    <div className="popup">
-        <h3 className="gymName">{appointmentData.gym_name}</h3>
-        <div className="plan">
-          <p>Tréningový plán</p>
-          <ul className="list">
-              {appointmentData.plan.map(e => <li>{e}</li>)}
-          </ul>
-        </div>
-        <div className="entered">
-          <p>Prihlásený</p>
-          <ul className="list">
-              {appointmentData.users.map(e => <li>{e.name + " " + e.surname}</li>)}
-          </ul>
-        </div>
-        <div className="trainer">
-          <div className="imageWrapper">
-            <img src="./logo192.png"/>
-          </div>
-          <p>{appointmentData.trainer_name + " " + appointmentData.trainer_surname} </p>
-          <a href="/profile"><button>Profil</button></a>
-        </div>
-        <p className="day">{getDayFromDateString(appointmentData.startDate, true)}</p>
-        <p className="date">Dátum: {getDateFromDateString(appointmentData.startDate)}</p>
-        <p className="from">Od: {getTimeFromDateString(appointmentData.startDate)}</p>
-        <p className="to">Do: { getTimeFromDateString(appointmentData.endDate)}</p>
-        <a href="/" className="sign"><button>Prihlásiť</button></a>
-    </div>
-  ));
-
-const CustomAppointment = ({ style, ...restProps }) => {
-  return (
-    <Appointments.Appointment
-      {...restProps}
-      style={{ ...style, backgroundColor: "green" }}
-      className="CLASS_ROOM2"
-    />
-  );
-};
-  
-const AppointmentContent = ({ style, ...restProps }) => {
-  return (
-    <Appointments.AppointmentContent {...restProps}>
-      <div className={restProps.container}>
-        <p className="appointment_name">{restProps.data.name}</p>
-        <p className="appointment_from">Od: {getTimeFromDateString(restProps.data.from)}</p>
-        <p className="appointment_to">Do:{getTimeFromDateString(restProps.data.to)}</p>
-      </div>
-    </Appointments.AppointmentContent>
-  );
-};
-
 class Calendar extends React.Component {
     
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.id,
             appointments: [],
-            currentDate: moment(),
+            currentDate: new Date(moment()),
+            range: this.getRange(new Date(moment()), "Week")
         };
-        this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
+        if(props.user) {
+          this.state.id = "Janci";
+        }
         this.updateInterval = 60000;
     }
-    /*
-    componentDidMount() {
-      fetch('/api/calendar?from=2021-12-01 12:00:00&to=2021-12-25 12:00:00')
-        .then(response => response.json())
-        .then(data => this.setState({appointments: data}));
-    }*/
+
+    style = ({ palette }) => ({
+    });
+  
+    formatTimeScaleDate = date => moment(date).format('HH:mm');
+    
+    TimeScaleLabel = (
+        { formatDate, ...restProps },
+      ) => <WeekView.TimeScaleLabel {...restProps} formatDate={this.formatTimeScaleDate} />;
+    
+    formatDayScaleDate = (date, options) => {
+        const { weekday } = options;
+        return this.getDayFromDateString(date, weekday);
+    };
+    
+    getDayFromDateString = (date, weekday) => {
+      moment.locale('sk');
+      const momentDate = moment(date);
+      if(weekday) {
+        const day = momentDate.format('dddd'); 
+        return day.charAt(0).toUpperCase() + day.slice(1);
+      }
+      return momentDate.format('D');
+    }
+    
+    getTimeFromDateString = (date) => {
+      moment.locale('sk');
+      const momentDate = moment(date);
+      return momentDate.format('LT');
+    }
+    
+    getDateFromDateString = (date) => {
+      moment.locale('sk');
+      const momentDate = moment(date);
+      return momentDate.format('l');
+    }
+    
+    styles = {
+        dayScaleCell: {
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        },
+      };
+    
+    DayScaleCell = withStyles(this.styles, 'DayScaleCell')((
+        { formatDate, classes, ...restProps },
+      ) => (
+        <WeekView.DayScaleCell
+          {...restProps}
+          formatDate={this.formatDayScaleDate}
+          className={classes.dayScaleCell}
+        />
+      ));
+    
+      Header = withStyles(this.style, { name: 'Header' })(({
+        children, appointmentData, classes, ...restProps
+      }) => (
+        <AppointmentTooltip.Header {...restProps} className="headerPopup">
+          <h2 className="title">{appointmentData.name}</h2>
+        </AppointmentTooltip.Header>
+      ));
+    
+    Content = withStyles(this.style, { name: 'Content' })(({
+        children, appointmentData, classes, ...restProps
+      }) => (
+        <div className="popup">
+            <h3 className="gymName">{appointmentData.gym_name}</h3>
+            <div className="plan">
+              <p>Tréningový plán</p>
+              <ul className="list">
+                  {appointmentData.plan.map(e => <li>{e}</li>)}
+              </ul>
+            </div>
+            <div className="entered">
+              <p>Prihlásený</p>
+              <ul className="list">
+                  {appointmentData.users.map(e => <li>{e.name + " " + e.surname}</li>)}
+              </ul>
+            </div>
+            <div className="trainer">
+              <div className="imageWrapper">
+                <img src="./logo192.png"/>
+              </div>
+              <p>{appointmentData.trainer_name + " " + appointmentData.trainer_surname}</p>
+              <a href="/profile"><button>Profil</button></a>
+            </div>
+            <p className="day">{this.getDayFromDateString(appointmentData.startDate, true)}</p>
+            <p className="date">Dátum: {this.getDateFromDateString(appointmentData.startDate)}</p>
+            <p className="from">Od: {this.getTimeFromDateString(appointmentData.startDate)}</p>
+            <p className="to">Do: { this.getTimeFromDateString(appointmentData.endDate)}</p>
+            {this.getTrainingButton(this.userId, appointmentData.id, appointmentData.users)}
+        </div>
+      ));
+  
+  getTrainingButton(id, eventId, users) {
+    if(users.some(user => user.id == id)) {
+      return (
+        <button className="sign" type="submit" onClick={() => {this.signIntoTraining('/api/event/signout', id, eventId) }}>Odhlásiť</button>
+      );
+    } else {
+      return (
+        <button className="sign" type="submit" onClick={() => {this.signIntoTraining('/api/event/signin', id, eventId) }}>Prihlásiť</button>
+      );
+    }
+  }
+    
+    
+    signIntoTraining = (path, userId, eventId) => {
+      fetch(path, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: userId,
+          eventId: eventId,
+        })
+      }).then(response => response.json())
+      .then(data => console.log(data));
+    };
+  
+  CustomAppointment = ({ style, ...restProps }) => {
+    return (
+      <Appointments.Appointment
+        {...restProps}
+        style={{ ...style, backgroundColor: "green" }}
+        className="CLASS_ROOM2"
+      />
+    );
+  };
+
+    AppointmentContent = ({ style, ...restProps }) => {
+      return (
+        <Appointments.AppointmentContent {...restProps}>
+          <div className="appointment">
+            <p className="appointment_name">{restProps.data.name}</p>
+            <p className="appointment_time_from">Od: {this.getTimeFromDateString(restProps.data.startDate)}</p>
+            <p className="appointment_time_to">Do: {this.getTimeFromDateString(restProps.data.endDate)}</p>
+            <p className="appointment_trainer">{restProps.data.trainer_name + " " + restProps.data.trainer_surname}</p>
+          </div>
+        </Appointments.AppointmentContent>
+      );
+    };
+    
+    getRange = (date, view) => {
+      if (view === "Day") {
+        return { startDate: date, endDate: date };
+      }
+      if (view === "Week") {
+        let firstDay = date.getDate() - date.getDay();
+        let lastDay = firstDay + 6;
+        console.log(date);
+        firstDay = new Date(date.setDate(firstDay));
+        firstDay.setHours(0,0,0,0);
+        lastDay = new Date(date.setDate(lastDay));
+        lastDay.setHours(0,0,0,0);
+        return {
+          startDate: firstDay,
+          endDate: lastDay
+        };
+      }
+    };
+
+    currentDateChange = currentDate => {
+      let range = this.getRange(currentDate, "Week");
+      this.setState({
+        currentDate,
+        range
+      }, this.componentDidMount);
+    };
 
     componentDidMount() {
       fetch('/api/calendar', {
@@ -155,8 +208,8 @@ class Calendar extends React.Component {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            from: "2021-12-01 12:00:00",
-            to: "2021-12-25 12:00:00",
+            from: this.state.range.startDate,
+            to: this.state.range.endDate,
           })
         }).then(response => response.json())
         .then(data => this.setState({appointments: data.events}));
@@ -164,26 +217,26 @@ class Calendar extends React.Component {
         
     render() {
         const { appointments, currentDate } = this.state;
-        console.log(appointments);
         return (
             <section className="calendar">
+                <h2 className="calendar_name">Môj kalendár</h2>
                 <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>
                     <WeekView
                         displayName="Môj kalendár"
-                        timeScaleLabelComponent={TimeScaleLabel}
-                        dayScaleCellComponent={DayScaleCell}
+                        timeScaleLabelComponent={this.TimeScaleLabel}
+                        dayScaleCellComponent={this.DayScaleCell}
                     />
                     <Toolbar />
                     <DateNavigator />
                     <TodayButton />
-                    <Appointments 
-                      appointmentComponent={CustomAppointment}
-                      appointmentContentComponent={AppointmentContent}
+                    <Appointments
+                      appointmentComponent={this.CustomAppointment}
+                      appointmentContentComponent={this.AppointmentContent}
                     />
                     <AppointmentTooltip
-                        headerComponent={Header}
-                        contentComponent={Content}
+                        headerComponent={this.Header}
+                        contentComponent={this.Content}
                         showCloseButton
                     />
                     <CurrentTimeIndicator

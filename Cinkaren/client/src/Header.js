@@ -29,7 +29,7 @@ class Header extends React.Component {
     render() {
       return (
         <header>
-            <div class="curved">
+            <div className="curved">
                 <a href="/">
                     <h1>Činkáreň</h1>
                     <img src={logo} alt="cinkaren_logo"  width="150" height="100"/>
