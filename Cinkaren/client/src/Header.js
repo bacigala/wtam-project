@@ -1,17 +1,20 @@
 import React from "react";
 import logo from "./assets/logo.svg";
 import "./Header.css";
+import Cookies from 'universal-cookie';
 
 class Header extends React.Component {
     
     constructor(props) {
         super(props);
         this.location = window.location.href;
-        this.loggedIn = false;
+        this.cookies = new Cookies();
+        this.cookies = this.cookies.getAll();
+        console.log(this.cookies);
     }
 
     logInOutButton(){
-        if(this.loggedIn) {
+        if(this.cookies.userdata) {
             return (
                 <a href="/signout">
                     <button className="login_logout">Odhlásiť</button>

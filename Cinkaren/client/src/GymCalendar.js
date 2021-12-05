@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 
 const GymCalendar = () => {
     const {id} = useParams();
-  
     return (
         <Calendar user="false" gymId={id}/>
     );

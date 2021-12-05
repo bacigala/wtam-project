@@ -22,16 +22,19 @@ class Calendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.id,
+            gymName: "",
             appointments: [],
             currentDate: new Date(moment()),
             range: this.getRange(new Date(moment()), "Week")
         };
         this.cookies = new Cookies();
-        console.log(this.cookies.getAll());
-        if(props.user) {
-          this.state.id = "Janci";
+        this.cookies = this.cookies.getAll();
+        if(this.cookies.userdata.user) {
+          this.userId = this.cookies.userdata.user.id
+          this.userName = this.cookies.userdata.user.username;
         }
+        this.gymId = props.gymId;
+        this.getGymName(this.gymId);
         this.updateInterval = 60000;
     }
 
@@ -102,13 +105,16 @@ class Calendar extends React.Component {
         <div className="popup">
             <h3 className="gymName">{appointmentData.gym_name}</h3>
             <div className="plan">
-              <p>Tréningový plán</p>
+              <p className="titleOfList">Tréningový plán</p>
               <ul className="list">
                   {appointmentData.plan.map(e => <li>{e}</li>)}
               </ul>
             </div>
             <div className="entered">
-              <p>Prihlásený</p>
+              <div>
+                <p className="titleOfList">Prihlásený</p>
+                <p className="numOfEntered">{appointmentData.users.length}/{appointmentData.max_participants}</p>
+              </div>
               <ul className="list">
                   {appointmentData.users.map(e => <li>{e.name + " " + e.surname}</li>)}
               </ul>
@@ -139,21 +145,33 @@ class Calendar extends React.Component {
       );
     }
   }
-    
-    
-    signIntoTraining = (path, userId, eventId) => {
-      fetch(path, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          userId: userId,
-          eventId: eventId,
-        })
-      }).then(response => response.json())
-      .then(data => console.log(data));
-    };
+  
+  signIntoTraining = (path, userId, eventId) => {
+    fetch(path, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userId: userId,
+        eventId: eventId,
+      })
+    });
+    window.location.reload();
+  };
+
+  getGymName = (gymId) => {
+    fetch('/api/gym/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: gymId
+      })
+    }).then(response => response.json())
+    .then(data => {if(data.gyms.length != 0) this.setState({gymName: data.gyms[0].name})});
+  };
   
   CustomAppointment = ({ style, ...restProps }) => {
     return (
@@ -206,7 +224,8 @@ class Calendar extends React.Component {
     };
 
     componentDidMount() {
-      fetch('/api/calendar', {
+      if (this.gymId) {
+        fetch('/api/calendar', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -214,20 +233,34 @@ class Calendar extends React.Component {
           body: JSON.stringify({
             from: this.state.range.startDate,
             to: this.state.range.endDate,
+            gym_id: this.gymId,
           })
         }).then(response => response.json())
         .then(data => this.setState({appointments: data.events}));
+      } else if (this.userName) {
+        fetch('/api/calendar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            from: this.state.range.startDate,
+            to: this.state.range.endDate,
+            username: this.userName,
+          })
+        }).then(response => response.json())
+        .then(data => this.setState({appointments: data.events}));
+      }
     }
         
     render() {
         const { appointments, currentDate } = this.state;
         return (
             <section className="calendar">
-                <h2 className="calendar_name">Môj kalendár</h2>
+                <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2>
                 <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>
                     <WeekView
-                        displayName="Môj kalendár"
                         timeScaleLabelComponent={this.TimeScaleLabel}
                         dayScaleCellComponent={this.DayScaleCell}
                     />

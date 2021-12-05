@@ -36,7 +36,7 @@
     grid-row: 1 / 1;
 }
 
-.Layout-popover-734, .jss393 {
+.Layout-popover-734, .jss393, .Layout-popover-729{
     width: 700px !important; 
     min-width: 700px !important;
     max-width: 700px !important;
@@ -119,19 +119,35 @@
 .plan, .entered {
     height: 250px;
 }
+.entered div {
+    display: flex; 
+    justify-content: space-between;
+}
 
-.plan p, .entered p {
+.titleOfList {
     margin-top: 2.5px;
     margin-bottom: 5px;
     font-size: 18px;
     font-weight: 600;
+    width: 150px;
+    margin: 15px 0 0 15px;
+    text-align: start;
+}
+
+.numOfEntered {
+    background-color: white;
+    color:black;
+    width: 75px;
+    margin: 15px 15px 0 0;
+    border-radius: 25px 0 25px 0;
+    border: 2px solid black;
 }
 
 .list {
     color: black;
     background-color: white;
     margin: 10px 10px 10px 10px; 
-    height: calc(240px - 10px - 24px - 30px);
+    height: calc(240px - 10px - 24px - 40px);
     overflow: auto;
     top: 50%;
     padding: 5px;
