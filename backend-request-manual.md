@@ -66,9 +66,8 @@
 - request: POST na /api/calendar
 ```
 {
-	from : "2021-01-01 12:12:12",   // povinny udaj
-	to : "2021-01-01 12:12:12",	// povinny udaj
-	
+	from : "2021-01-01 12:12:12",   // volitelne
+	to : "2021-01-01 12:12:12",	// volitelne
 	username : "Janci",	// volitele, treningy len daneho pouzivatela (kde je prihlseny)
 	trainer_id : 9, // volitelne, len treningy, ktore vedie dany trener
 	gym_id : 2,	// volitelne, len treningy v danom gyme
@@ -231,29 +230,56 @@
 	```
  
  ### Achievement list pre pouzivatela
- - **request** posli JSON nizsie cez POST na `/api/achievement/list`
+ - **REQUEST**
+	JSON cez POST na `/api/achievement/list`
 	```
 	{
 	  user_id = 1,
 	}
 	```
-- **response** JSON
+- **RESPONSE**
+	JSON
 	```
 	{
 	  achievements : [
 	    {
-		  id = 1, // ID uspechu
-		  trainer_id = 1, // foreign key v tabulke user
+	      id = 1, // ID uspechu
+	      trainer_id = 1, // foreign key v tabulke user
 	      sportsman_id = 1, // foreign key v tabulke user
 	      name : "Mrtvy tah",
 	      value : "30kg"	
-		},
-		{
-		  ...
-		},
-		...
+	    },
+	    {
+	      ...
+	    },
+	    ...
 	  ]
 	}
 	```
 	- pouzivatel bez uspechov -> `{achievements : []}`
 	- neexistujuce *user_id* v request -> `{achievements : []}`
+
+## Event categories
+Each event can be added to multiple categories.
+
+### Create a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/create`
+	```
+	{
+		name : "Silový",
+		color : "abcd45" // HEX
+	}
+	```
+
+
+
+
+
+
+
+
+
+
+
+
