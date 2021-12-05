@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 const dbUser = require("./db-user");
 const dbEvent = require("./db-event");
 const dbCalendar = require("./db-calendar");
+const dbCategory = require("./db-category");
 const dbAchievement = require("./db-achievement");
 var morgan = require('morgan')
 
@@ -51,6 +52,14 @@ app.post("/api/event/signout", urlencodedParser, dbEvent.signOut);
 app.post("/api/event/create", urlencodedParser, dbEvent.create);
 app.post("/api/event/modify", urlencodedParser, dbEvent.modify);
 app.post("/api/event/delete", urlencodedParser, dbEvent.delete);
+
+// category
+app.post("/api/category/create", urlencodedParser, dbCategory.create);
+app.post("/api/category/modify", urlencodedParser, dbCategory.modify);
+app.post("/api/category/delete", urlencodedParser, dbCategory.delete);
+app.post("/api/category/add", urlencodedParser, dbCategory.add);
+app.post("/api/category/remove", urlencodedParser, dbCategory.remove);
+app.post("/api/category/list", urlencodedParser, dbCategory.list);
 
 // achievement
 app.post("/api/achievement/create", urlencodedParser, dbAchievement.create);

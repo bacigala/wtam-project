@@ -267,19 +267,104 @@ Each event can be added to multiple categories.
 	JSON cez POST na `/api/category/create`
 	```
 	{
-		name : "Silový",
-		color : "abcd45" // HEX
+	  name : "Silový",
+	  color : "abcd45" // HEX
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
 	}
 	```
 
+### Modify a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/modify`
+	```
+	{
+	  id : 1, // required, ID of category to be modified
+	  name : "Silový", // optional
+	  color : "abcd45" // optional
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
+	}
+	```
 
+### Delete a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/delete`
+	```
+	{
+	  id : 1, // required, ID of category to be deleted
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
+	}
+	```
 
+### Add an event to a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/add`
+	```
+	{
+	  event_id : 1, // required
+	  category_id : 1, // required
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
+	}
+	```
 
+### Remove an event from a category
+ - **REQUEST**
+	JSON cez POST na `/api/category/remove`
+	```
+	{
+	  event_id : 1, // required
+	  category_id : 1, // required
+	}
+	```
+- **response**
+	JSON
+	```
+	{
+	  success : true
+	}
+	```
+	
+### Get current category list
+ - **REQUEST**
+	POST na `/api/category/list`
 
-
-
-
-
-
-
-
+- **response**
+	JSON
+	```
+	{
+	  categories : [
+	    {
+		  id : 1,
+		  name : "konicny",
+		  color : "AABB77" // HEX
+	    },
+	    {
+	      ...
+	    }
+	    ...
+	  ]
+	}
+	```
