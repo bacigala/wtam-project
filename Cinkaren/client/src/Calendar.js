@@ -14,6 +14,8 @@ import {
 import moment from 'moment';
 import 'moment/locale/sk'
 import { withStyles } from '@material-ui/core/styles';
+import Cookies from 'universal-cookie';
+
 
 class Calendar extends React.Component {
     
@@ -25,6 +27,8 @@ class Calendar extends React.Component {
             currentDate: new Date(moment()),
             range: this.getRange(new Date(moment()), "Week")
         };
+        this.cookies = new Cookies();
+        console.log(this.cookies.getAll());
         if(props.user) {
           this.state.id = "Janci";
         }
