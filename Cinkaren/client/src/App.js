@@ -3,6 +3,8 @@ import "./App.css";
 import LoginOut from "./LoginOut";
 import Calendar from "./Calendar";
 import Header from "./Header";
+import MainPage from "./MainPage";
+import Footer from "./Footer";
 import GymCalendar from "./GymCalendar"
 import SignUp from "./SignUp";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -13,7 +15,7 @@ function App() {
       <Header/>
       <BrowserRouter>
         <Routes>
-          <Route path="" element={<p>TODO MAIN PAGE</p>}/>
+          <Route path="" element={<MainPage/>}/>
           <Route path="/signin" element={<LoginOut/>}/>
           <Route path="/signout" element={<>SignUp</>}/>
           <Route path="/signup" element={<SignUp/>}/>
@@ -24,6 +26,7 @@ function App() {
           <Route path="/calendar/:id" element={<GymCalendar/>}/>
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </div>
   );
     
