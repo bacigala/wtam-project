@@ -199,6 +199,7 @@
 }
 
 .sign {
+    text-align: center;
     height: 30px;
     background-color: green;
     border-radius: 90px;
@@ -210,6 +211,13 @@
     -moz-box-shadow:    0 5px 5px -2px gray;
     -webkit-box-shadow: 0 5px 5px -2px gray;
     box-shadow:         0 5px 5px -2px gray;
+}
+
+.full {
+    background-color: red;
+    color:black;
+    font-weight: bold;
+    border: 1px solid black;
 }
 
 .appointment_name {

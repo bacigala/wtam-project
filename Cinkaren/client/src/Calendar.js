@@ -15,7 +15,8 @@ import moment from 'moment';
 import 'moment/locale/sk'
 import { withStyles } from '@material-ui/core/styles';
 import Cookies from 'universal-cookie';
-
+import  { Navigate } from 'react-router'
+import profile from "./No_Image.jpg"
 
 class Calendar extends React.Component {
     
@@ -29,13 +30,16 @@ class Calendar extends React.Component {
         };
         this.cookies = new Cookies();
         this.cookies = this.cookies.getAll();
-        if(this.cookies.userdata.user) {
+        if(this.cookies.userdata && this.cookies.userdata.user) {
           this.userId = this.cookies.userdata.user.id
           this.userName = this.cookies.userdata.user.username;
+        } else if(this.props.user) {
+          this.redirect = true;
         }
         this.gymId = props.gymId;
         this.getGymName(this.gymId);
         this.updateInterval = 60000;
+        console.log(this.cookies);
     }
 
     style = ({ palette }) => ({
@@ -121,7 +125,7 @@ class Calendar extends React.Component {
             </div>
             <div className="trainer">
               <div className="imageWrapper">
-                <img src="./logo192.png"/>
+                <img src={profile} width="150" height="115"/>
               </div>
               <p>{appointmentData.trainer_name + " " + appointmentData.trainer_surname}</p>
               <a href="/profile"><button>Profil</button></a>
@@ -130,12 +134,15 @@ class Calendar extends React.Component {
             <p className="date">Dátum: {this.getDateFromDateString(appointmentData.startDate)}</p>
             <p className="from">Od: {this.getTimeFromDateString(appointmentData.startDate)}</p>
             <p className="to">Do: { this.getTimeFromDateString(appointmentData.endDate)}</p>
-            {this.getTrainingButton(this.userId, appointmentData.id, appointmentData.users)}
+            {this.getTrainingButton(this.userId, appointmentData.id, appointmentData.users, appointmentData.users.length >= appointmentData.max_participants)}
         </div>
       ));
   
-  getTrainingButton(id, eventId, users) {
-    if(users.some(user => user.id == id)) {
+  getTrainingButton(id, eventId, users, full) {
+    console.log(full);
+    if(full){
+      return (<p className="sign full">Plné!</p>)
+    } else if(users.some(user => user.id == id)) {
       return (
         <button className="sign" type="submit" onClick={() => {this.signIntoTraining('/api/event/signout', id, eventId) }}>Odhlásiť</button>
       );
@@ -257,6 +264,7 @@ class Calendar extends React.Component {
         const { appointments, currentDate } = this.state;
         return (
             <section className="calendar">
+                {this.redirect && (<Navigate to="/signin"/>)}
                 <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2>
                 <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>

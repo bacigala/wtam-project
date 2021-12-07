@@ -9,15 +9,13 @@ class Header extends React.Component {
         super(props);
         this.location = window.location.href;
         this.cookies = new Cookies();
-        this.cookies = this.cookies.getAll();
-        console.log(this.cookies);
     }
 
     logInOutButton(){
-        if(this.cookies.userdata) {
+        if(this.cookies.get("userdata")) {
             return (
-                <a href="/signout">
-                    <button className="login_logout">Odhlásiť</button>
+                <a href="/">
+                    <button className="login_logout" onClick={() => {this.logout()}}>Odhlásiť</button>
                 </a>
             );
         } else {
@@ -27,6 +25,11 @@ class Header extends React.Component {
                 </a>
             );
         }
+    }
+
+    logout() {
+        this.cookies = new Cookies();
+        this.cookies.remove('userdata', {path: '/'});
     }
 
     render() {

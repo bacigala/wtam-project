@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import LoginOut from "./LoginOut";
+import SignIn from "./SignIn";
 import Calendar from "./Calendar";
 import Header from "./Header";
 import MainPage from "./MainPage";
@@ -16,13 +16,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="" element={<MainPage/>}/>
-          <Route path="/signin" element={<LoginOut/>}/>
-          <Route path="/signout" element={<>SignUp</>}/>
+          <Route path="/signin" element={<SignIn/>}/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/search" element={<p>TODO SEARCH</p>}/>
-          <Route path="/trainers" element={<p>NOT IN THE SCOPE OF ROUND 2</p>}/>
-          <Route path="/profile" element={<p>NOT IN THE SCOPE OF ROUND 2</p>}/>
-          <Route path="/mycalendar" element={<Calendar/>}/>
+          <Route path="/trainers" element={<p>NOT IN THE SCOPE OF TESTING</p>}/>
+          <Route path="/profile" element={<p>NOT IN THE SCOPE OF TESTING</p>}/>
+          <Route path="/mycalendar" element={<Calendar user="true"/>}/>
           <Route path="/calendar/:id" element={<GymCalendar/>}/>
         </Routes>
       </BrowserRouter>

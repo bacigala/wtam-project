@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import "./LoginOut.css";
+import React from 'react';
+import "./SignIn.css";
 import Cookies from 'universal-cookie';
 import { sha256} from 'js-sha256';
+import { Navigate } from 'react-router';
 
-class LoginOut extends React.Component {
+class SignIn extends React.Component {
     
     constructor(props) {
         super(props);
         this.location = window.location.href;
-        this.state = { username: '', password: '' };
-        this.loggedIn = false;
+        this.state = { result: false, username: '', password: '' };
         this.cookies = new Cookies();
     }
 
@@ -32,9 +32,10 @@ class LoginOut extends React.Component {
       })
         .then((response) => response.json())
         .then((result) => {
-            console.log(result);
-            this.cookies.set('userdata', result, {path: '/'});
-            console.log(this.cookies.getAll());
+            if(result.user){
+                this.cookies.set('userdata', result, {path: '/'});
+                this.setState({result: true});
+            }
         });
       }
 
@@ -78,19 +79,17 @@ class LoginOut extends React.Component {
         );
     }
 
-
-
     render () {
-        
         return (
-        <section className="loginout">
-            <div className="modal">
-                {this.login()}
-                {this.createAccountBtn()}   
-            </div>
-        </section>
+            <section className="loginout">
+                {this.cookies.get("userdata") && (<Navigate to="/"/>)}
+                <div className="modal">
+                    {this.login()}
+                    {this.createAccountBtn()}   
+                </div>
+            </section>
         );
     }
 }
 
-export default LoginOut;
+export default SignIn;
