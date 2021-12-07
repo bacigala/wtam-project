@@ -1,5 +1,6 @@
 footer {
     display: flex;
+    margin-top: auto;
     justify-content: center;
     background-color: green;
     -moz-box-shadow:    inset -6px -6px 0px darkgreen;
