@@ -13,7 +13,7 @@ const dbEvent = require("./db-event");
 const dbCalendar = require("./db-calendar");
 const dbCategory = require("./db-category");
 const dbAchievement = require("./db-achievement");
-var morgan = require('morgan')
+var morgan = require('morgan');
 
 // specify port (default 3001)
 const PORT = process.env.PORT || 3001;

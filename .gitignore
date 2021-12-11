@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# configuration of enviroment variables (e.g. DB connection details)
+.env
