@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
 import SignIn from "./SignIn";
-import Calendar from "./Calendar";
+import Calendar from "./calendar/Calendar";
 import Header from "./Header";
 import MainPage from "./MainPage";
 import Footer from "./Footer";
-import GymCalendar from "./GymCalendar"
+import GymCalendar from "./calendar/GymCalendar"
 import SignUp from "./SignUp";
 import GymSearch from "./GymSearch";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
