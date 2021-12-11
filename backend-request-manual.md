@@ -8,13 +8,13 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	- [modification](#profile-modification)
 	- [deletion](#profile-deletion)
 	- [get profile info by user ID](#get-any-profile-by-id)
-- [**TRAINING LIST FOR CALENDAR**](#training-list-for-calendar)
 - [**TRAINING**](#training)
 	- [sign in](#sign-in)
 	- [sign out](#sign-out)
 	- [creation](#training-creation)
 	- [modification](#training-modification)
 	- [deletion](#training-deletion)
+	- [training list for calendar](#training-list-for-calendar)
 - [**ACHIEVEMENT**](#achievement)
 	- [creation](#achievement-creation)
 	- [modification](#achievement-modification)
@@ -26,7 +26,7 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	- [deletion](#category-deletion)
 	- [add event](#add-an-event-to-a-category)
 	- [remove event](#remove-an-event-from-a-category)
-	- [get category list](#get-category-list)
+	- [category list](#get-category-list)
 - [**GYM**](#gym)
     - [search for gyms / get specific gym](#search-fo-gyms)
 
@@ -151,71 +151,6 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	}
 	```
 
-## Training list for calendar
-- load multiple events specified by some criteria
-- **request**: POST to `/api/calendar`
-	```
-	{
-	  from : "2021-01-01 12:12:12", // optional
-	  to : "2021-01-01 12:12:12",	// optional
-	  username : "Janci",           // optional, get trainings only for specified user
-	  trainer_id : 9, // optional
-	  gym_id : 2,     // optional
-	  category_id : 2 // optional
-	}
-	```
-- **response**: JSON
-	```
-	{
-	  events : [ // this array can be empty if no events match criteria
-	    {
-	      id : 1,
-	      name : "Trening s Jancim",
-	      location : "Miestnost 1",
-	      from : "2021-01-01 12:12:12",
-	      to : "2021-01-01 15:12:12",
-	      max_participants : 20,
-	      plan : ["rozvcicka", "biceps", "strecing"],
-
-	      users : [ // this array can be empty (no users (yet))
-	        {
-	          id : 1,
-	          name : "Alojz",
-	          surname : "Mamut"
-	        },
-	        {
-	          ...
-	        },
-	      ...			
-	      ],
-
-	      categories : [ // this array can be empty (no category)
-	        {
-	          id : 1,
-	          name : "Silovy",
-	          color : "f032ab"
-	        },
-	        {
-	          ...
-	        },
-	        ...			
-	      ],			
-				
-	      trainer_id : 1,
-	      trainer_name : "Franto",
-	      trainer_surname : "Frantovic",
-				
-	      gym_id : 1,
-	      gym_name : "Fancy gym",
-	    },
-	    {
-	      ...		
-		},
-		...	
-	  ]
-	}
-	```
-
 ## Training
 
 ### Sign in
@@ -302,6 +237,71 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	```
 	{
 	  result : true
+	}
+	```
+
+### Training list for calendar
+- load multiple events specified by some criteria
+- **request**: POST to `/api/calendar`
+	```
+	{
+	  from : "2021-01-01 12:12:12", // optional
+	  to : "2021-01-01 12:12:12",	// optional
+	  username : "Janci",           // optional, get trainings only for specified user
+	  trainer_id : 9, // optional
+	  gym_id : 2,     // optional
+	  category_id : 2 // optional
+	}
+	```
+- **response**: JSON
+	```
+	{
+	  events : [ // this array can be empty if no events match criteria
+	    {
+	      id : 1,
+	      name : "Trening s Jancim",
+	      location : "Miestnost 1",
+	      from : "2021-01-01 12:12:12",
+	      to : "2021-01-01 15:12:12",
+	      max_participants : 20,
+	      plan : ["rozvcicka", "biceps", "strecing"],
+
+	      users : [ // this array can be empty (no users (yet))
+	        {
+	          id : 1,
+	          name : "Alojz",
+	          surname : "Mamut"
+	        },
+	        {
+	          ...
+	        },
+	      ...			
+	      ],
+
+	      categories : [ // this array can be empty (no category)
+	        {
+	          id : 1,
+	          name : "Silovy",
+	          color : "f032ab"
+	        },
+	        {
+	          ...
+	        },
+	        ...			
+	      ],			
+				
+	      trainer_id : 1,
+	      trainer_name : "Franto",
+	      trainer_surname : "Frantovic",
+				
+	      gym_id : 1,
+	      gym_name : "Fancy gym",
+	    },
+	    {
+	      ...		
+		},
+		...	
+	  ]
 	}
 	```
 
@@ -484,6 +484,7 @@ Each event can be added to multiple categories.
 ### Search for gyms
 Search for gyms matching some criteria or select a specific gym by ID.
 - **request** POST to `/api/gym/search`
+	- value specified for key *address* will be searched for in street name, street number, city name and zip code
 	```
 	{
 	  id : 1, // optional, response will contain this gym only (if it exists)
@@ -500,7 +501,11 @@ Search for gyms matching some criteria or select a specific gym by ID.
 	    {
 	      id : 1,
 	      name : "strong gym",
-	      address : "Pristavna 8, 854 02 Bratislava",
+	      address : "Pristavna 8, 854 02 Bratislava", // deprecated
+	      street_name : "Pristavna",
+	      street_number : "8",
+	      city : "Bratislava",
+	      zip : "98732";
 	      email : "emanuel@fmfi.sk",
 	      phone : "090x 123 123"
 	    },

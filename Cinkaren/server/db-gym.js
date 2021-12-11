@@ -26,8 +26,13 @@ exports.search = function(req, res) {
         statement += " AND g.id = '" + reqData.id + "'";
     if ("name" in reqData)
         statement += " AND g.name LIKE '%" + reqData.name + "%'";
-    if ("address" in reqData)
-        statement += " AND g.address LIKE '%" + reqData.address + "%'";
+    if ("address" in reqData) {
+        statement += " AND (g.street_name LIKE '%" + reqData.address + "%'"
+        statement += " OR g.street_number LIKE '%" + reqData.address + "%'"
+        statement += " OR g.city LIKE '%" + reqData.address + "%'"
+        statement += " OR g.zip LIKE '%" + reqData.address + "%'"
+        statement += ")"
+    }
     if ("email" in reqData)
         statement += " AND g.email LIKE '%" + reqData.email + "%'";
     if ("phone" in reqData)
