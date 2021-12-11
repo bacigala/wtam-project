@@ -3,6 +3,7 @@
     height: 120px;
     min-width: 350px;
     display: flex;
+    justify-content: space-between;
     -moz-box-shadow:    inset 6px 6px 0px darkgreen;
     -webkit-box-shadow: inset 6px 6px 0px darkgreen;
     box-shadow:         inset 6px 6px 0px darkgreen;
@@ -138,8 +139,8 @@ nav a:hover {
 
   .login_icon, .logout_icon {
     right: 20px;
-    top: 20px;
-    position: absolute;
+    margin-left: auto;
+    position: relative;
     display: unset;
   }
 }

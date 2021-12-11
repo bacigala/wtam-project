@@ -44,10 +44,10 @@ class Header extends React.Component {
                     <img className="logo" src={logo} alt="cinkaren_logo"  width="150" height="100"/>
                     <h1>Činkáreň</h1>
                 </a>
-                {this.logInOutButton()}
                 <svg xmlns="http://www.w3.org/2000/svg">
                     <path fill="white" d="M 1600 100 Q 150 150 0 0 L 1600 0 L 1600 600 Q 450 600 300 500 Z"/>
                 </svg>
+                {this.logInOutButton()}
             </div>
             <nav>
                 <a className={this.location.endsWith("mycalendar") ? "active" : ""} href="/mycalendar"><span>Môj kalendár </span></a>
