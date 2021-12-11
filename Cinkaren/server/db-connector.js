@@ -3,15 +3,16 @@
 //  MANAGE DB CONNECTION
 //
 
+require('dotenv').config();
 var mysql = require('mysql');
 
 exports.getConnection = function() {
     connection = mysql.createConnection({
-        host: "mariadb105.websupport.sk",
-        database : '4ve7qe0v',
-        port : 3315,
-        user: "4ve7qe0v",
-        password: "Yq6X[jXf&1"
+        host: process.env.DB_HOST,
+        database : process.env.DB_NAME,
+        port : process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD
     });
     connection.connect(function(err) {
         if (err) throw err;
