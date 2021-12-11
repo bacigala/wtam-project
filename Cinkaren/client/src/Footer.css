@@ -58,3 +58,12 @@ footer {
     -ms-transform: translateY(-50%) translateX(-50%);
     transform: translateY(-50%) translateX(-50%);
 }
+
+@media only screen and (max-width: 768px) {
+    footer {
+      margin-bottom: 55px;
+      z-index: -10;
+    }
+  
+  
+  }

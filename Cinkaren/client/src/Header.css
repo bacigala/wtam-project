@@ -1,85 +1,145 @@
 .curved {
     background-color: green;
     height: 120px;
+    min-width: 350px;
     display: flex;
     -moz-box-shadow:    inset 6px 6px 0px darkgreen;
     -webkit-box-shadow: inset 6px 6px 0px darkgreen;
     box-shadow:         inset 6px 6px 0px darkgreen;
   }
   
-  .curved > a {
-    display: flex;
-    text-decoration: none;
-    color: white;
-    text-shadow: 5px 5px black;
-  }
+.curved > a {
+  display: flex;
+  text-decoration: none;
+  color: white;
+  text-shadow: 5px 5px black;
+}
+ 
+.curved h1 {
+  display:inline-block;
+  font-size: 72px;
+  margin-top: 20px;
+}
   
-  .curved h1 {
-    display:inline-block;
-    font-size: 72px;
-    margin-right: 20px; 
-    margin-left: 20px;
-    margin-top: 20px;
-  }
+.curved svg {
+  width: 100%;
+}
   
-  .curved svg {
+.logo {
+  margin-top: 20px;
+}
+
+.login_icon, .logout_icon {
+  display: none;
+}
+  
+.login_logout {
+  right: 20px;
+  top: 20px;
+  height: 30px;
+  position: absolute;
+  background-color: green;
+  border-radius: 90px;
+  border-color: green;
+  color: white;
+  font-size: 20px;
+  width: 130px;
+  -moz-box-shadow:    0 5px 5px -2px gray;
+  -webkit-box-shadow: 0 5px 5px -2px gray;
+  box-shadow:         0 5px 5px -2px gray;
+}
+  
+nav {
+  background-color: green;
+  color: white;
+  height: 55px;
+  display: flex;
+  -moz-box-shadow:    inset 6px 0px 0px darkgreen, 0 4px 3px -1px gray;
+  -webkit-box-shadow: inset 6px 0px 0px darkgreen, 0 4px 3px -1px gray;
+  box-shadow:         inset 6px 0px 0px darkgreen, 0 4px 3px -1px gray;
+}
+  
+nav a  {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 24px;
+  width: 200px;
+  border-right: 4px solid darkgreen;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+nav a:hover {
+  background-color: darkgreen;
+}
+  
+.active {
+  -moz-box-shadow:    inset 0px -6px 0px darkgreen;
+  -webkit-box-shadow: inset 0px -6px 0px darkgreen;
+  box-shadow:         inset 0px -6px 0px darkgreen;
+}
+
+@media only screen and (max-width: 768px) {
+  nav {
+    position: fixed;
+    bottom: 0;
     width: 100%;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   }
   
-  .curved img {
-    margin-top: 20px;
+  nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    min-width: 50px;
+    overflow: hidden;
+    word-wrap: break-word;
+    font-family: sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.1s ease-in-out;
+    padding: 0 0;
   }
-  
+
+  .active {
+    -moz-box-shadow:    inset 0px 6px 0px darkgreen;
+    -webkit-box-shadow: inset 0px 6px 0px darkgreen;
+    box-shadow:         inset 0px 6px 0px darkgreen;
+  }
+
+  .curved svg {
+    display: none;
+  }
+
+  .curved h1 {
+    font-size: 41px;
+    margin-top: 25px;
+  }
+
+  .logo {
+    width: 80px;
+    height: 60px;
+    margin-top: 25px;
+    margin-left: 10px;
+  }
+
+  .curved {
+    height: 80px;
+    align-items: center;
+  }
+
   .login_logout {
+    display: none;
+  }
+
+  .login_icon, .logout_icon {
     right: 20px;
     top: 20px;
-    height: 30px;
     position: absolute;
-    background-color: green;
-    border-radius: 90px;
-    border-color: green;
-    color: white;
-    font-size: 20px;
-    width: 130px;
-    -moz-box-shadow:    0 5px 5px -2px gray;
-    -webkit-box-shadow: 0 5px 5px -2px gray;
-    box-shadow:         0 5px 5px -2px gray;
+    display: unset;
   }
-  
-  nav {
-    background-color: green;
-    color: white;
-    height: 55px;
-    display: flex;
-    -moz-box-shadow:    inset 6px 0px 0px darkgreen, 0 4px 3px -1px gray;
-    -webkit-box-shadow: inset 6px 0px 0px darkgreen, 0 4px 3px -1px gray;
-    box-shadow:         inset 6px 0px 0px darkgreen, 0 4px 3px -1px gray;
-  }
-  
-  nav > ul{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  
-  nav > ul > li{
-    float: left;
-  }
-  
-  nav > ul > li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 24px;
-    width: 200px;
-    border-right: 4px solid darkgreen;
-    text-decoration: none;
-    font-size: 20px;
-  }
-  
-  .active {
-    -moz-box-shadow:    inset 0px -6px 0px darkgreen;
-    -webkit-box-shadow: inset 0px -6px 0px darkgreen;
-    box-shadow:         inset 0px -6px 0px darkgreen;
-  }
+}

@@ -1,5 +1,7 @@
 import React from "react";
 import logo from "./assets/logo.svg";
+import login from "./assets/login_icon.svg";
+import logout from "./assets/logout_icon.svg";
 import "./Header.css";
 import Cookies from 'universal-cookie';
 
@@ -16,12 +18,14 @@ class Header extends React.Component {
             return (
                 <a href="/">
                     <button className="login_logout" onClick={() => {this.logout()}}>Odhlásiť</button>
+                    <img className="login_icon" src={logout} alt="login_icon"  width="40" height="40"/>
                 </a>
             );
         } else {
             return (
                 <a href="/signin">
                     <button className="login_logout">Prihlásiť</button>
+                    <img className="logout_icon" src={login} alt="logout_icon"  width="40" height="40"/>
                 </a>
             );
         }
@@ -37,8 +41,8 @@ class Header extends React.Component {
         <header>
             <div className="curved">
                 <a href="/">
+                    <img className="logo" src={logo} alt="cinkaren_logo"  width="150" height="100"/>
                     <h1>Činkáreň</h1>
-                    <img src={logo} alt="cinkaren_logo"  width="150" height="100"/>
                 </a>
                 {this.logInOutButton()}
                 <svg xmlns="http://www.w3.org/2000/svg">
@@ -46,12 +50,10 @@ class Header extends React.Component {
                 </svg>
             </div>
             <nav>
-                <ul>
-                    <li><a className={this.location.endsWith("mycalendar") ? "active" : ""} href="/mycalendar">Môj kalendár </a></li>
-                    <li><a className={this.location.endsWith("search") ? "active" : ""} href="/search">Vyhladať gym </a></li>
-                    <li><a className={this.location.endsWith("trainers") ? "active" : ""} href="/trainers">Tréneri </a></li>
-                    <li><a className={this.location.endsWith("profile") ? "active" : ""} href="/profile">Profil </a></li>
-                </ul>
+                <a className={this.location.endsWith("mycalendar") ? "active" : ""} href="/mycalendar"><span>Môj kalendár </span></a>
+                <a className={this.location.endsWith("search") ? "active" : ""} href="/search"><span>Vyhladať gym </span></a>
+                <a className={this.location.endsWith("trainers") ? "active" : ""} href="/trainers"><span>Tréneri </span></a>
+                <a className={this.location.endsWith("profile") ? "active" : ""} href="/profile"><span>Profil </span></a>
             </nav>
         </header>
         );
