@@ -28,7 +28,7 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	- [remove event](#remove-an-event-from-a-category)
 	- [category list](#get-category-list)
 - [**GYM**](#gym)
-    - [search for gyms / get specific gym](#search-fo-gyms)
+    - [search for gyms / get specific gym](#search-for-gyms)
 
 
 ## User
@@ -246,7 +246,7 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	```
 	{
 	  from : "2021-01-01 12:12:12", // optional
-	  to : "2021-01-01 12:12:12",	// optional
+	  to : "2021-01-01 12:12:12",   // optional
 	  username : "Janci",           // optional, get trainings only for specified user
 	  trainer_id : 9, // optional
 	  gym_id : 2,     // optional
@@ -299,8 +299,8 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	    },
 	    {
 	      ...		
-		},
-		...	
+	    },
+	    ...	
 	  ]
 	}
 	```
@@ -507,11 +507,19 @@ Search for gyms matching some criteria or select a specific gym by ID.
 	      city : "Bratislava",
 	      zip : "98732";
 	      email : "emanuel@fmfi.sk",
-	      phone : "090x 123 123"
+	      phone : "090x 123 123",
+	      opening_hours : [ // may be null if no opening hours are specified
+	        {
+	          "day" : 1,
+	          "from_time" : "07:00:00",
+	          "to_time" : "22:00:00"
+	        },
+	        ...
+	      ]
 	    },
 	    {
 	      ...
-	    }
+	    },
 	    ...
 	  ]
 	}
