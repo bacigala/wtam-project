@@ -1,10 +1,11 @@
 .signupmodal {
-    height: 300px !important;
+    height: 475px !important;
     width: 250px !important; 
     min-width: 100px !important;
     max-width: 300px !important;    
     margin: auto;
     margin-top: 5%;
+    margin-bottom: 5%;
     border: 3px solid green;
     padding: 10px;
     border-color: black;
