@@ -61,9 +61,19 @@ footer {
 
 @media only screen and (max-width: 768px) {
     footer {
-      margin-bottom: 55px;
-      z-index: -10;
+        flex-direction: column;
+        margin-bottom: 55px;
+        z-index: -1;
+        min-height: 0;
+        min-height: fit-content;  
     }
-  
-  
+
+    .sub-footer {
+        min-width: 0;
+        margin: 0;
+    }
+
+    #footer-logo {
+        display: none;
+    }
   }

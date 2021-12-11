@@ -20,7 +20,7 @@ class Footer extends React.Component {
                         <li><a href="https://github.com/bacigala/wtam-project/issues" target="_blank">Nahlásiť problém</a></li>
                     </ul>
                 </div>
-                <div className="sub-footer">
+                <div className="sub-footer" id="footer-logo">
                     <a href="/" className="vertical-center">
                         <img src={logo} alt="cinkaren_logo"  width="150" height="100"/>
                     </a>

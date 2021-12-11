@@ -61,5 +61,6 @@
     #main-page .wellcome {
         border-left: none;
         border-right: none;
+        max-height: none;
     }
 }
