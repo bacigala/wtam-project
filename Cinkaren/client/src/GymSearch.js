@@ -5,7 +5,24 @@ class GymSearch extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {gyms: []};
+        this.state = {gyms: [], address: ""};
+    }
+
+    handleChange = ({ target }) => {
+        this.setState({ address: target.value });
+    };
+
+    filter(){
+        fetch('/api/gym/search', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                address: this.state.address,
+            })
+          }).then(response => response.json())
+          .then(data => {this.setState({gyms: data.gyms})});
     }
 
     componentDidMount() {
@@ -18,13 +35,22 @@ class GymSearch extends React.Component {
             })
           }).then(response => response.json())
           .then(data => this.setState({gyms: data.gyms}));
-      }
+    }
+
+    filter() {
+        return (
+            <form>
+                <input type="text" mesto="address" value={this.state.address} onChange={this.handleChange}/>
+                <button className="filtruj" type="submit" onClick={this.filter} required>Filtruj</button>
+            </form>
+        );
+    }
 
     render() {
-        console.log(this.state);
       return (
         <section className="main">
                 <h2>Vyhľadávanie gymov</h2>
+                {this.filter()}
                 <div className="listWrapper">
                     <ul className="gymList">
                         {this.state.gyms.map(gym => {
