@@ -283,7 +283,7 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	  max_participants : 20,
 	  plan : ["rozcvicka","miesenie","strecing"]	
 	}
-```
+	```
 - **response**: JSON
 	```
 	{
