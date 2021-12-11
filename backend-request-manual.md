@@ -1,65 +1,142 @@
 # Backend request manual
+Co a kam poslat na BE a aka bude odpoved :wink:
 
-## Pouzivatel
+## Contents
+- [**USER**](#user)
+	- [login](#login)
+	- [registration](#registration)
+	- [modification](#profile-modification)
+	- [deletion](#profile-deletion)
+	- [get profile info by profile id](#get-any-profile-by-id)
+- [**TRAINING LIST FOR CALENDAR**](#training-list-for-calendar)
+- [**TRAINING**](#event-/-training)
+- [**ACHIEVEMENTS**](#achievements)
+- [**TRAINING CATEGORIES**](#training-categories)
+- [**GYM**](#gym)
+    - [search for gyms / get specific gym](#search-fo-gyms-/-get-specific-gym)
 
-### Overenie loginu (prihlasenie)
-- request: POST na /api/user/verify { username: 'janci', password: 'sha 256 hash hesla' }
-- response ak sa neoveri: {"user":null}
-- response ak sa uspesne overi: namiesto null JSON zaznamu v DB tabulka user
-{"user":{"id":3,"name":"Jano","surname":"Zákaazníkovič","username":"janci","birth_date":"1993-06-14T22:00:00.000Z","registration_date":"2021-09-09T22:00:00.000Z","last_login_timestamp":"2021-11-23T16:49:18.000Z","email":"janci.zakaznik@janci.sk","password":"56B1DB8133D9EB398AABD376F07BF8AB5FC584EA0B8BD6A1770200CB613CA005","workplace_id":null}}
 
-### Registracia
-- request: POST na /api/user/insert {key : value z tabulky user, key2 : value2, ... }
-- ak sa nepodari: {"success":false,"message":"Používateľské meno je už obsadené."}
-- ak sa podari: {"success":true,"message":"Profil bol úspešne vytvorený."}
+## User
 
-### Uprava profilu
-- request: POST na /api/user/update
-```
-	{
-		username : "Janci",
-		password : "heslo",
-		newData	: 	{
-						username : "novy_nick",
-						password : "nove_heslo"
-						...
-					}	
-	}
-```
-- ak sa nepodari: {"success":false,"message":"Profil sa nepodarilo upraviť."}
-- ak sa podari: {"success":true,"message":"Profil bol úspešne upravený."}
-
-### Odstranenie profilu
-- upravte profil, nastavte active="0"
-
-### Nacitanie profilu
- - napriklad pri kliknuti na profil v zozname prihlasenych
- - **request:** POST na `/api/user/profile`
-	JSON {id : 3}
- - **response:**
+### Login
+- **request**: send JSON below via POST to `/api/user/verify`
 	```
 	{
-		"user": {
-			"id":1,
-			"name":"Demeter",
-			"surname":"Veselý",
-			"username":"demeter1",
-			"birth_date":"1999-01-02T23:00:00.000Z", // v DB je to len DATE
-			"registration_date":"2021-06-30T22:00:00.000Z", // v DB je to len DATE
-			"last_login_timestamp":"2021-11-23T16:43:48.000Z",
-			"email":"demeter.vesely@uniba.sk",
-			"workplace_id":2,
-			"active":1,
-			"private":0
-		}
+	  username : 'janci',
+	  password : 'SHA-256-hash-of-the-password'
 	}
 	```
-	- *hash hesla* v response nie je
-	- *active* je vzdy *1*, neaktivne profily su skryte
-	- *private* je vzdy *0*, neverejne profily su skryte
+- **response - login failed**: JSON
+	```
+	{
+	  user : null
+	}
+	```
+- **response - login ok**: JSON
+	```
+	{
+	  "user" : { 
+	    "id" : 3,
+	    "name" : "Jano",
+	    "surname" : "Zákaazníkovič",
+	    "username" : "janci",
+	    "birth_date" : "1993-06-14T22:00:00.000Z",
+	    "registration_date" : "2021-09-09T22:00:00.000Z",
+	    "last_login_timestamp" : "2021-11-23T16:49:18.000Z",
+	    "email" : "janci.zakaznik@janci.sk",
+	    "password" : "56B1DB8133D9EB398AABD376F07BF8AB5FC584EA0B8BD6A1770200CB613CA005",
+	    "workplace_id" : null // ID of gym for trainers
+	  }
+	}
+	```
 
+### Registration
+- **request**: POST to `/api/user/insert`
+	```
+	{
+	  "name" : "Jano",
+	  "surname" : "Zákazníkovič",
+	  "username" : "janci",
+	  "birth_date" : "1993-06-14T22:00:00.000Z",    // optional
+	  "email" : "janci.zakaznik@janci.sk",          // optional
+	  "password" : "SHA-256-hash-of-the-password",
+	  "workplace_id" : null                         // optional, ID of gym
+	}
+	```
+- **response - registration failed**: JSON
+	```
+	{
+	  "success" : false,
+	  "message" : "Používateľské meno je už obsadené."
+	}
+	```
+- **resonse - registration ok**: JSON
+	```
+	{
+	  "success" : true,
+	  "message" : "Profil bol úspešne vytvorený."
+	}
+	```
 
-## Training list pre kalendar
+### Profile modification
+- **request**: POST to `/api/user/update`
+	```
+	{
+	  username : "Janci",
+	  password : "SHA-256-hash-of-the-password",
+	  newData : {
+	    username : "new_nick",                         // optional
+	    password : "SHA-256-hash-of-the-new-password", // optional
+	    ... // add any other data that needs to be updated
+	  }	
+	}
+	```
+- **response - modification failed**: JSON
+	```
+	{
+	  "success" : false,
+	  "message" : "Profil sa nepodarilo upraviť."
+	}
+	```
+- **response - modification ok**: JSON
+	```
+	{
+	  "success" : true,
+	  "message" : "Profil bol úspešne upravený."
+	}
+	```
+
+### Profile deletion
+- send [profile modification request](#profile-modification) and set `active="0"`
+
+### Get any profile by ID
+- e.g. when some logged-in user wants to view other public profile
+- **request:** POST to `/api/user/profile`
+	```
+	{
+	  id : 1
+	}
+	```
+ - **response**:
+	```
+	{
+	  "user": {
+	    "id" : 1,
+	    "name" : "Demeter",
+	    "surname" : "Veselý",
+	    "username" : "demeter1",
+	    "birth_date" : "1999-01-02T23:00:00.000Z",        // type 'DATE' in DB
+	    "registration_date" : "2021-06-30T22:00:00.000Z", // type 'DATE' in DB
+	    "last_login_timestamp" : "2021-11-23T16:43:48.000Z",
+	    "email" : "demeter.vesely@uniba.sk",
+	    "workplace_id" : 2, // null if the user id not a trainer
+	    "active" : 1,       // constant, inactive profiles are hidden
+	    "private" : 0       // constant, private profiles are hidden
+	  }
+	}
+	```
+
+## Training list for calendar
 - nacitanie dat pre kalendar (podla kriterii)
 - jednoducha manipulacia s jednym gymom alebo jednym treningom (select dat/uprava/prihllasenie/odhlasenie) je v dalsej casti, tu sa robi SELECT pre kalendar
 
@@ -129,7 +206,7 @@
 - tiez moze byt prazdne pole _users_ ak nikto nie je prihlaseny alebo _categories_ ak trening nie je zaradeny
 
 
-## Event / Trening
+## Event / Training
 
 ### Prihlasenie sa na trening
 - request: POST na /api/event/signin {"userId" : 1, eventId : 1}
@@ -177,7 +254,7 @@
 - *response:* JSON {result : true}
 
 
-## Achievements (uspechy)
+## Achievements
 
 ### Pridanie uspechu
 - **request** posli JSON nizsie cez POST na `/api/achievement/create`
@@ -259,7 +336,7 @@
 	- pouzivatel bez uspechov -> `{achievements : []}`
 	- neexistujuce *user_id* v request -> `{achievements : []}`
 
-## Event categories
+## Training categories
 Each event can be added to multiple categories.
 
 ### Create a category
@@ -348,10 +425,10 @@ Each event can be added to multiple categories.
 	```
 	
 ### Get current category list
- - **REQUEST**\
+ - **REQUEST**
 	POST na `/api/category/list`
 
-- **response**\
+- **response**
 	JSON
 	```
 	{
@@ -372,7 +449,7 @@ Each event can be added to multiple categories.
 ## Gym
 
 ### Search for gyms / get specific gym
- - **REQUEST**\
+ - **REQUEST**
 	 - JSON cez POST na `/api/gym/search`
 	 - all keys are optional
 	```
@@ -384,7 +461,7 @@ Each event can be added to multiple categories.
 	  phone : "1233221"
 	}
 	```
-- **response**\
+ - **response**\
 	JSON
 	```
 	{
