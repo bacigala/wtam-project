@@ -7,13 +7,28 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	- [registration](#registration)
 	- [modification](#profile-modification)
 	- [deletion](#profile-deletion)
-	- [get profile info by profile id](#get-any-profile-by-id)
+	- [get profile info by user ID](#get-any-profile-by-id)
 - [**TRAINING LIST FOR CALENDAR**](#training-list-for-calendar)
-- [**TRAINING**](#event-/-training)
-- [**ACHIEVEMENTS**](#achievements)
+- [**TRAINING**](#training)
+	- [sign in](#sign-in)
+	- [sign out](#sign-out)
+	- [creation](#training-creation)
+	- [modification](#training-modification)
+	- [deletion](#training-deletion)
+- [**ACHIEVEMENT**](#achievement)
+	- [creation](#achievement-creation)
+	- [modification](#achievement-modification)
+	- [deletion](#achievement-deletion)
+	- [achievement list for user (by user ID)](#achievement-list-for-user)
 - [**TRAINING CATEGORIES**](#training-categories)
+	- [creation](#category-creation)
+	- [modification](#category-modification)
+	- [deletion](#category-deletion)
+	- [add event](#add-an-event-to-a-category)
+	- [remove event](#remove-an-event-from-a-category)
+	- [get category list](#get-category-list)
 - [**GYM**](#gym)
-    - [search for gyms / get specific gym](#search-fo-gyms-/-get-specific-gym)
+    - [search for gyms / get specific gym](#search-fo-gyms)
 
 
 ## User
@@ -137,130 +152,166 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	```
 
 ## Training list for calendar
-- nacitanie dat pre kalendar (podla kriterii)
-- jednoducha manipulacia s jednym gymom alebo jednym treningom (select dat/uprava/prihllasenie/odhlasenie) je v dalsej casti, tu sa robi SELECT pre kalendar
-
-- request: POST na /api/calendar
-```
-{
-	from : "2021-01-01 12:12:12",   // volitelne
-	to : "2021-01-01 12:12:12",	// volitelne
-	username : "Janci",	// volitele, treningy len daneho pouzivatela (kde je prihlseny)
-	trainer_id : 9, // volitelne, len treningy, ktore vedie dany trener
-	gym_id : 2,	// volitelne, len treningy v danom gyme
-	category_id : 2 // volitelne, len treningy v danej kategorii
-}
-```
-- response je JSON:
-```
-{
-	events : [
-		{
-			id : 1,
-			name : "Trening s Jancim",
-			location : "Miestnost 1",
-			from : "2021-01-01 12:12:12",
-			to : "2021-01-01 15:12:12",
-			max_participants : 20,
-			
-			plan : ["rozvcicka", "biceps", "strecing"],
-			users : [
-				{
-					id : 1,
-					name : "Alojz",
-					surname : "Mamut"
-				},
-				{
-					...
-				},
-				...			
-			],
-			
-			categories : [
-				{
-					id : 1,
-					name : "Silovy",
-					color : "f032ab"
-				},
-				{
-					...
-				},
-				...			
-			],			
-			
-			trainer_id : 1,
-			trainer_name : "Franto",
-			trainer_surname : "Frantovic",
-			
-			gym_id : 1,
-			gym_name : "Fancy gym",
-		},
-		{
-			...		
-		},
-		...	
-	]
-}
-```
-- ak zadanym parametrom nevyhovuje ziadny trening, pole _events_ je prazdne
-- tiez moze byt prazdne pole _users_ ak nikto nie je prihlaseny alebo _categories_ ak trening nie je zaradeny
-
-
-## Event / Training
-
-### Prihlasenie sa na trening
-- request: POST na /api/event/signin {"userId" : 1, eventId : 1}
-- response: JSON {result : true}
-
-### Odhlasenie sa z treningu
-- request: POST na /api/event/signout {"userId" : 1, eventId : 1}
-- response: JSON {result : true}
-
-### Vytvorenie treningu
-- request: POST na /api/event/create
-```
-{
-	gym_id : 1, // *povinne*, musi byt realne gym_id (foreign key)
-	trainer_id : 1, // *povinne*, musi byt realne user_id (foreign key)
-	name : "Trening s Jancim",
-	location : "Posilka vlavo",
-	from_datetime : 2021-12-05 13:45:00,
-	to_datetime: 2021-12-05 14:50:00,
-	max_participants : 20,
-	plan : ["rozcvicka","miesenie","strecing"]	
-}
-```
-- response: JSON {result : true}
-
-### Uprava treningu
-- request: POST na /api/event/modify
-```
-{
-	id = 1, // jedine *povinne*, ostatne volitelne
-	name : "Trening s Jancim",
-	gym_id : 1,
-	location : "Posilka vlavo",
-	from_datetime : 2021-12-05 13:45:00,
-	to_datetime: 2021-12-05 14:50:00,
-	trainer_id : 1,
-	max_participants : 20,
-	plan : ["rozcvicka","miesenie","strecing"]	
-}
-```
-- response: JSON {result : true}
-
-### Odstranenie treningu
-- *request:* POST na /api/event/delete {"id" : 1}
-- *response:* JSON {result : true}
-
-
-## Achievements
-
-### Pridanie uspechu
-- **request** posli JSON nizsie cez POST na `/api/achievement/create`
+- load multiple events specified by some criteria
+- **request**: POST to `/api/calendar`
 	```
 	{
-	  trainer_id = 1, // foreign key v tabulke user
+	  from : "2021-01-01 12:12:12", // optional
+	  to : "2021-01-01 12:12:12",	// optional
+	  username : "Janci",           // optional, get trainings only for specified user
+	  trainer_id : 9, // optional
+	  gym_id : 2,     // optional
+	  category_id : 2 // optional
+	}
+	```
+- **response**: JSON
+	```
+	{
+	  events : [ // this array can be empty if no events match criteria
+	    {
+	      id : 1,
+	      name : "Trening s Jancim",
+	      location : "Miestnost 1",
+	      from : "2021-01-01 12:12:12",
+	      to : "2021-01-01 15:12:12",
+	      max_participants : 20,
+	      plan : ["rozvcicka", "biceps", "strecing"],
+
+	      users : [ // this array can be empty (no users (yet))
+	        {
+	          id : 1,
+	          name : "Alojz",
+	          surname : "Mamut"
+	        },
+	        {
+	          ...
+	        },
+	      ...			
+	      ],
+
+	      categories : [ // this array can be empty (no category)
+	        {
+	          id : 1,
+	          name : "Silovy",
+	          color : "f032ab"
+	        },
+	        {
+	          ...
+	        },
+	        ...			
+	      ],			
+				
+	      trainer_id : 1,
+	      trainer_name : "Franto",
+	      trainer_surname : "Frantovic",
+				
+	      gym_id : 1,
+	      gym_name : "Fancy gym",
+	    },
+	    {
+	      ...		
+		},
+		...	
+	  ]
+	}
+	```
+
+## Training
+
+### Sign in
+- **request**: POST to `/api/event/signin`
+	```
+	{
+	  userId : 1,
+	  eventId : 1
+	}
+	```
+- **response**: JSON
+	```
+	{
+	  result : true
+	}
+	```
+
+### Sign out
+- **request**: POST to `/api/event/signout`
+	```
+	{
+	  userId : 1,
+	  eventId : 1
+	}
+	```
+- **response**: JSON
+	```
+	{
+	  result : true
+	}
+	```
+
+### Training creation
+- **request**: POST to `/api/event/create`
+	```
+	{
+	  gym_id : 1,     // required, foreign key gym.id
+	  trainer_id : 1, // required, foreign key user.id
+	  name : "Trening s Jancim",
+	  location : "Posilka vlavo",
+	  from_datetime : 2021-12-05 13:45:00,
+	  to_datetime: 2021-12-05 14:50:00,
+	  max_participants : 20,
+	  plan : ["rozcvicka","miesenie","strecing"]	
+	}
+	```
+- **response**: JSON
+	```
+	{
+	  result : true
+	}
+	```
+
+### Training modification
+- **request**: POST to `/api/event/modify`
+	```
+	{
+	  id = 1, // the only required value
+	  name : "Trening s Jancim",
+	  gym_id : 1,
+	  location : "Posilka vlavo",
+	  from_datetime : 2021-12-05 13:45:00,
+	  to_datetime: 2021-12-05 14:50:00,
+	  trainer_id : 1,
+	  max_participants : 20,
+	  plan : ["rozcvicka","miesenie","strecing"]	
+	}
+```
+- **response**: JSON
+	```
+	{
+	  result : true
+	}
+	```
+
+### Training deletion
+- **request:** POST to `/api/event/delete`
+	```
+	{
+	  id : 1
+	}
+	```
+- **response:** JSON
+	```
+	{
+	  result : true
+	}
+	```
+
+## Achievement
+
+### Achievement creation
+- **request** POST to `/api/achievement/create`
+	```
+	{
+	  trainer_id = 1,   // foreign key v tabulke user
 	  sportsman_id = 1, // foreign key v tabulke user
 	  name : "Mrtvy tah",
 	  value : "20kg"
@@ -273,18 +324,17 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	}
 	```
 
-### Uprava uspechu
-- **request** posli JSON nizsie cez POST na `/api/achievement/modify`
+### Achievement modification
+- **request** POST to `/api/achievement/modify`
 	```
 	{
-	  id = 1, // ID uspechu, jedine povinne
-	  trainer_id = 1, // foreign key v tabulke user
-	  sportsman_id = 1, // foreign key v tabulke user
+	  id = 1,           // required, achievement ID
+	  trainer_id = 1,   // optional, foreign key user.id
+	  sportsman_id = 1, // optional, foreign key user.id
 	  name : "Mrtvy tah",
 	  value : "30kg"
 	}
 	```
-	- povinny je len key `id`, ostatne pridavame len ak sa ma zmenit im pridelena hodnota
 - **response** JSON
 	```
 	{
@@ -292,11 +342,11 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	}
 	```
 	
-### Odstranenie uspechu
-- **request** posli JSON nizsie cez POST na `/api/achievement/delete`
+### Achievement deletion
+- **request** POST to `/api/achievement/delete`
 	```
 	{
-	  id = 1, // ID uspechu
+	  id = 1, // achievement ID
 	}
 	```
 - **response** JSON
@@ -306,23 +356,21 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	}
 	```
  
- ### Achievement list pre pouzivatela
- - **REQUEST**
-	JSON cez POST na `/api/achievement/list`
+ ### Achievement list for user
+- **request** POST to `/api/achievement/list`
 	```
 	{
 	  user_id = 1,
 	}
 	```
-- **RESPONSE**
-	JSON
+- **response** JSON
 	```
 	{
 	  achievements : [
 	    {
-	      id = 1, // ID uspechu
-	      trainer_id = 1, // foreign key v tabulke user
-	      sportsman_id = 1, // foreign key v tabulke user
+	      id = 1,           // achievement ID
+	      trainer_id = 1,   // foreign key user.id
+	      sportsman_id = 1, // foreign key user.id
 	      name : "Mrtvy tah",
 	      value : "30kg"	
 	    },
@@ -333,57 +381,49 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	  ]
 	}
 	```
-	- pouzivatel bez uspechov -> `{achievements : []}`
-	- neexistujuce *user_id* v request -> `{achievements : []}`
 
 ## Training categories
 Each event can be added to multiple categories.
 
-### Create a category
- - **REQUEST**
-	JSON cez POST na `/api/category/create`
+### Category creation
+- **request** POST to `/api/category/create`
 	```
 	{
 	  name : "Silový",
 	  color : "abcd45" // HEX
 	}
 	```
-- **response**
-	JSON
+- **response** JSON
 	```
 	{
 	  success : true
 	}
 	```
 
-### Modify a category
- - **REQUEST**
-	JSON cez POST na `/api/category/modify`
+### Category modification
+- **request** POST to `/api/category/modify`
 	```
 	{
-	  id : 1, // required, ID of category to be modified
+	  id : 1,          // required, ID of category to be modified
 	  name : "Silový", // optional
 	  color : "abcd45" // optional
 	}
 	```
-- **response**
-	JSON
+- **response** JSON
 	```
 	{
 	  success : true
 	}
 	```
 
-### Delete a category
- - **REQUEST**
-	JSON cez POST na `/api/category/delete`
+### Category deletion
+- **request** POST to `/api/category/delete`
 	```
 	{
 	  id : 1, // required, ID of category to be deleted
 	}
 	```
-- **response**
-	JSON
+- **response** JSON
 	```
 	{
 	  success : true
@@ -391,16 +431,14 @@ Each event can be added to multiple categories.
 	```
 
 ### Add an event to a category
- - **REQUEST**
-	JSON cez POST na `/api/category/add`
+- **request** POST to `/api/category/add`
 	```
 	{
-	  event_id : 1, // required
+	  event_id : 1,    // required
 	  category_id : 1, // required
 	}
 	```
-- **response**
-	JSON
+- **response** JSON
 	```
 	{
 	  success : true
@@ -408,35 +446,30 @@ Each event can be added to multiple categories.
 	```
 
 ### Remove an event from a category
- - **REQUEST**
-	JSON cez POST na `/api/category/remove`
+ - **request** POST to `/api/category/remove`
 	```
 	{
-	  event_id : 1, // required
+	  event_id : 1,    // required
 	  category_id : 1, // required
 	}
 	```
-- **response**
-	JSON
+- **response** JSON
 	```
 	{
 	  success : true
 	}
 	```
 	
-### Get current category list
- - **REQUEST**
-	POST na `/api/category/list`
-
-- **response**
-	JSON
+### Get category list
+- **request** POST to `/api/category/list`
+- **response** JSON
 	```
 	{
 	  categories : [
 	    {
-		  id : 1,
-		  name : "konicny",
-		  color : "AABB77" // HEX
+	      id : 1,
+	      name : "konicny",
+	      color : "AABB77" // HEX
 	    },
 	    {
 	      ...
@@ -448,34 +481,32 @@ Each event can be added to multiple categories.
 	
 ## Gym
 
-### Search for gyms / get specific gym
- - **REQUEST**
-	 - JSON cez POST na `/api/gym/search`
-	 - all keys are optional
+### Search for gyms
+Search for gyms matching some criteria or select a specific gym by ID.
+- **request** POST to `/api/gym/search`
 	```
 	{
-	  id : 1, // response will contain this gym only (if it exists)
-	  name : "Gym",
-	  address : "Bratis",
-	  email : "gym@topgyms.com",
-	  phone : "1233221"
+	  id : 1, // optional, response will contain this gym only (if it exists)
+	  name : "Gym",              // optional, specify substring to be search for
+	  address : "Bratis",        // optional, specify substring to be search for
+	  email : "gym@topgyms.com", // optional, specify substring to be search for
+	  phone : "1233221"          // optional, specify substring to be search for
 	}
 	```
- - **response**\
-	JSON
+ - **response**	JSON
 	```
 	{
 	  gyms : [
 	    {
-		  id : 1,
-		  name : "strong gym",
-		  address : "Pristavna 8, 854 02 Bratislava",
-		  email : "emanuel@fmfi.sk",
-		  phone : "090x 123 123"
-		},
-		{
-		  ...
-		}
+	      id : 1,
+	      name : "strong gym",
+	      address : "Pristavna 8, 854 02 Bratislava",
+	      email : "emanuel@fmfi.sk",
+	      phone : "090x 123 123"
+	    },
+	    {
+	      ...
+	    }
 	    ...
 	  ]
 	}
