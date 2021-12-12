@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import GymCalendar from "./calendar/GymCalendar"
 import SignUp from "./SignUp";
 import GymSearch from "./GymSearch";
+import Profile from "./Profile";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/search" element={<GymSearch/>}/>
           <Route path="/trainers" element={<p>NOT IN THE SCOPE OF TESTING</p>}/>
-          <Route path="/profile" element={<p>NOT IN THE SCOPE OF TESTING</p>}/>
+          <Route path="/profile" element={<Profile/>}/>
           <Route path="/mycalendar" element={<Calendar user="true"/>}/>
           <Route path="/calendar/:id" element={<GymCalendar/>}/>
         </Routes>

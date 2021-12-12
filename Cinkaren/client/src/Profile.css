@@ -1,0 +1,248 @@
+.main {
+    width: 750px;
+    height: 650px;
+    border: 2px solid black;
+    margin: auto;
+    border-radius: 20px;
+    -moz-box-shadow:    0 5px 5px -2px gray;
+    -webkit-box-shadow: 0 5px 5px -2px gray;
+    box-shadow:         0 5px 5px -2px gray;
+}
+
+
+.popup {
+    height: 650px !important;
+    width: 750px !important; 
+    min-width: 700px !important;
+    max-width: 750px !important;
+    display: grid;
+}
+
+
+
+.achievments, .history {
+    background-color: green;
+    text-align: center;
+    color: white;
+    width: 350px;
+    margin: 0 0 12px 25px;
+    border-radius: 25px 0px 25px 0px;
+    -moz-box-shadow:    0 5px 5px -2px gray;
+    -webkit-box-shadow: 0 5px 5px -2px gray;
+    box-shadow:         0 5px 5px -2px gray;
+}
+
+.titleOfProfile, .userName, .surname, .name, .profile {
+    background-color: green;
+    text-align: center;
+    color: white;
+    width: 250px;
+    margin: 0 0 12px 25px;
+    border-radius: 25px 0px 25px 0px;
+    -moz-box-shadow:    0 5px 5px -2px gray;
+    -webkit-box-shadow: 0 5px 5px -2px gray;
+    box-shadow:         0 5px 5px -2px gray;
+}
+
+.userName, .surname, .name {
+    font-size: 20px;
+    height: 30px;
+}
+
+.titleOfProfile {
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+    margin: 12px 0 12px 25px;
+}
+
+.achievments {
+    grid-column: 2 / 2;
+    grid-row: 2 / 2;
+}
+
+.history {
+    grid-column: 2 / 2;
+    grid-row: 3 / 8;
+}
+
+.profile {
+    grid-column: 1 / 1;
+    grid-row: 2 / 2;
+    height: 210px;
+}
+
+.userName {
+    grid-column: 1 / 1;
+    grid-row: 3 / 3;
+}
+
+.name {
+    grid-column: 1 / 1;
+    grid-row: 4 / 4;
+}
+
+.surname {
+    grid-column: 1 / 1;
+    grid-row: 5 / 5;
+}
+
+
+
+
+.achievments, .history {
+    height: 250px;
+}
+.history div {
+    display: flex; 
+    justify-content: space-between;
+}
+
+.titleOfList {
+    margin-top: 2.5px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    width: 150px;
+    margin: 15px 0 0 15px;
+    text-align: start;
+}
+
+.list {
+    color: black;
+    background-color: white;
+    margin: 10px 10px 10px 10px; 
+    height: calc(240px - 10px - 24px - 40px);
+    overflow: auto;
+    top: 50%;
+    padding: 5px;
+    -moz-box-shadow:    inset 3px 3px 3px gray;
+    -webkit-box-shadow: inset 3px 3px 3px gray;
+    box-shadow:         inset 3px 3px 3px gray;
+}
+
+.list li {
+    background-color: green;
+    color: white;
+    text-align: center;
+    list-style: none;
+    margin-top: 10px;
+    border-radius: 25px 0px 25px 0px;
+}
+
+.profile .imageWrapper {
+    background-color: white;
+    height: 160px;
+    border-radius: 25px 0px 25px 0px;
+    margin: 20px 20px 20px 20px;
+}
+
+.profile .imageWrapper img {
+    width: 210px;
+    height: 160px;
+    margin: 0px;
+    border-radius: 25px 0px 25px 0px;
+}
+
+.profile p {
+    color: white;
+    font-size: 18px;
+    margin: 10px 0 10px 0;
+}
+
+.profile button {
+    background-color: white;
+    border-radius: 90px;
+    border-color: black;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    width: 130px;
+    -moz-box-shadow:    0 1px 10px -2px black;
+    -webkit-box-shadow: 0 1px 10px -2px black;
+    box-shadow:         0 1px 10px -2px black;
+}
+
+
+
+   
+
+
+@media only screen and (max-width: 768px) {
+    .main {
+        width: 350px;
+        height: 1350px;
+        border: 2px solid black;
+        margin: auto;
+        border-radius: 10px;
+        -moz-box-shadow:    0 5px 5px -2px gray;
+        -webkit-box-shadow: 0 5px 5px -2px gray;
+        box-shadow:         0 5px 5px -2px gray;
+    }
+   
+    .popup {
+        height: 1350px !important;
+        width: 350px !important; 
+        min-width: 350px !important;
+        max-width: 350px !important;
+    }
+
+
+    .titleOfProfile, .achievments, .history {
+        background-color: green;
+        text-align: center;
+        color: white;
+        width: 300px;
+        margin: 0 0 12px 25px;
+    }
+    
+    .userName, .surname, .name, .profile {
+        background-color: green;
+        text-align: center;
+        color: white;
+        width: 300px;
+        margin: 0 0 12px 25px;
+        border-radius: 25px 0px 25px 0px;
+        -moz-box-shadow:    0 5px 5px -2px gray;
+        -webkit-box-shadow: 0 5px 5px -2px gray;
+        box-shadow:         0 5px 5px -2px gray;
+    }
+    
+    .titleOfProfile {
+        grid-column: 1 / 1;
+        grid-row: 1 / 1;
+    }
+    
+    .achievments {
+        grid-column: 1 / 1;
+        grid-row: 6 / 6;
+    }
+    
+    .history {
+        grid-column: 1 / 1;
+        grid-row: 7 / 7;
+    }
+    
+    .profile {
+        grid-column: 1 / 1;
+        grid-row: 2 / 2;
+    }
+    
+    .userName {
+        grid-column: 1 / 1;
+        grid-row: 3 / 3;
+    }
+    
+    .name {
+        grid-column: 1 / 1;
+        grid-row: 4 / 4;
+    }
+    
+    .surname {
+        grid-column: 1 / 1;
+        grid-row: 5 / 5;
+    }
+    
+  
+    
+    
+}
