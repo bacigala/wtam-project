@@ -7,13 +7,14 @@ class MainPage extends React.Component {
         super(props);
         this.location = window.location.href;
         this.loggedIn = false;
+        
     }
 
     render() {
       return (
         <section id="main-page">
             <div class="wellcome">
-                <h1>Vitaj makáč!</h1>
+                <h1>Vitaj makač!</h1>
                 <p>Kým Ty si tu pobehuješ po webe,</p>
                 <p>v gymoch na sebe pracuje 1453 ľudí na 93 práve prebiehajúcich tréningoch.</p>
                 <p>Pridaj sa k nim:</p>
