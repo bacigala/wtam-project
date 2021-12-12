@@ -35,6 +35,7 @@ class SignIn extends React.Component {
             if(result.user){
                 this.cookies.set('userdata', result, {path: '/'});
                 this.setState({result: true});
+                window.location.reload(false);
             }
         });
       }

@@ -8,7 +8,7 @@ class SingUp extends React.Component {
     constructor(props) {
         super(props);
         this.location = window.location.href;
-        this.state = { username: '', password: '' };
+        this.state = { username: '', password: '', email: '', meno: '', priezvisko: '', errorMessage:''};
         this.loggedIn = false;
         this.cookies = new Cookies();
     }
@@ -20,24 +20,43 @@ class SingUp extends React.Component {
 
     signup () {
         return (
-            <form className="loginwrapper">
+            <form className="loginwrapper" autocomplete="off">
                 <h3>
                     Registrácia
                 </h3>
+
                 <p><b>
-                    Zadajte meno:
+                    Zadajte Vaše meno
+                </b></p>
+                <p>
+                    <input type="text" name="meno" value={this.state.meno} onChange={this.handleChange} required>
+                    </input>
+                </p> 
+
+                <p><b>
+                    Zadajte Vaše priezvisko
+                </b></p>
+                <p>
+                    <input type="text" name="priezvisko" value={this.state.priezvisko} onChange={this.handleChange} required>
+                    </input>
+                </p>
+
+                <p><b>
+                    Zadajte užívateľské meno
                 </b></p>
                 <p>
                     <input type="text" name="username" value={this.state.username} onChange={this.handleChange}>
                     </input>
                 </p>
+
                 <p><b>
-                    Zadajte heslo:
+                    Zadajte heslo
                 </b></p>
                 <p>
                     <input type="password" name="password" value={this.state.password} onChange={this.handleChange}>
                     </input>
                 </p>
+
                 <p>
                     <button className="login" type="submit" onClick={this.clickRegister}>Zaregistrovať sa</button>
                 </p>
@@ -63,19 +82,19 @@ class SingUp extends React.Component {
            body: JSON.stringify({
              username: this.state.username,  
              password: sha256(this.state.password),
-             "name":"Martin",
-             "surname":"Userovič"
+             name: this.state.meno,
+             priezvisko: this.state.priezvisko
           }),
       })
         .then((response) => response.json())
         .then((result) => {
-            console.log(result);
             this.cookies.set('wasCreated', result.success, {path: '/'});
             this.cookies.set('username', this.state.username, {path: '/'});
-            console.log(this.cookies.getAll());
-        });
-      }
-
+            if (result.success === false) {
+                this.setState({ errorMessage: result.message });
+            }
+        });        
+    }
 
 
 render() {
@@ -84,6 +103,7 @@ render() {
         <div className="signupmodal">
         {this.signup()}
         {this.createLoginBtn()} 
+        {<h4 className="error"> { this.state.errorMessage } </h4>}
         </div>
     </section>
     );
