@@ -4,6 +4,7 @@ import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   WeekView,
+  DayView,
   Appointments,
   AppointmentTooltip,
   Toolbar,
@@ -27,10 +28,11 @@ class Calendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            windowWidth: window.innerWidth,
             gymName: "",
             appointments: [],
             currentDate: new Date(moment()),
-            range: this.getRange(new Date(moment()), "Week")
+            range: this.getRange(new Date(moment()), window.innerWidth < 769)
         };
         this.cookies = new Cookies();
         this.cookies = this.cookies.getAll();
@@ -47,10 +49,18 @@ class Calendar extends React.Component {
         this.getGymName(this.gymId);
         this.updateInterval = 60000;
     }
+
+    handleResize = (e) => {
+      this.setState({ windowWidth: window.innerWidth });
+    };
   
     formatTimeScaleDate = date => moment(date).format('HH:mm');
     
-    TimeScaleLabel = (
+    TimeScaleLabelForDay = (
+        { formatDate, ...restProps },
+      ) => <DayView.TimeScaleLabel {...restProps} formatDate={this.formatTimeScaleDate} />;
+
+    TimeScaleLabelForWeek = (
         { formatDate, ...restProps },
       ) => <WeekView.TimeScaleLabel {...restProps} formatDate={this.formatTimeScaleDate} />;
     
@@ -61,15 +71,25 @@ class Calendar extends React.Component {
         },
       };
     
-    DayScaleCell = withStyles(this.styles, 'DayScaleCell')((
+    DayScaleCellForDay = withStyles(this.styles, 'DayScaleCell')((
         { formatDate, classes, ...restProps },
       ) => (
-        <WeekView.DayScaleCell
+        <DayView.DayScaleCell
           {...restProps}
           formatDate={formatDayScaleDate}
           className={classes.dayScaleCell}
         />
     ));
+
+    DayScaleCellForWeek = withStyles(this.styles, 'DayScaleCell')((
+      { formatDate, classes, ...restProps },
+    ) => (
+      <WeekView.DayScaleCell
+        {...restProps}
+        formatDate={formatDayScaleDate}
+        className={classes.dayScaleCell}
+      />
+  ));
 
     getGymName = (gymId) => {
       fetch('/api/gym/search', {
@@ -84,18 +104,21 @@ class Calendar extends React.Component {
       .then(data => {if(data.gyms.length != 0) this.setState({gymName: data.gyms[0].name})});
     };
 
-    getRange = (date, view) => {
-      if (view === "Day") {
-        return { startDate: date, endDate: date };
-      }
-      if (view === "Week") {
+    getRange = (date, small) => {
+      if (small) {
+        let startDate = new Date(date);
+        startDate.setHours(0,0,0,0);
+        let endDate = new Date(date);
+        endDate.setHours(23,59,59,59);
+        return { startDate: startDate, endDate: endDate };
+      } else {
         let firstDay = date.getDate() - date.getDay();
         let lastDay = firstDay + 6;
         console.log(date);
         firstDay = new Date(date.setDate(firstDay));
         firstDay.setHours(0,0,0,0);
         lastDay = new Date(date.setDate(lastDay));
-        lastDay.setHours(0,0,0,0);
+        lastDay.setHours(23,59,59,59);
         return {
           startDate: firstDay,
           endDate: lastDay
@@ -104,7 +127,7 @@ class Calendar extends React.Component {
     };
 
     currentDateChange = currentDate => {
-      let range = this.getRange(currentDate, "Week");
+      let range = this.getRange(currentDate, this.state.windowWidth < 769);
       this.setState({
         currentDate,
         range
@@ -112,6 +135,7 @@ class Calendar extends React.Component {
     };
 
     componentDidMount() {
+      window.addEventListener("resize", this.handleResize);
       if (this.gymId) {
         fetch('/api/calendar', {
           method: 'POST',
@@ -140,19 +164,38 @@ class Calendar extends React.Component {
         .then(data => this.setState({appointments: data.events}));
       }
     }
+
+    componentWillUnmount() {
+      window.addEventListener("resize", this.handleResize);
+    }
+
+    getView(small) {
+      if(small) {
+        return (
+          <DayView
+            timeScaleLabelComponent={this.TimeScaleLabelForDay}
+            dayScaleCellComponent={this.DayScaleCellForDay}
+          /> 
+        ); 
+      } else { 
+        return (
+          <WeekView
+            timeScaleLabelComponent={this.TimeScaleLabelForWeek}
+            dayScaleCellComponent={this.DayScaleCellForWeek}
+          /> 
+        );
+      }
+    }
         
     render() {
-        const { appointments, currentDate } = this.state;
+        const { windowWidth, appointments, currentDate } = this.state;
         return (
             <section className="calendar">
                 {this.redirect && (<Navigate to="/signin"/>)}
                 <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2>
                 <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>
-                    <WeekView
-                        timeScaleLabelComponent={this.TimeScaleLabel}
-                        dayScaleCellComponent={this.DayScaleCell}
-                    />
+                    {this.getView(windowWidth < 769)} 
                     <Toolbar />
                     <DateNavigator />
                     <TodayButton />

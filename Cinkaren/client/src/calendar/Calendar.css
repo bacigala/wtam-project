@@ -1,5 +1,5 @@
 .calendar {
-    height: calc(100vh - 205px);
+    height: calc(100vh - 160px - 140px);
 }
 
 .popup {
@@ -36,7 +36,7 @@
     grid-row: 1 / 1;
 }
 
-.Layout-popover-734, .jss393, .Layout-popover-729{
+.Layout-popover-734, .jss393, .Layout-popover-729, .Layout-popover-158{
     width: 700px !important; 
     min-width: 700px !important;
     max-width: 700px !important;
@@ -243,7 +243,7 @@
 
 .calendar_name {
     position: absolute;
-    left: 45%;
+    left: 70%;
 }
 
 /* width */
@@ -267,4 +267,111 @@
 .calendar ::-webkit-scrollbar-thumb:hover {
     background: darkgreen; 
 }
-  
+@media only screen and (max-width: 768px) {
+    .calendar {
+        height: calc(100vh - 100px - 140px);
+    }
+
+    .calendar_name {
+        font-size: 16px;
+    }
+
+    .popup {
+        height: 400px !important;
+        width: 350px !important; 
+        min-width: 350px !important;
+        max-width: 350px !important;
+    }
+
+    .Layout-popover-734, .jss393, .Layout-popover-729, .Layout-popover-158{
+        width: 350px !important; 
+        min-width: 350px !important;
+        max-width: 350px !important;
+    }
+
+    .gymName, .plan, .entered {
+        background-color: green;
+        text-align: center;
+        color: white;
+        width: 300px;
+        margin: 0 0 12px 25px;
+    }
+    
+    .day, .from, .to, .date, .trainer {
+        background-color: green;
+        text-align: center;
+        color: white;
+        width: 300px;
+        margin: 0 0 12px 25px;
+        border-radius: 25px 0px 25px 0px;
+        -moz-box-shadow:    0 5px 5px -2px gray;
+        -webkit-box-shadow: 0 5px 5px -2px gray;
+        box-shadow:         0 5px 5px -2px gray;
+    }
+    
+    .gymName {
+        grid-column: 1 / 1;
+        grid-row: 1 / 1;
+    }
+    
+    .plan {
+        grid-column: 1 / 1;
+        grid-row: 2 / 2;
+    }
+    
+    .entered {
+        grid-column: 1 / 1;
+        grid-row: 3 / 3;
+    }
+    
+    .trainer {
+        grid-column: 1 / 1;
+        grid-row: 4 / 4;
+    }
+    
+    .day {
+        grid-column: 1 / 1;
+        grid-row: 5 / 5;
+    }
+    
+    .date {
+        grid-column: 1 / 1;
+        grid-row: 6 / 6;
+    }
+    
+    .from {
+        grid-column: 1 / 1;
+        grid-row: 7 / 7;
+    }
+    
+    .to {
+        grid-column: 1 / 1;
+        grid-row: 8 / 8;
+    }
+    
+    .sign {
+        grid-column: 1 / 1;
+        grid-row: 9 / 9;
+    }
+
+    .title {
+        margin-bottom: 0;
+        background-color: green;
+        text-align: center;
+        color: white;
+        width: 300px;
+        margin: 10px 0 12px 0;
+        border-radius: 25px 0px 25px 0px;
+        -moz-box-shadow:    0 5px 5px -2px gray;
+        -webkit-box-shadow: 0 5px 5px -2px gray;
+        box-shadow:         0 5px 5px -2px gray;
+        text-align: center;
+        font-weight: bold;
+        grid-column: 1 / 1;
+        grid-row: 1 / 1;
+    }
+
+    .sign {
+        margin-left: 30%;
+    }
+}

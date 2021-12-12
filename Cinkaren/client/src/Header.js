@@ -18,14 +18,14 @@ class Header extends React.Component {
             return (
                 <a href="/">
                     <button className="login_logout" onClick={() => {this.logout()}}>Odhlásiť</button>
-                    <img className="login_icon" src={logout} alt="login_icon"  width="40" height="40"/>
+                    <img className="login_icon" src={logout} alt="login_icon"  width="30" height="30"/>
                 </a>
             );
         } else {
             return (
                 <a href="/signin">
                     <button className="login_logout">Prihlásiť</button>
-                    <img className="logout_icon" src={login} alt="logout_icon"  width="40" height="40"/>
+                    <img className="logout_icon" src={login} alt="logout_icon"  width="30" height="30"/>
                 </a>
             );
         }

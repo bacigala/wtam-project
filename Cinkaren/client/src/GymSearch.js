@@ -77,21 +77,6 @@ class GymSearch extends React.Component {
                                     </li>
                                 </a>);
                         })}
-                        {this.state.gyms.map(gym => {
-                            return(
-                                <a href={"/calendar/" + gym.id}>
-                                    <li className="listOfGyms">
-                                        <div className="info">
-                                            <h3 className="info-gym-name">{gym.name}</h3>
-                                            <ul className="additionalInfo">
-                                                <li>Adresa: {gym.address}</li>
-                                                <li>Email: {gym.email}</li>
-                                                <li>Mobil: {gym.phone}</li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </a>);
-                        })}
                     </ul>
                 </div>
         </section>
