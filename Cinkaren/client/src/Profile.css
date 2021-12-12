@@ -1,4 +1,4 @@
-.main {
+.mainProfile {
     width: 750px;
     height: 650px;
     border: 2px solid black;
@@ -10,7 +10,7 @@
 }
 
 
-.popup {
+.popupProfile {
     height: 650px !important;
     width: 750px !important; 
     min-width: 700px !important;
@@ -32,7 +32,7 @@
     box-shadow:         0 5px 5px -2px gray;
 }
 
-.titleOfProfile, .userName, .surname, .name, .profile {
+.titleOfProfile, .profileUserName, .profileSurname, .profileNname, .profile {
     background-color: green;
     text-align: center;
     color: white;
@@ -44,7 +44,7 @@
     box-shadow:         0 5px 5px -2px gray;
 }
 
-.userName, .surname, .name {
+.profileUserName, .profileSurname, .profileNname {
     font-size: 20px;
     height: 30px;
 }
@@ -71,17 +71,17 @@
     height: 210px;
 }
 
-.userName {
+.profileUserName {
     grid-column: 1 / 1;
     grid-row: 3 / 3;
 }
 
-.name {
+.profileNname {
     grid-column: 1 / 1;
     grid-row: 4 / 4;
 }
 
-.surname {
+.profileSurname {
     grid-column: 1 / 1;
     grid-row: 5 / 5;
 }
@@ -97,7 +97,7 @@
     justify-content: space-between;
 }
 
-.titleOfList {
+.titleOfAchievements {
     margin-top: 2.5px;
     margin-bottom: 5px;
     font-size: 18px;
@@ -107,7 +107,7 @@
     text-align: start;
 }
 
-.list {
+.profileList {
     color: black;
     background-color: white;
     margin: 10px 10px 10px 10px; 
@@ -120,7 +120,7 @@
     box-shadow:         inset 3px 3px 3px gray;
 }
 
-.list li {
+.profileList li {
     background-color: green;
     color: white;
     text-align: center;
@@ -129,14 +129,14 @@
     border-radius: 25px 0px 25px 0px;
 }
 
-.profile .imageWrapper {
+.profile .imageWrapperProfile {
     background-color: white;
     height: 160px;
     border-radius: 25px 0px 25px 0px;
     margin: 20px 20px 20px 20px;
 }
 
-.profile .imageWrapper img {
+.profile .imageWrapperProfile img {
     width: 210px;
     height: 160px;
     margin: 0px;
@@ -168,7 +168,7 @@
 
 
 @media only screen and (max-width: 768px) {
-    .main {
+    .mainProfile {
         width: 350px;
         height: 1350px;
         border: 2px solid black;
@@ -179,7 +179,7 @@
         box-shadow:         0 5px 5px -2px gray;
     }
    
-    .popup {
+    .popupProfile {
         height: 1350px !important;
         width: 350px !important; 
         min-width: 350px !important;
@@ -195,7 +195,7 @@
         margin: 0 0 12px 25px;
     }
     
-    .userName, .surname, .name, .profile {
+    .profileUserName, .profileSurname, .profileNname, .profile {
         background-color: green;
         text-align: center;
         color: white;
@@ -227,17 +227,17 @@
         grid-row: 2 / 2;
     }
     
-    .userName {
+    .profileUserName {
         grid-column: 1 / 1;
         grid-row: 3 / 3;
     }
     
-    .name {
+    .profileNname {
         grid-column: 1 / 1;
         grid-row: 4 / 4;
     }
     
-    .surname {
+    .profileSurname {
         grid-column: 1 / 1;
         grid-row: 5 / 5;
     }

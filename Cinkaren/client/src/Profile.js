@@ -44,31 +44,31 @@ class Profile extends React.Component {
 //{this.state.achievments.map(e => <li>{e}</li>)}
     render() {
       return (
-        <section className="main">
-            <div className="popup">
+        <section className="mainProfile">
+            <div className="popupProfile">
                 <h3 className="titleOfProfile">Profil</h3>
                 <div className="achievments">
-                    <p className="titleOfList">Úspechy</p>
-                    <ul className="list">
+                    <p className="titleOfAchievements">Úspechy</p>
+                    <ul className="profileList">
 
                     </ul>
                 </div>
                 <div className="history">
                     <div>
-                        <p className="titleOfList">História tréningov</p>
+                        <p className="titleOfAchievements">História tréningov</p>
                     </div>
-                    <ul className="list">
+                    <ul className="profileList">
 
                     </ul>
                 </div>
                 <div className="profile">
-                    <div className="imageWrapper">
+                    <div className="imageWrapperProfile">
                         <img src={profile} width="150" height="115"/>
                     </div>
                 </div>
-                <p className="userName">Prezívka: {this.userName}</p>
-                <p className="name">Meno: {this.name}</p>
-                <p className="surname">Priezvisko: {this.surname}</p>
+                <p className="profileUserName">Prezívka: {this.userName}</p>
+                <p className="profileNname">Meno: {this.name}</p>
+                <p className="profileSurname">Priezvisko: {this.surname}</p>
             </div>
                 
         </section>
