@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "./SingUp.css";
 import { sha256} from 'js-sha256';
 import Cookies from 'universal-cookie';
+import { Navigate } from 'react-router';
 
 class SingUp extends React.Component {
     
@@ -83,7 +84,7 @@ class SingUp extends React.Component {
              username: this.state.username,  
              password: sha256(this.state.password),
              name: this.state.meno,
-             priezvisko: this.state.priezvisko
+             surname: this.state.priezvisko
           }),
       })
         .then((response) => response.json())
@@ -92,6 +93,8 @@ class SingUp extends React.Component {
             this.cookies.set('username', this.state.username, {path: '/'});
             if (result.success === false) {
                 this.setState({ errorMessage: result.message });
+            } else {
+                this.setState({ errorMessage: "Účet bol vytvorený, pokračujte prihlásením" });
             }
         });        
     }
