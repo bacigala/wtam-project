@@ -1,19 +1,19 @@
 # Backend request manual
-Co a kam poslat na BE a aka bude odpoved :wink:
+How to use backend API :wink:
 
 ## Contents
-- [**USER**](#user)
-	- [login](#login)
-	- [registration](#registration)
+- [**USER PROFILE**](#user-profile)
+	- [creation](#profile-creation)
 	- [modification](#profile-modification)
 	- [deletion](#profile-deletion)
+	- [login](#login)
 	- [get profile info by user ID](#get-any-profile-by-id)
 - [**TRAINING**](#training)
-	- [sign in](#sign-in)
-	- [sign out](#sign-out)
 	- [creation](#training-creation)
 	- [modification](#training-modification)
 	- [deletion](#training-deletion)
+	- [sign in](#sign-in)
+	- [sign out](#sign-out)
 	- [training list for calendar](#training-list-for-calendar)
 - [**ACHIEVEMENT**](#achievement)
 	- [creation](#achievement-creation)
@@ -31,41 +31,9 @@ Co a kam poslat na BE a aka bude odpoved :wink:
     - [search for gyms / get specific gym](#search-for-gyms)
 
 
-## User
+## User profile
 
-### Login
-- **request**: send JSON below via POST to `/api/user/verify`
-	```
-	{
-	  username : 'janci',
-	  password : 'SHA-256-hash-of-the-password'
-	}
-	```
-- **response - login failed**: JSON
-	```
-	{
-	  user : null
-	}
-	```
-- **response - login ok**: JSON
-	```
-	{
-	  "user" : { 
-	    "id" : 3,
-	    "name" : "Jano",
-	    "surname" : "Zákaazníkovič",
-	    "username" : "janci",
-	    "birth_date" : "1993-06-14T22:00:00.000Z",
-	    "registration_date" : "2021-09-09T22:00:00.000Z",
-	    "last_login_timestamp" : "2021-11-23T16:49:18.000Z",
-	    "email" : "janci.zakaznik@janci.sk",
-	    "password" : "56B1DB8133D9EB398AABD376F07BF8AB5FC584EA0B8BD6A1770200CB613CA005",
-	    "workplace_id" : null // ID of gym for trainers
-	  }
-	}
-	```
-
-### Registration
+### Profile creation
 - **request**: POST to `/api/user/insert`
 	```
 	{
@@ -124,6 +92,38 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 ### Profile deletion
 - send [profile modification request](#profile-modification) and set `active="0"`
 
+### Login
+- **request**: send JSON below via POST to `/api/user/verify`
+	```
+	{
+	  username : 'janci',
+	  password : 'SHA-256-hash-of-the-password'
+	}
+	```
+- **response - login failed**: JSON
+	```
+	{
+	  user : null
+	}
+	```
+- **response - login ok**: JSON
+	```
+	{
+	  "user" : { 
+	    "id" : 3,
+	    "name" : "Jano",
+	    "surname" : "Zákaazníkovič",
+	    "username" : "janci",
+	    "birth_date" : "1993-06-14T22:00:00.000Z",
+	    "registration_date" : "2021-09-09T22:00:00.000Z",
+	    "last_login_timestamp" : "2021-11-23T16:49:18.000Z",
+	    "email" : "janci.zakaznik@janci.sk",
+	    "password" : "56B1DB8133D9EB398AABD376F07BF8AB5FC584EA0B8BD6A1770200CB613CA005",
+	    "workplace_id" : null // ID of gym for trainers
+	  }
+	}
+	```
+
 ### Get any profile by ID
 - e.g. when some logged-in user wants to view other public profile
 - **request:** POST to `/api/user/profile`
@@ -152,36 +152,6 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	```
 
 ## Training
-
-### Sign in
-- **request**: POST to `/api/event/signin`
-	```
-	{
-	  userId : 1,
-	  eventId : 1
-	}
-	```
-- **response**: JSON
-	```
-	{
-	  result : true
-	}
-	```
-
-### Sign out
-- **request**: POST to `/api/event/signout`
-	```
-	{
-	  userId : 1,
-	  eventId : 1
-	}
-	```
-- **response**: JSON
-	```
-	{
-	  result : true
-	}
-	```
 
 ### Training creation
 - **request**: POST to `/api/event/create`
@@ -234,6 +204,36 @@ Co a kam poslat na BE a aka bude odpoved :wink:
 	}
 	```
 - **response:** JSON
+	```
+	{
+	  result : true
+	}
+	```
+
+### Sign in
+- **request**: POST to `/api/event/signin`
+	```
+	{
+	  userId : 1,
+	  eventId : 1
+	}
+	```
+- **response**: JSON
+	```
+	{
+	  result : true
+	}
+	```
+
+### Sign out
+- **request**: POST to `/api/event/signout`
+	```
+	{
+	  userId : 1,
+	  eventId : 1
+	}
+	```
+- **response**: JSON
 	```
 	{
 	  result : true
