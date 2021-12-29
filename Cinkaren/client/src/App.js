@@ -2,10 +2,12 @@ import React from "react";
 import "./App.css";
 import SignIn from "./SignIn";
 import Calendar from "./calendar/Calendar";
+import CalendarB from "./calendarB/Calendar";
 import Header from "./Header";
 import MainPage from "./MainPage";
 import Footer from "./Footer";
 import GymCalendar from "./calendar/GymCalendar"
+import GymCalendarB from "./calendarB/GymCalendar"
 import SignUp from "./SignUp";
 import GymSearch from "./GymSearch";
 import Profile from "./Profile";
@@ -24,7 +26,9 @@ function App() {
           <Route path="/trainers" element={<p>NOT IN THE SCOPE OF TESTING</p>}/>
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/mycalendar" element={<Calendar user="true"/>}/>
+          <Route path="/mycalendarB" element={<CalendarB user="true"/>}/>
           <Route path="/calendar/:id" element={<GymCalendar/>}/>
+          <Route path="/calendarB/:id" element={<GymCalendarB/>}/>
         </Routes>
       </BrowserRouter>
       <Footer/>

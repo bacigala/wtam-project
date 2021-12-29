@@ -22,10 +22,15 @@ function getTimeFromDateString(date) {
   return momentDate.format('LT');
 };
 
-function getDateFromDateString(date) {
-  moment.locale('sk');
+function getDateFromDateString(date, locale = "sk") {
+  moment.locale(locale);
   const momentDate = moment(date);
   return momentDate.format('l');
 };
 
-export {formatDayScaleDate, getDayFromDateString, getTimeFromDateString, getDateFromDateString};
+function getDayNameFromDateString (dateStr, locale = "sk-SK") {
+  let date = new Date(dateStr);
+  return date.toLocaleDateString(locale, { weekday: 'long' });        
+}
+
+export {formatDayScaleDate, getDayFromDateString, getTimeFromDateString, getDateFromDateString, getDayNameFromDateString};
