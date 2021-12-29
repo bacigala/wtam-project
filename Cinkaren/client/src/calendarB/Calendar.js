@@ -1,3 +1,10 @@
+
+//
+// Version B of "calendar" for AB testing
+// displays calendar as a list of events
+// based on ../calendar/Calendar.js
+//
+
 import React from "react";
 import "./Calendar.css";
 import Cookies from 'universal-cookie';
@@ -137,21 +144,25 @@ class CalendarB extends React.Component {
                 <h1>{event.name}</h1>
                 <div className="event-body">
                   <div className="details">
-                    <div className="detail">
+                    <div className="detail hide-on-mobile-2">
                       <h1>Deň</h1>
                       <p>{getDateFromDateString(event.startDate) + " (" + getDayNameFromDateString(getDateFromDateString(event.startDate, "en")) + ")"}</p>
                     </div>
-                    <div className="detail">
+                    <div className="detail hide-on-mobile-2">
                       <h1>Od</h1>
                       <p>{getTimeFromDateString(event.startDate)}</p>
                     </div>
-                    <div className="detail">
+                    <div className="detail hide-on-mobile-2">
                       <h1>Do</h1>
                       <p>{getTimeFromDateString(event.endDate)}</p>
                     </div>
-                    <div className="detail">
+                    <div className="detail hide-on-mobile-1">
                       <h1>Tréner</h1>
                       <p>{event.trainer_name + " " + event.trainer_surname}</p>
+                    </div>
+                    <div className="detail hide show-on-mobile-2">
+                      <h1>{getDateFromDateString(event.startDate) + " (" + getDayNameFromDateString(getDateFromDateString(event.startDate, "en")) + ")"}</h1>
+                      <p>{getTimeFromDateString(event.startDate)} - {getTimeFromDateString(event.Date)}</p>
                     </div>
                   </div>
                   <div className="options">

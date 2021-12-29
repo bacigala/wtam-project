@@ -4,8 +4,12 @@
     based on ../calendar/Calendar.css
 */
 
-.clearfix {
+.calendarB .clearfix {
     clear: both;
+}
+
+.calendarB .hide {
+    display: none;
 }
 
 
@@ -14,7 +18,7 @@
 .calendarB {
     box-sizing: border-box;
     position: relative;
-    width: 70%;
+    width: 100%;
     height: calc(100vh - 160px - 140px);
     margin: 10px auto;
     padding: 0;
@@ -118,12 +122,14 @@
     margin: auto;
     left: 0;
     right: 0;
-    height: 600px !important;
+    height: 600px;
+    max-height: calc(100vh - 160px - 140px);
     width: 700px !important; 
     display: grid;
     z-index: 3;
     background-color: rgb(236, 236, 236);
     border-radius: 25px;
+    overflow: auto;
 }
 
 .popupB .titleB {
@@ -152,13 +158,7 @@
     fill: white;
 }
 
-.Layout-popover-734, .jss393, .Layout-popover-729, .Layout-popover-158{
-    width: 700px !important; 
-    min-width: 700px !important;
-    max-width: 700px !important;
-}
-
-.gymName, .plan, .entered {
+.popupB .gymName, .popupB .plan, .popupB .entered {
     background-color: green;
     text-align: center;
     color: white;
@@ -170,7 +170,7 @@
     box-shadow:         0 5px 5px -2px gray;
 }
 
-.day, .from, .to, .date, .trainer {
+.popupB .day, .popupB .from, .popupB .to, .popupB .date, .popupB .trainer {
     background-color: green;
     text-align: center;
     color: white;
@@ -182,65 +182,65 @@
     box-shadow:         0 5px 5px -2px gray;
 }
 
-.day, .from, .to, .date {
+.popupB .day, .popupB .from, .popupB .to, .popupB .date {
     font-size: 20px;
     height: 30px;
 }
 
-.gymName {
+.popupB .gymName {
     grid-column: 1 / 1;
     grid-row: 1 / 1;
 }
 
-.plan {
+.popupB .plan {
     grid-column: 1 / 1;
     grid-row: 2 / 2;
 }
 
-.entered {
+.popupB .entered {
     grid-column: 1 / 1;
     grid-row: 3 / 8;
 }
 
-.trainer {
+.popupB .trainer {
     grid-column: 2 / 2;
     grid-row: 2 / 2;
     height: 250px;
 }
 
-.day {
+.popupB .day {
     grid-column: 2 / 2;
     grid-row: 3 / 3;
 }
 
-.date {
+.popupB .date {
     grid-column: 2 / 2;
     grid-row: 4 / 4;
 }
 
-.from {
+.popupB .from {
     grid-column: 2 / 2;
     grid-row: 5 / 5;
 }
 
-.to {
+.popupB .to {
     grid-column: 2 / 2;
     grid-row: 6 / 6;
 }
 
-.sign {
+.popupB .sign {
     grid-column: 2 / 2;
     grid-row: 7 / 7;
 }
-.plan, .entered {
+.popupB .plan, .popupB .entered {
     height: 250px;
 }
-.entered div {
+.popupB .entered div {
     display: flex; 
     justify-content: space-between;
 }
 
-.titleOfList {
+.popupB .titleOfList {
     margin-top: 2.5px;
     margin-bottom: 5px;
     font-size: 18px;
@@ -250,7 +250,7 @@
     text-align: start;
 }
 
-.numOfEntered {
+.popupB .numOfEntered {
     background-color: white;
     color:black;
     width: 75px;
@@ -259,7 +259,7 @@
     border: 2px solid black;
 }
 
-.list {
+.popupB .list {
     color: black;
     background-color: white;
     margin: 10px 10px 10px 10px; 
@@ -272,7 +272,7 @@
     box-shadow:         inset 3px 3px 3px gray;
 }
 
-.list li {
+.popupB .list li {
     background-color: green;
     color: white;
     text-align: center;
@@ -281,27 +281,27 @@
     border-radius: 25px 0px 25px 0px;
 }
 
-.trainer .imageWrapper {
+.popupB .trainer .imageWrapper {
     background-color: white;
     height: 125px;
     border-radius: 25px 0px 25px 0px;
     margin: 20px 20px 15px 20px;
 }
 
-.trainer .imageWrapper img {
+.popupB .trainer .imageWrapper img {
     width: 150px;
     height: 115px;
     margin: 5px;
     border-radius: 25px 0px 25px 0px;
 }
 
-.trainer p {
+.popupB .trainer p {
     color: white;
     font-size: 18px;
     margin: 10px 0 10px 0;
 }
 
-.trainer button {
+.popupB .trainer button {
     background-color: white;
     border-radius: 90px;
     border-color: black;
@@ -314,7 +314,7 @@
     box-shadow:         0 1px 10px -2px black;
 }
 
-.sign {
+.popupB .sign {
     text-align: center;
     height: 30px;
     background-color: green;
@@ -329,14 +329,14 @@
     box-shadow:         0 5px 5px -2px gray;
 }
 
-.full {
+.popupB .full {
     background-color: red;
     color:black;
     font-weight: bold;
     border: 1px solid black;
 }
 
-.appointment_name {
+.popupB .appointment_name {
     font-size: 16px;
     margin-bottom: 0;
     margin-top: 2px;
@@ -344,7 +344,7 @@
     white-space: normal;
 }
 
-.appointment_time_from, .appointment_time_to, .appointment_trainer {
+.popupB .appointment_time_from, .popupB .appointment_time_to, .popupB .appointment_trainer {
     font-size: 14px;
     margin-bottom: 0;
     margin-top: 2px;
@@ -352,147 +352,119 @@
     white-space: normal;
 }
 
-.appointment {
+.popupB .appointment {
     overflow: auto;
     text-align: center;
-}
-
-.calendar_name {
-    position: absolute;
-    left: 70%;
 }
 
 
 /* ----- ----- ----- SCROLLBARS ----- ----- ----- */
 
-/* width */
 .calendarB ::-webkit-scrollbar {
     width: 14px;
 }
   
-  /* Track */
 .calendarB ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
     border-radius: 10px;
 }
    
-  /* Handle */
 .calendarB ::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 10px 10px green;
     border-radius: 10px;
     border: 2px solid transparent;
 }
 
-  /* Handle on hover */
 .calendarB ::-webkit-scrollbar-thumb:hover {
     box-shadow: inset 0 0 10px 10px darkgreen; 
 }
 
+
+/* ----- ----- ----- RESPONSIVE LAYOUT ----- ----- ----- */
+
+@media only screen and (max-width: 1260px) {
+    .calendarB .events {
+        width: 90%;
+    }
+}
+
 @media only screen and (max-width: 768px) {
-    .calendar {
+    .calendarB {
         height: calc(100vh - 100px - 140px);
+        width: 100%;
     }
 
-    .calendar_name {
-        font-size: 16px;
+    .calendarB .calendar_name {
+        font-size: 1.2em;
     }
 
-    .popup {
-        height: 400px !important;
-        width: 350px !important; 
-        min-width: 350px !important;
-        max-width: 350px !important;
+    .calendarB h1 {
+        font-size: 1.1em;
     }
 
-    .Layout-popover-734, .jss393, .Layout-popover-729, .Layout-popover-158{
-        width: 350px !important; 
-        min-width: 350px !important;
-        max-width: 350px !important;
+    .calendarB .events {
+        font-size: 0.9em;
     }
 
-    .gymName, .plan, .entered {
+    .popupB {
+        max-height: calc(100vh - 100px - 140px - 20px);
+        height: calc(100vh - 100px - 140px - 20px);
+        width: 350px !important;
+        padding-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .popupB .closeIcon {
+        top: 7px;
+    }
+
+    .popupB .gymName, .popupB .plan, .popupB .entered {
         background-color: green;
         text-align: center;
         color: white;
         width: 300px;
         margin: 0 0 12px 25px;
+        font-size: 0.9em;
     }
     
-    .day, .from, .to, .date, .trainer {
+    .popupB .day, .popupB .from, .popupB .to, .popupB .date, .popupB .trainer {
         background-color: green;
         text-align: center;
         color: white;
         width: 300px;
         margin: 0 0 12px 25px;
-        border-radius: 25px 0px 25px 0px;
-        -moz-box-shadow:    0 5px 5px -2px gray;
-        -webkit-box-shadow: 0 5px 5px -2px gray;
-        box-shadow:         0 5px 5px -2px gray;
-    }
-    
-    .gymName {
-        grid-column: 1 / 1;
-        grid-row: 1 / 1;
-    }
-    
-    .plan {
-        grid-column: 1 / 1;
-        grid-row: 2 / 2;
-    }
-    
-    .entered {
-        grid-column: 1 / 1;
-        grid-row: 3 / 3;
-    }
-    
-    .trainer {
-        grid-column: 1 / 1;
-        grid-row: 4 / 4;
-    }
-    
-    .day {
-        grid-column: 1 / 1;
-        grid-row: 5 / 5;
-    }
-    
-    .date {
-        grid-column: 1 / 1;
-        grid-row: 6 / 6;
-    }
-    
-    .from {
-        grid-column: 1 / 1;
-        grid-row: 7 / 7;
-    }
-    
-    .to {
-        grid-column: 1 / 1;
-        grid-row: 8 / 8;
-    }
-    
-    .sign {
-        grid-column: 1 / 1;
-        grid-row: 9 / 9;
+        font-size: 0.9em;
     }
 
-    .title {
-        margin-bottom: 0;
-        background-color: green;
-        text-align: center;
-        color: white;
-        width: 300px;
-        margin: 10px 0 12px 0;
-        border-radius: 25px 0px 25px 0px;
-        -moz-box-shadow:    0 5px 5px -2px gray;
-        -webkit-box-shadow: 0 5px 5px -2px gray;
-        box-shadow:         0 5px 5px -2px gray;
-        text-align: center;
-        font-weight: bold;
-        grid-column: 1 / 1;
-        grid-row: 1 / 1;
+    .popupB .trainer button {
+        font-size: 1em;
+        margin: 10px auto;
+    }
+    
+    .popupB .sign {
+        margin: 0 auto;
+        font-size: 1em;
     }
 
-    .sign {
-        margin-left: 30%;
+    .popupB .titleB {
+        font-size: 1.1em;
+        padding: 10px;
+    }        
+}
+
+@media only screen and (max-width: 600px) {
+    .calendarB .hide-on-mobile-1 {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 460px) {
+    .calendarB .hide-on-mobile-2 {
+        display: none;
+    }
+
+    .calendarB .show-on-mobile-2 {
+        display: block;
     }
 }
