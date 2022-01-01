@@ -16,8 +16,8 @@ class Header extends React.Component {
     logInOutButton(){
         if(this.cookies.get("userdata")) {
             return (
-                <a href="/">
-                    <button className="login_logout" onClick={() => {this.logout()}}>Odhlásiť</button>
+                <a href="/" onClick={() => {this.logout()}}>
+                    <button className="login_logout">Odhlásiť</button>
                     <img className="login_icon" src={logout} alt="login_icon"  width="30" height="30"/>
                 </a>
             );
