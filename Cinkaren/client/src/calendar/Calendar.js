@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from 'react-dom';
 import "./Calendar.css";
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -21,7 +22,15 @@ import Content from "./appointment-tooltip/Content"
 import Header from "./appointment-tooltip/Header"
 import AppointmentContent from "./appointment/AppointmentContent"
 import CustomAppointment from "./appointment/CustomAppointment"
-import {formatDayScaleDate} from "../UtilityFunctions";
+import {
+  formatDayScaleDate, 
+  getHoursFromDateString,
+  getWeekNumberFromDate, 
+  getYearFromDate,
+  getBegginingOfWeek,
+  getEndOfWeek
+} from "../UtilityFunctions";
+import { RouteChildrenProps } from "react-router-dom";
 
 class Calendar extends React.Component {
     
@@ -36,7 +45,6 @@ class Calendar extends React.Component {
         };
         this.cookies = new Cookies();
         this.cookies = this.cookies.getAll();
-        console.log(this.cookies);
         if(this.cookies.userdata && this.cookies.userdata.user) {
           this.userId = this.cookies.userdata.user.id
           this.userName = this.cookies.userdata.user.username;
@@ -112,12 +120,9 @@ class Calendar extends React.Component {
         endDate.setHours(23,59,59,59);
         return { startDate: startDate, endDate: endDate };
       } else {
-        let firstDay = date.getDate() - date.getDay();
-        let lastDay = firstDay + 6;
-        console.log(date);
-        firstDay = new Date(date.setDate(firstDay));
+        let firstDay = getBegginingOfWeek(date);
+        let lastDay = getEndOfWeek(date);
         firstDay.setHours(0,0,0,0);
-        lastDay = new Date(date.setDate(lastDay));
         lastDay.setHours(23,59,59,59);
         return {
           startDate: firstDay,
@@ -134,6 +139,19 @@ class Calendar extends React.Component {
       }, this.componentDidMount);
     };
 
+    setScrollbarOffset() {
+      let time = 25;
+      for(const appointment of this.state.appointments) {
+        if(time > getHoursFromDateString(appointment.startDate)){
+          time = getHoursFromDateString(appointment.startDate);
+        }
+      }
+      if(time < 25){
+        let elements = document.querySelectorAll("#root > div > section > div > div");
+        elements[1].scrollTo(0, (time * 2 * 48) - 10);
+      }
+    }
+
     componentDidMount() {
       window.addEventListener("resize", this.handleResize);
       if (this.gymId) {
@@ -148,7 +166,7 @@ class Calendar extends React.Component {
             gym_id: this.gymId,
           })
         }).then(response => response.json())
-        .then(data => this.setState({appointments: data.events}));
+        .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
       } else if (this.userName) {
         fetch('/api/calendar', {
           method: 'POST',
@@ -161,7 +179,7 @@ class Calendar extends React.Component {
             username: this.userName,
           })
         }).then(response => response.json())
-        .then(data => this.setState({appointments: data.events}));
+        .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
       }
     }
 

@@ -16,7 +16,8 @@ class Content extends React.Component {
           trainer_name: this.props.appointmentData.trainer_name,  
           trainer_surname: this.props.appointmentData.trainer_surname, 
           startDate: this.props.appointmentData.startDate,
-          endDate: this.props.appointmentData.endDate
+          endDate: this.props.appointmentData.endDate,
+          triedToSign: false
         };
         this.cookies = new Cookies();
         this.cookies = this.cookies.getAll();
@@ -69,6 +70,8 @@ class Content extends React.Component {
             })
           });
           this.setState({users: users});
+        } else {
+          this.setState({triedToSign: true});
         }
     };
 
@@ -77,10 +80,10 @@ class Content extends React.Component {
             <div className="popup">
                 <h3 className="gymName">{this.state.gym_name}</h3>
                 <div className="plan">
-                <p className="titleOfList">Tréningový plán</p>
-                <ul className="list">
-                    {this.state.plan.map(e => <li>{e}</li>)}
-                </ul>
+                  <p className="titleOfList">Tréningový plán</p>
+                  <ul className="list">
+                      {this.state.plan.map(e => <li>{e}</li>)}
+                  </ul>
                 </div>
                 <div className="entered">
                 <div>
@@ -103,6 +106,7 @@ class Content extends React.Component {
                 <p className="from">Od: {getTimeFromDateString(this.state.startDate)}</p>
                 <p className="to">Do: { getTimeFromDateString(this.state.endDate)}</p>
                 {this.getTrainingButton(this.state.id, this.state.users, this.state.users.length >= this.state.max_participants)}
+                {this.state.triedToSign ? <p className="appointmentError">Musíte byt prihlásený aby ste sa mohli prihlásiť na tréning</p> : null}
             </div>
         );
     }
