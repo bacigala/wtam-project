@@ -146,9 +146,11 @@ class Calendar extends React.Component {
           time = getHoursFromDateString(appointment.startDate);
         }
       }
+      let elements = document.querySelectorAll("#root > div > section > div > div");
       if(time < 25){
-        let elements = document.querySelectorAll("#root > div > section > div > div");
         elements[1].scrollTo(0, (time * 2 * 48) - 10);
+      } else {
+        elements[1].scrollTo(0, (moment().hours() * 2 * 48) - 10);
       }
     }
 
