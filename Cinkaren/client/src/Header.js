@@ -51,8 +51,8 @@ class Header extends React.Component {
             </div>
             <nav>
                 <a className={this.location.endsWith("mycalendar") ? "active" : ""} href="/mycalendar"><span>Môj kalendár </span></a>
+                <a className={this.location.endsWith("calendar") ? "active" : ""} href="/calendar"><span>Vyhladať tréning </span></a>
                 <a className={this.location.endsWith("search") ? "active" : ""} href="/search"><span>Vyhladať gym </span></a>
-                <a className={this.location.endsWith("trainers") ? "active" : ""} href="/trainers"><span>Tréneri </span></a>
                 <a className={this.location.endsWith("profile") ? "active" : ""} href="/profile"><span>Profil </span></a>
             </nav>
         </header>

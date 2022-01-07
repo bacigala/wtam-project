@@ -33,10 +33,11 @@ class CalendarB extends React.Component {
       this.userName = this.cookies.userdata.user.username;
       this.name = this.cookies.userdata.user.name;
       this.surname = this.cookies.userdata.user.surname;
-    } else if (this.props.user && !props.gymId) {
+    } else if (this.props.user && !props.gymId && !props.showAll) {
       this.redirect = true;
     }
     this.gymId = props.gymId;
+    this.showAll = props.showAll;
     this.getGymName(this.gymId);
     this.updateInterval = 60000;
   }
@@ -88,7 +89,19 @@ class CalendarB extends React.Component {
   };
 
   componentDidMount() {
-    if (this.gymId) {
+    if(this.showAll) {
+      fetch('/api/calendar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: this.state.range.startDate,
+          to: this.state.range.endDate
+        })
+      }).then(response => response.json())
+      .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+    } else if (this.gymId) {
       fetch('/api/calendar', {
         method: 'POST',
         headers: {
