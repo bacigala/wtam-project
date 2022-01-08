@@ -75,23 +75,31 @@ class Calendar extends React.Component {
     };
 
     handleFilterUseCase = (startDate, endDate, startTime, endTime, userInputTrainer, userInputGym, userInputCategory) => {
-      if ((startDate && endDate) || (startTime && endTime) || (userInputTrainer || userInputGym || userInputCategory)) {
+      let body = {};
+      if(startTime && endTime){
+        body = {            
+          from_time: moment(startTime).format('HH:mm').replace(":",""),
+          to_time: moment(endTime).format('HH:mm').replace(":","")
+        }
+      }
+      if(userInputTrainer){
+        body = {...body, trainer_name: userInputTrainer};
+      }
+      if(userInputGym){
+        body = {...body, gym_name: userInputGym};
+      }
+      if(userInputCategory){
+        body = {...body, category_name: userInputCategory};
+      }
+      if(body !== {}){
         this.setState({ show: false, userFilter: true});
-        
+        console.log(moment(startTime).format('HH:mm'));
         fetch('/api/calendar', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },  
-          body: JSON.stringify({
-            from: startDate,
-            to: endDate,
-            from_time: getTimeFromDateString(startTime).replace(":",""),
-            to_time: getTimeFromDateString(endTime).replace(":",""),
-            trainer_name: userInputTrainer,
-            gym_name: userInputGym,
-            category_name: userInputCategory,
-          })
+          body: JSON.stringify(body)
         }).then(response => response.json())
         .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
       } else {
