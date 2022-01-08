@@ -13,6 +13,7 @@ import moment from 'moment';
 import 'moment/locale/sk';
 import {getTimeFromDateString, getDateFromDateString, getDayNameFromDateString} from "../UtilityFunctions";
 import EventDetailsPopup from "./EventDetailsPopup";
+import CalendarFilter from "../calendar/CalendarFilter";
 
 class CalendarB extends React.Component {
     
@@ -150,6 +151,13 @@ class CalendarB extends React.Component {
             )
         }
         <h1 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár B"}</h1>
+        
+        <div>
+                <button className="filter_button" onClick={this.showModal}>FILTER</button>
+                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false}>
+                </CalendarFilter>
+        </div>
+
         <div className="events">
         { appointments.map(event => {
           return(

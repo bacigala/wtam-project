@@ -44,9 +44,6 @@ class Calendar extends React.Component {
             currentDate: new Date(moment()),
             range: this.getRange(new Date(moment()), window.innerWidth < 769),
             show: false,
-            filterStartDate: "",
-            filterEndDate: "",
-            filterGymName: "",
             userFilter: false
         };
         this.cookies = new Cookies();
@@ -76,7 +73,7 @@ class Calendar extends React.Component {
       this.setState({show: false})
     };
 
-    handleFilterUseCase = (startDate, endDate, filteredName) => {
+    handleFilterUseCase = (startDate, endDate, startTime, endTime, filteredName) => {
       if ((startDate && endDate) || filteredName) {
       this.setState({ show: false, userFilter: true});
       fetch('/api/calendar', {
@@ -268,7 +265,7 @@ class Calendar extends React.Component {
                 <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2> 
                 <div>
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
-                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase}>
+                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false}>
                 </CalendarFilter>
                 </div>
                 <Scheduler data={appointments}>                       
