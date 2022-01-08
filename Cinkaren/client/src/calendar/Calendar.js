@@ -30,6 +30,7 @@ import {
   getBegginingOfWeek,
   getEndOfWeek
 } from "../UtilityFunctions";
+import CalendarFilter from "./CalendarFilter";
 import { RouteChildrenProps } from "react-router-dom";
 
 class Calendar extends React.Component {
@@ -41,7 +42,12 @@ class Calendar extends React.Component {
             gymName: "",
             appointments: [],
             currentDate: new Date(moment()),
-            range: this.getRange(new Date(moment()), window.innerWidth < 769)
+            range: this.getRange(new Date(moment()), window.innerWidth < 769),
+            show: false,
+            filterStartDate: "",
+            filterEndDate: "",
+            filterGymName: "",
+            userFilter: false
         };
         this.cookies = new Cookies();
         this.cookies = this.cookies.getAll();
@@ -56,6 +62,36 @@ class Calendar extends React.Component {
         this.gymId = props.gymId;
         this.getGymName(this.gymId);
         this.updateInterval = 60000;
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
+        this.handleFilterUseCase = this.handleFilterUseCase.bind(this);
+    }
+
+    showModal = () => {
+      this.setState({ show: true });
+    };
+  
+    hideModal = () => {
+      this.setState({show: false, filterStartDate: "", filterEndDate: "", filterGymName: "", userFilter: false });
+    };
+
+    handleFilterUseCase = (startDate, endDate, filteredName) => {
+      if ((startDate != null && endDate != null) || filteredName != null) {
+      this.setState({ show: false, filterStartDate: startDate, filterEndDate: endDate, filterGymName: filteredName});
+      this.setState({userFilter: true});
+      fetch('/api/calendar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: this.state.filterStartDate,
+          to: this.state.filterEndDate,
+          username: this.state.userName,
+        })
+      }).then(response => response.json())
+      .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+      }
     }
 
     handleResize = (e) => {
@@ -182,6 +218,10 @@ class Calendar extends React.Component {
           })
         }).then(response => response.json())
         .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+        console.log(JSON.stringify({
+          from: this.state.range.startDate,
+          to: this.state.range.endDate,
+          username: this.userName,}));
       }
     }
 
@@ -212,12 +252,17 @@ class Calendar extends React.Component {
         return (
             <section className="calendar">
                 {this.redirect && (<Navigate to="/signin"/>)}
-                <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2>
+                <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2> 
+                <div>
+                <button className="filter_button" onClick={this.showModal}>FILTER</button>
+                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase}>
+                </CalendarFilter>
+                </div>
                 <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>
                     {this.getView(windowWidth < 769)} 
                     <Toolbar />
-                    <DateNavigator />
+                      <DateNavigator />
                     <TodayButton />
                     <Appointments
                       appointmentComponent={CustomAppointment}
