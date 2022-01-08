@@ -298,7 +298,7 @@ class Calendar extends React.Component {
         return (
             <section className="calendar">
                 {this.redirect && (<Navigate to="/signin"/>)}
-                <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2> 
+                <h2 className="calendar_name">{this.gymId ? this.state.gymName : this.props.user ? "Môj kalendár" : "Aktuálne tréningy"}</h2> 
                 <div>
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
                 <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false} isGymView={this.gymId} reset={this.reset}/>

@@ -223,7 +223,7 @@ class CalendarB extends React.Component {
               />
             )
         }
-        <h1 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár B"}</h1>
+        <h1 className="calendar_name">{this.gymId ? this.state.gymName : this.props.user ? "Môj kalendár B" : "Aktuálne tréningy B"}</h1>
         <div className="filter">
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
 
