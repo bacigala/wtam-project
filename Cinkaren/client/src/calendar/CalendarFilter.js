@@ -9,14 +9,23 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB}) => {
 
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;   
-  const [userInput, setUserInput] = useState('');
 
+  const [userInputTrainer, setUserInputTrainer] = useState('');
+  const [userInputGym, setUserInputGym] = useState('');
+  const [userInputCategory, setUserInputCategory] = useState('');
+  
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
 
+  const[errorMessage, setErrorMessage] = useState('');
+
   const resetInputField = () => {
-    setUserInput('');
+    setUserInputTrainer('');
+    setUserInputGym('');
+    setUserInputCategory('');
     setDateRange([null, null]);
+    setStartTime(new Date());
+    setEndTime(new Date());
   };
 
   return (
@@ -37,7 +46,7 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB}) => {
                 className="time_picker_overlay"
                 dateFormat="yyyy/MM/dd" 
             />}
-
+            <span>Od</span>
             <DatePicker
                 selected={startTime}
                 onChange={(date) => setStartTime(date)}
@@ -46,9 +55,10 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB}) => {
                 timeIntervals={30}
                 timeCaption="Time"
                 placeholderText="Denný filter od:"
-                dateFormat="h:mm aa"
+                dateFormat="hh:mm aa"
                 className="time_picker_overlay"
             />
+            <span>Do</span>
           <DatePicker
                 selected={endTime}
                 onChange={(date) => setEndTime(date)}
@@ -56,17 +66,20 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB}) => {
                 showTimeSelectOnly
                 timeIntervals={30}
                 timeCaption="Time"
-                dateFormat="h:mm aa"
+                dateFormat="hh:mm aa"
                 className="time_picker_overlay"
             />
-            
+          
+            <input type="text" placeholder="Hľadanie podľa mena trénera" className="time_picker_overlay" value={userInputTrainer} onChange= 
+            {(e) => setUserInputTrainer(e.target.value)}/>
 
-            <input type="text" placeholder="Hľadanie podľa mena gymu" className="time_picker_overlay" value={userInput} onChange= 
-            {(e) => setUserInput(e.target.value)}/>
+            <input type="text" placeholder="Hľadanie podľa mena gymu" className="time_picker_overlay" value={userInputGym} onChange= 
+            {(e) => setUserInputGym(e.target.value)}/>
 
-            <select name="categories" id="category_select" className="category_selector">
-              <option value="">--Vyberte kategóriu--</option>
-            </select>
+            <input type="text" placeholder="Hľadanie podľa kategórie tréningu" className="time_picker_overlay" value={userInputCategory} onChange= 
+            {(e) => setUserInputCategory(e.target.value)}/>
+
+            {<h4 className="filter_error"> {errorMessage} </h4>}
 
         </div>   
           <button type="button" className="button_modal button-left" onClick={() => {handleClose()}}>
@@ -77,8 +90,8 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB}) => {
         </button>
         <button className="button_modal button-right" 
                 type="submit" 
-                onClick={ () => {
-                  handleUseCase(startDate, endDate, userInput);  
+                onClick={ () => { 
+                  handleUseCase(startDate, endDate, startTime, endTime, userInputTrainer, userInputGym, userInputCategory);  
                } }> 
           Použi filtre
         </button>

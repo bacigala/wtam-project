@@ -73,21 +73,28 @@ class Calendar extends React.Component {
       this.setState({show: false})
     };
 
-    handleFilterUseCase = (startDate, endDate, startTime, endTime, filteredName) => {
-      if ((startDate && endDate) || filteredName) {
-      this.setState({ show: false, userFilter: true});
-      fetch('/api/calendar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },  
-        body: JSON.stringify({
-          from: startDate,
-          to: endDate,
-          username: this.state.userName,
-        })
-      }).then(response => response.json())
-      .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+    handleFilterUseCase = (startDate, endDate, startTime, endTime, userInputTrainer, userInputGym, userInputCategory) => {
+      if ((startDate && endDate) || (startTime && endTime) || (userInputTrainer || userInputGym || userInputCategory)) {
+        this.setState({ show: false, userFilter: true});
+        console.log(startTime, endTime);
+        fetch('/api/calendar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },  
+          body: JSON.stringify({
+            from_time: startTime,
+            to_time: endTime,
+            userInputTrainer,
+            userInputGym,
+            userInputCategory,
+          })
+        }).then(response => response.json())
+        .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+      } else {
+        return (
+          <h3>Unexpected Error</h3>
+        )
       }
     }
 
