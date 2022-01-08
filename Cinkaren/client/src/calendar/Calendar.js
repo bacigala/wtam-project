@@ -26,6 +26,7 @@ import {
   formatDayScaleDate, 
   getHoursFromDateString,
   getWeekNumberFromDate, 
+  getTimeFromDateString,
   getYearFromDate,
   getBegginingOfWeek,
   getEndOfWeek
@@ -76,18 +77,20 @@ class Calendar extends React.Component {
     handleFilterUseCase = (startDate, endDate, startTime, endTime, userInputTrainer, userInputGym, userInputCategory) => {
       if ((startDate && endDate) || (startTime && endTime) || (userInputTrainer || userInputGym || userInputCategory)) {
         this.setState({ show: false, userFilter: true});
-        console.log(startTime, endTime);
+        
         fetch('/api/calendar', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },  
           body: JSON.stringify({
-            from_time: startTime,
-            to_time: endTime,
-            userInputTrainer,
-            userInputGym,
-            userInputCategory,
+            from: startDate,
+            to: endDate,
+            from_time: getTimeFromDateString(startTime).replace(":",""),
+            to_time: getTimeFromDateString(endTime).replace(":",""),
+            trainer_name: userInputTrainer,
+            gym_name: userInputGym,
+            category_name: userInputCategory,
           })
         }).then(response => response.json())
         .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
@@ -272,7 +275,7 @@ class Calendar extends React.Component {
                 <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2> 
                 <div>
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
-                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={false}>
+                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false}>
                 </CalendarFilter>
                 </div>
                 <Scheduler data={appointments}>                       
