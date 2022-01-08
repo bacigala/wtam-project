@@ -44,7 +44,7 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView}) => {
                 withPortal
                 placeholderText="Dátumový rozsah"
                 className="time_picker_overlay"
-                dateFormat="yyyy/MM/dd" 
+                dateFormat="dd/MM/yyyy" 
             />}
             <span>Od</span>
             <DatePicker

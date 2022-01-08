@@ -62,8 +62,9 @@ class CalendarB extends React.Component {
         to: endDate
       }
     }
+    console.log(body);
     if(startTime && endTime){
-      body = {            
+      body = {...body,             
         from_time: moment(startTime).format('HH:mm').replace(":",""),
         to_time: moment(endTime).format('HH:mm').replace(":","")
       }
@@ -79,7 +80,6 @@ class CalendarB extends React.Component {
     }
     if(body !== {}){
       this.setState({ show: false, userFilter: true});
-      console.log(moment(startTime).format('HH:mm'));
       fetch('/api/calendar', {
         method: 'POST',
         headers: {
@@ -88,6 +88,7 @@ class CalendarB extends React.Component {
         body: JSON.stringify(body)
       }).then(response => response.json())
       .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+      console.log(JSON.stringify(body));
     } else {
       return (
         <h3>Unexpected Error</h3>
@@ -207,7 +208,7 @@ class CalendarB extends React.Component {
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
 
         </div>
-        <CalendarFilter isGymView={this.gymId} show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={true} isGymView={this.gymId}/>
+        <CalendarFilter isGymView={this.gymId} show={this.state.show}  handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={true} isGymView={this.gymId}/>
         <div className="events">
         { appointments.map(event => {
           return(
