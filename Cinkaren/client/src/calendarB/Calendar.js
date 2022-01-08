@@ -151,10 +151,10 @@ class CalendarB extends React.Component {
             )
         }
         <h1 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár B"}</h1>
-        
+
         <div>
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
-                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false}>
+                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={true}>
                 </CalendarFilter>
         </div>
 

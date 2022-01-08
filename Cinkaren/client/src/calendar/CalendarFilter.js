@@ -33,7 +33,7 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isA}) => {
       <h3 className="filter_name">Možnosti filtra kalendáru</h3>
       <section className="modal-main">
         <div className="datarange_picker">
-          {isA &&
+          {!isA &&  
             <DatePicker
                 selectsRange={true}
                 startDate={startDate}
@@ -46,7 +46,7 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isA}) => {
                 className="time_picker_overlay"
                 dateFormat="yyyy/MM/dd" 
             />}
-
+            <span>Od</span>
             <DatePicker
                 selected={startTime}
                 onChange={(date) => setStartTime(date)}
@@ -55,9 +55,10 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isA}) => {
                 timeIntervals={30}
                 timeCaption="Time"
                 placeholderText="Denný filter od:"
-                dateFormat="hh:mm"
+                dateFormat="hh:mm aa"
                 className="time_picker_overlay"
             />
+            <span>Do</span>
           <DatePicker
                 selected={endTime}
                 onChange={(date) => setEndTime(date)}
@@ -65,11 +66,10 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isA}) => {
                 showTimeSelectOnly
                 timeIntervals={30}
                 timeCaption="Time"
-                dateFormat="hh:mm"
+                dateFormat="hh:mm aa"
                 className="time_picker_overlay"
             />
-            
-
+          
             <input type="text" placeholder="Hľadanie podľa mena trénera" className="time_picker_overlay" value={userInputTrainer} onChange= 
             {(e) => setUserInputTrainer(e.target.value)}/>
 
