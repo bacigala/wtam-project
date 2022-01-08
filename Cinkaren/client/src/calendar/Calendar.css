@@ -1,5 +1,5 @@
 .calendar {
-    height: calc(100vh - 160px - 140px);
+    height: calc(100vh - 160px - 60px);
 }
 
 .popup {

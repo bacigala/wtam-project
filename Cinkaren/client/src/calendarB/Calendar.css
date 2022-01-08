@@ -19,7 +19,7 @@
     box-sizing: border-box;
     position: relative;
     width: 100%;
-    height: calc(100vh - 160px - 140px);
+    height: calc(100vh - 160px - 80px);
     margin: 10px auto;
     padding: 0;
     text-align: center;
