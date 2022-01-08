@@ -41,6 +41,35 @@ class CalendarB extends React.Component {
     this.showAll = props.showAll;
     this.getGymName(this.gymId);
     this.updateInterval = 60000;
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
+    this.handleFilterUseCase = this.handleFilterUseCase.bind(this);
+  }
+
+  showModal = () => {
+    this.setState({ show: true });
+  };
+
+  hideModal = () => {
+    this.setState({show: false})
+  };
+
+  handleFilterUseCase = (startDate, endDate, startTime, endTime, filteredName) => {
+    if ((startDate && endDate) || filteredName) {
+    this.setState({ show: false, userFilter: true});
+    fetch('/api/calendar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },  
+      body: JSON.stringify({
+        from: startDate,
+        to: endDate,
+        username: this.state.userName,
+      })
+    }).then(response => response.json())
+    .then(data => this.setState({appointments: data.events}));
+    }
   }
   
   getGymName = (gymId) => {
@@ -101,7 +130,7 @@ class CalendarB extends React.Component {
           to: this.state.range.endDate
         })
       }).then(response => response.json())
-      .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+      .then(data => this.setState({appointments: data.events}));
     } else if (this.gymId) {
       fetch('/api/calendar', {
         method: 'POST',
@@ -152,12 +181,10 @@ class CalendarB extends React.Component {
         }
         <h1 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár B"}</h1>
         
-        <div>
+        <div className="filter">
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
-                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false}>
-                </CalendarFilter>
         </div>
-
+        <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={true}/>
         <div className="events">
         { appointments.map(event => {
           return(

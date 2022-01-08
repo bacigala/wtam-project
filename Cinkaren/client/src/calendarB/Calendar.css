@@ -33,6 +33,17 @@
     margin: 0 0 10px 0;
 }
 
+.calendarB > .filter {
+    position: absolute;
+    margin-top: 0;
+    top: 0.5%;
+    left: 75%;
+}
+
+.calendarB > .filter > .filter_button {
+    margin-top: 0;
+}
+
 .calendarB .events {
     box-sizing: border-box;
     position: absolute;
