@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 const GymCalendar = () => {
     const {id} = useParams();
     return (
-        <Calendar showAll="false" user="false" gymId={id}/>
+        <Calendar showAll={false} user={false} gymId={id}/>
     );
 }
 

@@ -14,6 +14,7 @@ import 'moment/locale/sk';
 import {getTimeFromDateString, getDateFromDateString, getDayNameFromDateString} from "../UtilityFunctions";
 import EventDetailsPopup from "./EventDetailsPopup";
 import CalendarFilter from "../calendar/CalendarFilter";
+import { RouteChildrenProps } from "react-router-dom";
 
 class CalendarB extends React.Component {
     
@@ -25,7 +26,10 @@ class CalendarB extends React.Component {
       appointments: [],
       currentDate: new Date(moment()),
       range: this.getRange(new Date(moment()), window.innerWidth < 769),
-      showDetailsOfEvent: null
+      showDetailsOfEvent: null,
+      show: false,
+      userFilter: false,
+      filterBody: {}
     };
     this.cookies = new Cookies();
     this.cookies = this.cookies.getAll();
@@ -78,9 +82,11 @@ class CalendarB extends React.Component {
     if(userInputCategory){
       body = {...body, category_name: userInputCategory};
     }
+    if (this.props.user) {
+      body = {...body, username: this.userName};
+    }
     if(body !== {}){
-      this.setState({ show: false, userFilter: true});
-      console.log(moment(startTime).format('HH:mm'));
+      this.setState({ show: false, userFilter: true, filterBody: {...body}});
       fetch('/api/calendar', {
         method: 'POST',
         headers: {
@@ -143,11 +149,21 @@ class CalendarB extends React.Component {
   };
 
   reset(){
+    this.state.userFilter = false;
     this.componentDidMount();
   }
 
   componentDidMount() {
-    if(this.showAll) {
+    if(this.state.userFilter){
+      fetch('/api/calendar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.state.filterBody)
+      }).then(response => response.json())
+      .then(data => this.setState({appointments: data.events}));
+    } else if(this.showAll) {
       fetch('/api/calendar', {
         method: 'POST',
         headers: {
