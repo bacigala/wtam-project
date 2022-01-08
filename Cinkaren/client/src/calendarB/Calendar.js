@@ -54,21 +54,44 @@ class CalendarB extends React.Component {
     this.setState({show: false})
   };
 
-  handleFilterUseCase = (startDate, endDate, startTime, endTime, filteredName) => {
-    if ((startDate && endDate) || filteredName) {
-    this.setState({ show: false, userFilter: true});
-    fetch('/api/calendar', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },  
-      body: JSON.stringify({
+  handleFilterUseCase = (startDate, endDate, startTime, endTime, userInputTrainer, userInputGym, userInputCategory) => {
+    let body = {};
+    if(startDate && endDate){
+      body = {            
         from: startDate,
-        to: endDate,
-        username: this.state.userName,
-      })
-    }).then(response => response.json())
-    .then(data => this.setState({appointments: data.events}));
+        to: endDate
+      }
+    }
+    if(startTime && endTime){
+      body = {            
+        from_time: moment(startTime).format('HH:mm').replace(":",""),
+        to_time: moment(endTime).format('HH:mm').replace(":","")
+      }
+    }
+    if(userInputTrainer){
+      body = {...body, trainer_name: userInputTrainer};
+    }
+    if(userInputGym){
+      body = {...body, gym_name: userInputGym};
+    }
+    if(userInputCategory){
+      body = {...body, category_name: userInputCategory};
+    }
+    if(body !== {}){
+      this.setState({ show: false, userFilter: true});
+      console.log(moment(startTime).format('HH:mm'));
+      fetch('/api/calendar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },  
+        body: JSON.stringify(body)
+      }).then(response => response.json())
+      .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+    } else {
+      return (
+        <h3>Unexpected Error</h3>
+      )
     }
   }
   
