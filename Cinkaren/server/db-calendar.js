@@ -87,11 +87,11 @@ exports.select = function(req, res) {
     if ("trainer_name" in reqData || "gym_name" in reqData || "category_name" in reqData) {
         statement += " AND ( FALSE "
         if ("trainer_name" in reqData) {
-            statement += " OR trainer_name LIKE '%" + reqData.trainer_name + "%'"
+            statement += " OR trainer.name LIKE '%" + reqData.trainer_name + "%'"
             statement += " OR trainer.surname LIKE '%" + reqData.trainer_name + "%'"
         }
         if ("gym_name" in reqData) {
-            statement += " OR gym_name LIKE '%" + reqData.gym_name + "%'"
+            statement += " OR gym.name LIKE '%" + reqData.gym_name + "%'"
         }
         if ("category_name" in reqData) {
             statement += " OR category.name LIKE '%" + reqData.category_name + "%'"
