@@ -64,6 +64,7 @@ class Calendar extends React.Component {
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.handleFilterUseCase = this.handleFilterUseCase.bind(this);
+        this.reset = this.reset.bind(this);
     }
 
     showModal = () => {
@@ -199,11 +200,16 @@ class Calendar extends React.Component {
         }
       }
       let elements = document.querySelectorAll("#root > div > section > div > div");
+      console.log(elements);
       if(time < 25){
-        elements[1].scrollTo(0, (time * 2 * 48) - 10);
+        elements[2].scrollTo(0, (time * 2 * 48) - 10);
       } else {
-        elements[1].scrollTo(0, (moment().hours() * 2 * 48) - 10);
+        elements[2].scrollTo(0, (moment().hours() * 2 * 48) - 10);
       }
+    }
+
+    reset(){
+      this.componentDidMount();
     }
 
     componentDidMount() {
@@ -283,7 +289,7 @@ class Calendar extends React.Component {
                 <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2> 
                 <div>
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
-                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false} isGymView={this.gymId}/>
+                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false} isGymView={this.gymId} reset={this.reset}/>
                 </div>
                 <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>

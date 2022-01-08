@@ -44,6 +44,7 @@ class CalendarB extends React.Component {
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.handleFilterUseCase = this.handleFilterUseCase.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   showModal = () => {
@@ -63,7 +64,7 @@ class CalendarB extends React.Component {
       }
     }
     if(startTime && endTime){
-      body = {            
+      body = {...body,            
         from_time: moment(startTime).format('HH:mm').replace(":",""),
         to_time: moment(endTime).format('HH:mm').replace(":","")
       }
@@ -141,6 +142,10 @@ class CalendarB extends React.Component {
     }, this.componentDidMount);
   };
 
+  reset(){
+    this.componentDidMount();
+  }
+
   componentDidMount() {
     if(this.showAll) {
       fetch('/api/calendar', {
@@ -207,7 +212,7 @@ class CalendarB extends React.Component {
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
 
         </div>
-        <CalendarFilter isGymView={this.gymId} show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={true} isGymView={this.gymId}/>
+        <CalendarFilter isGymView={this.gymId} show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={true} isGymView={this.gymId} reset={this.reset}/>
         <div className="events">
         { appointments.map(event => {
           return(
