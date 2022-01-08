@@ -207,7 +207,7 @@ class CalendarB extends React.Component {
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
 
         </div>
-        <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={true}/>
+        <CalendarFilter isGymView={this.gymId} show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={true} isGymView={this.gymId}/>
         <div className="events">
         { appointments.map(event => {
           return(

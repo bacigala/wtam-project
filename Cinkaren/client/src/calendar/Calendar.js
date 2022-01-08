@@ -283,8 +283,7 @@ class Calendar extends React.Component {
                 <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2> 
                 <div>
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
-                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false}>
-                </CalendarFilter>
+                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false} isGymView={this.gymId}/>
                 </div>
                 <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>

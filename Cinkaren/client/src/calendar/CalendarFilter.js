@@ -4,7 +4,7 @@ import './CalendarFilter.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-let CalendarFilter = ({handleUseCase, handleClose, show, isB}) => {
+let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView}) => {
   const showHideClassName = show ? "modal-filter display-block" : "modal-filter display-none";
 
   const [dateRange, setDateRange] = useState([null, null]);
@@ -73,8 +73,8 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB}) => {
             <input type="text" placeholder="Hľadanie podľa mena trénera" className="time_picker_overlay" value={userInputTrainer} onChange= 
             {(e) => setUserInputTrainer(e.target.value)}/>
 
-            <input type="text" placeholder="Hľadanie podľa mena gymu" className="time_picker_overlay" value={userInputGym} onChange= 
-            {(e) => setUserInputGym(e.target.value)}/>
+            {!isGymView && <input type="text" placeholder="Hľadanie podľa mena gymu" className="time_picker_overlay" value={userInputGym} onChange= 
+            {(e) => setUserInputGym(e.target.value)}/>}
 
             <input type="text" placeholder="Hľadanie podľa kategórie tréningu" className="time_picker_overlay" value={userInputCategory} onChange= 
             {(e) => setUserInputCategory(e.target.value)}/>
