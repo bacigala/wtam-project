@@ -73,27 +73,27 @@ class Calendar extends React.Component {
     };
   
     hideModal = () => {
-      this.setState({show: false, filterStartDate: "", filterEndDate: "", filterGymName: "", userFilter: false });
+      this.setState({show: false})
     };
 
     handleFilterUseCase = (startDate, endDate, filteredName) => {
-      if ((startDate != null && endDate != null) || filteredName != null) {
-      this.setState({ show: false, filterStartDate: startDate, filterEndDate: endDate, filterGymName: filteredName});
-      this.setState({userFilter: true});
+      if ((startDate && endDate) || filteredName) {
+      this.setState({ show: false, userFilter: true});
       fetch('/api/calendar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        },
+        },  
         body: JSON.stringify({
-          from: this.state.filterStartDate,
-          to: this.state.filterEndDate,
+          from: startDate,
+          to: endDate,
           username: this.state.userName,
         })
       }).then(response => response.json())
       .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
       }
     }
+
 
     handleResize = (e) => {
       this.setState({ windowWidth: window.innerWidth });

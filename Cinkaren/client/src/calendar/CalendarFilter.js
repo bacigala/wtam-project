@@ -31,9 +31,15 @@ let CalendarFilter = ({handleUseCase, handleClose, show}) => {
                 placeholderText="Dátumový rozsah"
                 className="time_picker_overlay"
                 dateFormat="yyyy/MM/dd" 
+                showTimeSelect
             />
             <input type="text" placeholder="Hľadanie podľa mena gymu" className="time_picker_overlay" value={userInput} onChange= 
             {(e) => setUserInput(e.target.value)}/>
+
+            <select name="categories" id="category_select" className="category_selector">
+              <option value="">--Vyberte kategóriu--</option>
+            </select>
+
         </div>   
           <button type="button" className="button_modal button-left" onClick={() => {handleClose()}}>
           Zatvoriť
