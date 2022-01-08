@@ -25,11 +25,11 @@ function App() {
           <Route path="/search" element={<GymSearch/>}/>
           <Route path="/trainers" element={<p>NOT IN THE SCOPE OF TESTING</p>}/>
           <Route path="/profile" element={<Profile/>}/>
-          <Route path="/mycalendar" element={<CalendarB showAll="false" user="true"/>}/>
+          <Route path="/mycalendar" element={<Calendar showAll="false" user="true"/>}/>
           <Route path="/mycalendarB" element={<CalendarB showAll="false" user="true"/>}/>
-          <Route path="/calendar/:id" element={<GymCalendarB gymSearch="true"/>}/>
+          <Route path="/calendar/:id" element={<GymCalendar gymSearch="true"/>}/>
           <Route path="/calendarB/:id" element={<GymCalendarB gymSearch="true"/>}/>
-          <Route path="/calendar" element={<CalendarB showAll="true" user="false"/>}/>
+          <Route path="/calendar" element={<Calendar showAll="true" user="false"/>}/>
           <Route path="/calendarB" element={<CalendarB showAll="true" user="false"/>}/>
         </Routes>
       </BrowserRouter>
