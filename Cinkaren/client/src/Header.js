@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./assets/logo.svg";
 import login from "./assets/login_icon.svg";
 import logout from "./assets/logout_icon.svg";
+import registration from "./assets/registration_icon.svg";
 import "./Header.css";
 import Cookies from 'universal-cookie';
 
@@ -31,6 +32,17 @@ class Header extends React.Component {
         }
     }
 
+    registrationButton(){
+        if(!this.cookies.get("userdata")) {
+            return (
+                <a href="/signup">
+                    <button className="registration_button">Registrácia</button>
+                    <img className="registration_icon" src={registration} alt="registration_icon"  width="30" height="30"/>
+                </a>
+            );
+        }
+    }
+
     logout() {
         this.cookies = new Cookies();
         this.cookies.remove('userdata', {path: '/'});
@@ -48,6 +60,7 @@ class Header extends React.Component {
                     <path fill="white" d="M 1600 100 Q 150 150 0 0 L 1600 0 L 1600 600 Q 450 600 300 500 Z"/>
                 </svg>
                 {this.logInOutButton()}
+                {this.registrationButton()}
             </div>
             <nav>
                 <a className={this.location.endsWith("/mycalendar") ? "active" : ""} href="/mycalendar"><span>Môj kalendár </span></a>

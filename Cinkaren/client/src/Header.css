@@ -3,7 +3,7 @@
     height: 120px;
     min-width: 350px;
     display: flex;
-    justify-content: space-between;
+    
     -moz-box-shadow:    inset 6px 6px 0px darkgreen;
     -webkit-box-shadow: inset 6px 6px 0px darkgreen;
     box-shadow:         inset 6px 6px 0px darkgreen;
@@ -33,10 +33,30 @@
 .login_icon, .logout_icon {
   display: none;
 }
+
+.registration_icon {
+  display: none;
+}
   
 .login_logout {
   right: 20px;
   top: 20px;
+  height: 30px;
+  position: absolute;
+  background-color: green;
+  border-radius: 90px;
+  border-color: green;
+  color: white;
+  font-size: 20px;
+  width: 130px;
+  -moz-box-shadow:    0 5px 5px -2px gray;
+  -webkit-box-shadow: 0 5px 5px -2px gray;
+  box-shadow:         0 5px 5px -2px gray;
+}
+
+.registration_button {
+  right: 20px;
+  top: 60px;
   height: 30px;
   position: absolute;
   background-color: green;
@@ -138,10 +158,22 @@ nav a:hover {
     display: none;
   }
 
+  .registration_button {
+    display: none;
+  }
+
   .login_icon, .logout_icon {
-    right: 20px;
+    top: 25px;
+    right: 60px;
     margin-left: auto;
-    position: relative;
+    position: absolute;
+    display: unset;
+  }
+  .registration_icon {
+    top: 25px;
+    right: 10px;
+    margin-left: auto;
+    position: absolute;
     display: unset;
   }
 }

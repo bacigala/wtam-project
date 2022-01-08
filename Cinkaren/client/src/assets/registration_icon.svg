@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" xml:space="preserve" version="1.1" style=""><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/>
+
+ <g style="" class="currentLayer">
+  <title>Layer 1</title>
+  
+ <g stroke="null" id="svg_3" class="">
+   <path stroke="null" fill="#ffffff" stroke-width="0" id="svg_1" d="m37.50382,28.16663l-12.4496,0l-12.4496,0c-6.87529,0 -12.4496,5.57431 -12.4496,12.4496l0,9.3372l49.79838,0l0,-9.3372c0,-6.87529 -5.57431,-12.4496 -12.4496,-12.4496z" class=""/>
+   <path fill="#ffffff" stroke="null" stroke-width="0" id="svg_2" d="m37.50382,15.71703l0,-3.1124c0,-6.87529 -5.57431,-12.4496 -12.4496,-12.4496s-12.4496,5.57431 -12.4496,12.4496l0,3.1124c0,6.87529 5.57431,12.4496 12.4496,12.4496s12.4496,-5.57431 12.4496,-12.4496z" class=""/>
+  </g><g class="selected" id="svg_5"><path fill="#ffffff" fill-opacity="1" stroke="#ffffff" stroke-opacity="1" stroke-width="3" stroke-dasharray="none" stroke-linejoin="round" stroke-linecap="butt" stroke-dashoffset="" fill-rule="nonzero" opacity="1" marker-start="" marker-mid="" marker-end="" d="M42.742003323975936,1.3964281556519365 L43.07105231302838,1.3964281556519365 L43.07105231302838,12.204859703542285 L42.742003323975936,12.204859703542285 L42.742003323975936,1.3964281556519365 z" class="" id="svg_7" transform="rotate(90 42.90652847290039,6.8006453514099166) "/><path fill="#ffffff" fill-opacity="1" stroke="#ffffff" stroke-opacity="1" stroke-width="3" stroke-dasharray="none" stroke-linejoin="round" stroke-linecap="butt" stroke-dashoffset="" fill-rule="nonzero" opacity="1" marker-start="" marker-mid="" marker-end="" d="M42.80120238767935,1.5624037561329693 L43.4677236133375,1.5624037561329693 L43.4677236133375,12.370835304023316 L42.80120238767935,12.370835304023316 L42.80120238767935,1.5624037561329693 z" class="" id="svg_4"/></g></g>
+</svg>
