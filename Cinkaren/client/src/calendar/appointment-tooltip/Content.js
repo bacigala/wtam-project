@@ -78,17 +78,16 @@ class Content extends React.Component {
     render(){
         return (
             <div className="popup">
-                <h3 className="gymName">{this.state.gym_name}</h3>
                 <div className="plan">
                   <p className="titleOfList">Tréningový plán</p>
                   <ul className="list">
                       {this.state.plan.map(e => <li>{e}</li>)}
                   </ul>
                 </div>
-                <div className="entered">
+                <div className="attendees">
                 <div>
-                    <p className="titleOfList">Prihlásený</p>
-                    <p className="numOfEntered">{this.state.users.length}/{this.state.max_participants}</p>
+                    <p className="titleOfList">Prihlásení</p>
+                    <p className="numOfAttendees">{this.state.users.length}/{this.state.max_participants}</p>
                 </div>
                 <ul className="list">
                     {this.state.users.map(e => <li>{e.name + " " + e.surname}</li>)}
@@ -101,12 +100,14 @@ class Content extends React.Component {
                 <p>{this.state.trainer_name + " " + this.state.trainer_surname}</p>
                 <a href="/profile"><button>Profil</button></a>
                 </div>
-                <p className="day">{getDayFromDateString(this.state.startDate, true)}</p>
-                <p className="date">Dátum: {getDateFromDateString(this.state.startDate)}</p>
-                <p className="from">Od: {getTimeFromDateString(this.state.startDate)}</p>
-                <p className="to">Do: { getTimeFromDateString(this.state.endDate)}</p>
-                {this.getTrainingButton(this.state.id, this.state.users, this.state.users.length >= this.state.max_participants)}
-                {this.state.triedToSign ? <p className="appointmentError">Musíte byt prihlásený aby ste sa mohli prihlásiť na tréning</p> : null}
+                <div className="details">
+                  <p className="day">{getDayFromDateString(this.state.startDate, true)}</p>
+                  <p className="date">{getDateFromDateString(this.state.startDate)}</p>
+                  <p className="from">{getTimeFromDateString(this.state.startDate)} - { getTimeFromDateString(this.state.endDate)}</p>
+                  <p className="gymName">{this.state.gym_name}</p>
+                  {this.getTrainingButton(this.state.id, this.state.users, this.state.users.length >= this.state.max_participants)}
+                </div>
+                {this.state.triedToSign ? <p className="appointmentError">Musíte byť prihlásený aby ste sa mohli prihlásiť na tréning</p> : null}
             </div>
         );
     }
