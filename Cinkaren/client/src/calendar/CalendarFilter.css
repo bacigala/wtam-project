@@ -10,7 +10,7 @@
     max-width: 500px !important;
     max-height: 500px !important;
     min-width: 100px !important;
-    min-height: 350px !important;
+    min-height: 400px !important;
     margin-top: 5%;
     margin-bottom: 5%;
     border: 3px solid green;
@@ -44,26 +44,6 @@
     box-shadow:         0 5px 5px -2px gray;
   }
 
-  .category_selector {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    border: 3px solid green;
-    border-color: green;
-    border-width: 2px;
-    border-radius: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    min-width: 177px;
-    max-width: 250px;
-    min-height: 20px;
-    max-height: 30px;
-    text-align: center;
-    padding: 1px 2px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    }
-
   .button-left {
     position: absolute;
     bottom: 10px;
@@ -92,6 +72,7 @@
   }
 
   input {
+    margin: auto 40px;
     min-width: 50px;
     max-width: 250px;
     min-height: 20px;
