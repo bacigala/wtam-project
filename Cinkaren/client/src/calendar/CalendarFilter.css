@@ -10,8 +10,8 @@
     max-width: 500px !important;
     max-height: 500px !important;
     min-width: 100px !important;
-    min-height: 400px !important;
-    margin-top: 5%;
+    min-height: 350px !important;
+    margin-top: 2%;
     margin-bottom: 5%;
     border: 3px solid green;
     padding: 10px;
@@ -20,8 +20,15 @@
     border-radius: 5px;
   }
 
-  .datarange_picker {
+  .form {
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form > div { 
+    width: 200px;
   }
 
   .filter_name {
@@ -30,6 +37,10 @@
   
   .display-none {
     display: none;
+  }
+
+  .label {
+    width: 150px;
   }
 
   .button_modal {
@@ -72,10 +83,8 @@
   }
 
   input {
-    margin: auto 40px;
     min-width: 50px;
     max-width: 250px;
-    width: 200px;
     min-height: 20px;
     max-height: 30px;
     text-align: center;

@@ -32,53 +32,61 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView}) => {
     <div className={showHideClassName}>
       <h3 className="filter_name">Možnosti filtra kalendáru</h3>
       <section className="modal-main">
-        <div className="datarange_picker">
-          {isB &&
+        <div className="form">
+          {isB && <div><label for="date" className="label">Dátum</label>
             <DatePicker
+                id="date"
                 selectsRange={true}
                 startDate={startDate}
                 endDate={endDate}
                 onChange={(update) => {
                     setDateRange(update);
                 }}
-                withPortal
                 placeholderText="Dátumový rozsah"
                 className="time_picker_overlay"
                 dateFormat="dd/MM/yyyy" 
-            />}
-            <span>Od</span>
-            <DatePicker
-                selected={startTime}
-                onChange={(date) => setStartTime(date)}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={30}
-                timeCaption="Time"
-                placeholderText="Denný filter od:"
-                dateFormat="hh:mm aa"
-                className="time_picker_overlay"
-            />
-            <span>Do</span>
-          <DatePicker
-                selected={endTime}
-                onChange={(date) => setEndTime(date)}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={30}
-                timeCaption="Time"
-                dateFormat="hh:mm aa"
-                className="time_picker_overlay"
-            />
-          
-            <input type="text" placeholder="Hľadanie podľa mena trénera" className="time_picker_overlay" value={userInputTrainer} onChange= 
-            {(e) => setUserInputTrainer(e.target.value)}/>
-
-            {!isGymView && <input type="text" placeholder="Hľadanie podľa mena gymu" className="time_picker_overlay" value={userInputGym} onChange= 
-            {(e) => setUserInputGym(e.target.value)}/>}
-
-            <input type="text" placeholder="Hľadanie podľa kategórie tréningu" className="time_picker_overlay" value={userInputCategory} onChange= 
-            {(e) => setUserInputCategory(e.target.value)}/>
-
+            /></div>}
+            <div>
+              <label for="fromTime" className="label">Od</label>
+              <DatePicker
+                  id="fromTime"
+                  selected={startTime}
+                  onChange={(date) => setStartTime(date)}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={30}
+                  timeCaption="Time"
+                  placeholderText="Denný filter od:"
+                  dateFormat="hh:mm aa"
+                  className="time_picker_overlay"
+              />
+            </div>
+            <div>
+              <label for="toTime" className="label">Do</label>
+              <DatePicker
+                    id="toTime"
+                    selected={endTime}
+                    onChange={(date) => setEndTime(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={30}
+                    timeCaption="Time"
+                    dateFormat="hh:mm aa"
+                    className="time_picker_overlay"
+                />
+            </div>
+            <div>
+              <label for="Trener" className="label">Trener</label>
+              <input type="text" id="Trener" placeholder="Hľadanie podľa mena trénera" className="time_picker_overlay" value={userInputTrainer} onChange= 
+              {(e) => setUserInputTrainer(e.target.value)}/>
+            </div>
+            {!isGymView && <div><label for="Gym" className="label">Gym</label><input type="text" id="Gym" placeholder="Hľadanie podľa mena gymu" className="time_picker_overlay" value={userInputGym} onChange= 
+            {(e) => setUserInputGym(e.target.value)}/></div>}
+            <div>
+              <label for="Category" className="label">Kategoria</label>
+              <input type="text" id="Category" placeholder="Hľadanie podľa kategórie tréningu" className="time_picker_overlay" value={userInputCategory} onChange= 
+              {(e) => setUserInputCategory(e.target.value)}/>
+            </div>
             {<h4 className="filter_error"> {errorMessage} </h4>}
 
         </div>   
