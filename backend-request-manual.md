@@ -250,7 +250,16 @@ How to use backend API :wink:
 	  username : "Janci",           // optional, get trainings only for specified user
 	  trainer_id : 9, // optional
 	  gym_id : 2,     // optional
-	  category_id : 2 // optional
+	  category_id : 2,// optional
+	  
+	  // TIME WITHIN EACH DAY SPECIFIED BY RANGE [from,to] ABOVE
+	  from_time : 1345,   // optional, time in format HHMM
+	  to_time : 1656,     // optional, time in format HHMM
+	  
+	  // SEARCH BY TRAINER / GYM / CATEGORY NAME
+	  trainer_name : "Richa", // specify substring to be search for
+	  gym_name : "Stro",      // specify substring to be search for
+	  category_name : "silov",// specify substring to be search for
 	}
 	```
 - **response**: JSON
