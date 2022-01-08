@@ -48,7 +48,8 @@
 }
 
 .headerPopup {
-    background-color: rgb(35, 57, 91);
+    background-color: #d81e5b;
+    border: 5px solid white;
 }
 
 .headerPopup button {
