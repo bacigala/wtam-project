@@ -45,7 +45,8 @@ class Calendar extends React.Component {
             currentDate: new Date(moment()),
             range: this.getRange(new Date(moment()), window.innerWidth < 769),
             show: false,
-            userFilter: false
+            userFilter: false,
+            filterBody: {}
         };
         this.cookies = new Cookies();
         this.cookies = this.cookies.getAll();
@@ -64,6 +65,7 @@ class Calendar extends React.Component {
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.handleFilterUseCase = this.handleFilterUseCase.bind(this);
+        this.reset = this.reset.bind(this);
     }
 
     showModal = () => {
@@ -91,9 +93,11 @@ class Calendar extends React.Component {
       if(userInputCategory){
         body = {...body, category_name: userInputCategory};
       }
+      if (this.props.user) {
+        body = {...body, username: this.userName};
+      }
       if(body !== {}){
-        this.setState({ show: false, userFilter: true});
-        console.log(moment(startTime).format('HH:mm'));
+        this.setState({ show: false, userFilter: true, filterBody: {...body}});
         fetch('/api/calendar', {
           method: 'POST',
           headers: {
@@ -200,15 +204,29 @@ class Calendar extends React.Component {
       }
       let elements = document.querySelectorAll("#root > div > section > div > div");
       if(time < 25){
-        elements[1].scrollTo(0, (time * 2 * 48) - 10);
+        elements[2].scrollTo(0, (time * 2 * 48) - 10);
       } else {
-        elements[1].scrollTo(0, (moment().hours() * 2 * 48) - 10);
+        elements[2].scrollTo(0, (moment().hours() * 2 * 48) - 10);
       }
+    }
+
+    reset(){
+      this.state.userFilter = false;
+      this.componentDidMount();
     }
 
     componentDidMount() {
       window.addEventListener("resize", this.handleResize);
-      if(this.showAll) {
+      if(this.state.userFilter){
+        fetch('/api/calendar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.state.filterBody)
+        }).then(response => response.json())
+        .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+      } else if(this.showAll) {
         fetch('/api/calendar', {
           method: 'POST',
           headers: {
@@ -280,10 +298,10 @@ class Calendar extends React.Component {
         return (
             <section className="calendar">
                 {this.redirect && (<Navigate to="/signin"/>)}
-                <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2> 
+                <h2 className="calendar_name">{this.gymId ? this.state.gymName : this.props.user ? "Môj kalendár" : "Aktuálne tréningy"}</h2> 
                 <div>
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
-                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false} isGymView={this.gymId}/>
+                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false} isGymView={this.gymId} reset={this.reset}/>
                 </div>
                 <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>

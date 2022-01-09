@@ -7,3 +7,5 @@ Web app for gym search, training sign up and achievement tracking.
  - [Prototype - desktop (Figma) post-test](https://www.figma.com/file/oyZZohUzyzjXbIiJEeZ6fx/Cinkaren-Post-Test?node-id=71%3A1120)
  - [Testing session - round 1 - video](http://davinci.fmph.uniba.sk/~stolarik6/wtam/2021-11-02_pageup-testing-session.mp4)
  - [Testing session - round 2 - video](http://davinci.fmph.uniba.sk/~stolarik6/wtam/2021-12-07_pageup-testing-session-round-2.mp4)
+ - [Testing session - round 3 - video - app version A](https://davinci.fmph.uniba.sk/~stolarik6/wtam/page-up_testing-session_round-3_a.mp4)
+ - [Testing session - round 3 - video - app version B](https://davinci.fmph.uniba.sk/~stolarik6/wtam/page-up_testing-session_round-3_b.mp4)

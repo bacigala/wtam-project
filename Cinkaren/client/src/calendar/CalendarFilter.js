@@ -4,7 +4,7 @@ import './CalendarFilter.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView}) => {
+let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView, reset}) => {
   const showHideClassName = show ? "modal-filter display-block" : "modal-filter display-none";
 
   const [dateRange, setDateRange] = useState([null, null]);
@@ -26,6 +26,7 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView}) => {
     setDateRange([null, null]);
     setStartTime(new Date());
     setEndTime(new Date());
+    reset();
   };
 
   return (

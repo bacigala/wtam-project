@@ -1,12 +1,21 @@
 footer {
+    position: absolute;
+    width: 100%;
+    bottom: -80px;
+    transition-property: bottom;
+    transition-duration: 0.6s;
     display: flex;
-    margin-top: auto;
     justify-content: center;
     background-color: green;
     -moz-box-shadow:    inset -6px -6px 0px darkgreen;
     -webkit-box-shadow: inset -6px -6px 0px darkgreen;
     box-shadow:         inset -6px -6px 0px darkgreen;
     min-height: 120px;
+    z-index: 1;
+}
+
+footer:hover {
+    bottom: 0;
 }
 
 .sub-footer {
@@ -42,6 +51,10 @@ footer {
     color: white;
 }
 
+.sub-footer li a:hover {
+    text-decoration: underline;
+}
+
 .sub-footer li::before, .sub-footer li::after {
     content: url("./assets/logo-mini.svg");
     padding: 0 5px;
@@ -50,6 +63,15 @@ footer {
 .sub-footer li:hover::before, .sub-footer li:hover::after {
     content: url("./assets/logo-mini-color.svg");
     padding: 0 5px;
+}
+
+#footer-logo img, footer ul {
+    transition: opacity 0.7s ease-in-out;
+    opacity: 0;
+}
+
+footer:hover #footer-logo img, footer:hover ul{
+    opacity: 1;
 }
 
 .vertical-center {
@@ -62,14 +84,19 @@ footer {
 @media only screen and (max-width: 768px) {
     footer {
         flex-direction: row;
+        justify-content: space-evenly;
         font-size: 13px;
-        margin-bottom: 55px;
-        z-index: -1;
+        bottom: 55px;
         min-height: 0;
         min-height: fit-content;
         -moz-box-shadow:    initial;
         -webkit-box-shadow: initial;
         box-shadow:         initial;
+        box-shadow: 0px -3px 5px -3px white inset;
+    }
+
+    footer:hover {
+        bottom: 55px;
     }
 
     .sub-footer {
@@ -79,15 +106,20 @@ footer {
         padding-bottom: 0;
     }
 
+    footer ul {
+        opacity: 1;
+    }
+
     #footer-logo {
         display: none;
     }
 
-    .sub-footer li::after {
+    .sub-footer li::after, .sub-footer li::before {
         content: none;
         padding: 0;
     }
-    .sub-footer li:hover::after {
+
+    .sub-footer li:hover::after, .sub-footer li:hover::before {
         content: none;
         padding:0;
     }

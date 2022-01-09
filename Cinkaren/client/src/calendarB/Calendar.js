@@ -14,6 +14,7 @@ import 'moment/locale/sk';
 import {getTimeFromDateString, getDateFromDateString, getDayNameFromDateString} from "../UtilityFunctions";
 import EventDetailsPopup from "./EventDetailsPopup";
 import CalendarFilter from "../calendar/CalendarFilter";
+import { RouteChildrenProps } from "react-router-dom";
 
 class CalendarB extends React.Component {
     
@@ -25,7 +26,10 @@ class CalendarB extends React.Component {
       appointments: [],
       currentDate: new Date(moment()),
       range: this.getRange(new Date(moment()), window.innerWidth < 769),
-      showDetailsOfEvent: null
+      showDetailsOfEvent: null,
+      show: false,
+      userFilter: false,
+      filterBody: {}
     };
     this.cookies = new Cookies();
     this.cookies = this.cookies.getAll();
@@ -44,6 +48,7 @@ class CalendarB extends React.Component {
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.handleFilterUseCase = this.handleFilterUseCase.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   showModal = () => {
@@ -64,7 +69,7 @@ class CalendarB extends React.Component {
     }
     console.log(body);
     if(startTime && endTime){
-      body = {...body,             
+      body = {...body,            
         from_time: moment(startTime).format('HH:mm').replace(":",""),
         to_time: moment(endTime).format('HH:mm').replace(":","")
       }
@@ -78,8 +83,11 @@ class CalendarB extends React.Component {
     if(userInputCategory){
       body = {...body, category_name: userInputCategory};
     }
+    if (this.props.user) {
+      body = {...body, username: this.userName};
+    }
     if(body !== {}){
-      this.setState({ show: false, userFilter: true});
+      this.setState({ show: false, userFilter: true, filterBody: {...body}});
       fetch('/api/calendar', {
         method: 'POST',
         headers: {
@@ -142,8 +150,22 @@ class CalendarB extends React.Component {
     }, this.componentDidMount);
   };
 
+  reset(){
+    this.state.userFilter = false;
+    this.componentDidMount();
+  }
+
   componentDidMount() {
-    if(this.showAll) {
+    if(this.state.userFilter){
+      fetch('/api/calendar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.state.filterBody)
+      }).then(response => response.json())
+      .then(data => this.setState({appointments: data.events}));
+    } else if(this.showAll) {
       fetch('/api/calendar', {
         method: 'POST',
         headers: {
@@ -203,12 +225,12 @@ class CalendarB extends React.Component {
               />
             )
         }
-        <h1 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár B"}</h1>
+        <h1 className="calendar_name">{this.gymId ? this.state.gymName : this.props.user ? "Môj kalendár B" : "Aktuálne tréningy B"}</h1>
         <div className="filter">
                 <button className="filter_button" onClick={this.showModal}>FILTER</button>
 
         </div>
-        <CalendarFilter isGymView={this.gymId} show={this.state.show}  handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={true} isGymView={this.gymId}/>
+        <CalendarFilter isGymView={this.gymId} show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isB={true} isGymView={this.gymId} reset={this.reset}/>
         <div className="events">
         { appointments.map(event => {
           return(
