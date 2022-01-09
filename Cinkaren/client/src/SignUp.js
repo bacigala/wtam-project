@@ -3,7 +3,6 @@ import "./SingUp.css";
 import { sha256} from 'js-sha256';
 import Cookies from 'universal-cookie';
 import { Navigate } from 'react-router';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 class SingUp extends React.Component {
     
@@ -47,7 +46,7 @@ class SingUp extends React.Component {
                     Zadajte užívateľské meno
                 </b></p>
                 <p>
-                    <input type="text" name="username" value={this.state.username} onChange={this.handleChange} required>
+                    <input type="text" name="username" value={this.state.username} onChange={this.handleChange}>
                     </input>
                 </p>
 
@@ -55,7 +54,7 @@ class SingUp extends React.Component {
                     Zadajte heslo
                 </b></p>
                 <p>
-                    <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required>
+                    <input type="password" name="password" value={this.state.password} onChange={this.handleChange}>
                     </input>
                 </p>
 
@@ -93,38 +92,9 @@ class SingUp extends React.Component {
             this.cookies.set('wasCreated', result.success, {path: '/'});
             this.cookies.set('username', this.state.username, {path: '/'});
             if (result.success === false) {
-                if (this.state.meno.trim()==='') {
-                    this.setState({ errorMessage: "Zadajte meno" });
-                } else if(this.state.priezvisko.trim()==='') {
-                    this.setState({ errorMessage: "Zadajte priezvisko" });
-                } else if(this.state.username.trim()==='') { 
-                    this.setState({ errorMessage: "Zadajte užívateľské meno" });
-                } else if(this.state.password.trim()==='') { 
-                    this.setState({ errorMessage: "Zadajte heslo" });
-                } else {
                 this.setState({ errorMessage: result.message });
-                }
             } else {
-                fetch ('/api/user/verify', {
-                    method: 'POST',
-                    headers: { 
-                     'Content-Type': 'application/json'
-                     },
-                    body: JSON.stringify({
-                      username: this.state.username,  
-                      password: sha256(this.state.password)
-                   }),
-               })
-                 .then((response) => response.json())
-                 .then((result) => {
-                     if(result.user){
-                        setTimeout(() => {
-                            this.cookies.set('userdata', result, {path: '/'});
-                            this.setState({result: true});
-                            window.location.reload(false);
-                        }, 10);
-                     }
-                 });
+                this.setState({ errorMessage: "Účet bol vytvorený, pokračujte prihlásením" });
             }
         });        
     }
@@ -134,7 +104,6 @@ render() {
     return (
     <section className="signup">
         <div className="signupmodal">
-        {this.cookies.get("userdata") && (<Navigate to="/"/>)}
         {this.signup()}
         {this.createLoginBtn()} 
         {<h4 className="error"> { this.state.errorMessage } </h4>}

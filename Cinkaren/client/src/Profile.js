@@ -3,7 +3,6 @@ import profile from "./assets/No_Image.jpg";
 import Cookies from 'universal-cookie';
 import "./Profile.css";
 import infoIcon from "./assets/info_icon.svg"
-import { Navigate } from 'react-router';
 
 class Profile extends React.Component {
     
@@ -21,8 +20,7 @@ class Profile extends React.Component {
           this.email = this.cookies.userdata.user.email;
           this.birth_date = this.cookies.userdata.user.birth_date;
           this.getAchievments();
-        } else {
-          this.redirect = true;
+          //console.log(this.state.achievments);
         }
         
     }
@@ -42,12 +40,11 @@ class Profile extends React.Component {
         console.log(this.state.achievments);
         
       };
-      
-
+      //{this.setState({achievments: data.achievments})}
+//{this.state.achievments.map(e => <li>{e}</li>)}
     render() {
       return (
         <section className="mainProfile">
-          { this.redirect && (<Navigate to="/signin"/>) }
             <div className="popupProfile">
                 <h3 className="titleOfProfile">Profil</h3>
                 <div className="achievments">

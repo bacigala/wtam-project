@@ -79,27 +79,6 @@ exports.select = function(req, res) {
         statement += " AND event.from_datetime >= '" + reqData.from + "'";
     if ("to" in reqData)
         statement += " AND event.to_datetime <= '" + reqData.to + "'";
-    if ("from_time" in reqData)
-        statement += " AND EXTRACT(HOUR_MINUTE FROM event.from_datetime) >= '" + reqData.from_time + "'";
-    if ("to_time" in reqData)
-        statement += " AND EXTRACT(HOUR_MINUTE FROM event.to_datetime) <= '" + reqData.to_time + "'";        
-    
-    if ("trainer_name" in reqData || "gym_name" in reqData || "category_name" in reqData) {
-        statement += " AND ( FALSE "
-        if ("trainer_name" in reqData) {
-            statement += " OR trainer.name LIKE '%" + reqData.trainer_name + "%'"
-            statement += " OR trainer.surname LIKE '%" + reqData.trainer_name + "%'"
-        }
-        if ("gym_name" in reqData) {
-            statement += " OR gym.name LIKE '%" + reqData.gym_name + "%'"
-        }
-        if ("category_name" in reqData) {
-            statement += " OR category.name LIKE '%" + reqData.category_name + "%'"
-        }
-        statement += ")"
-    }
-
-    statement += " ORDER BY event.from_datetime ASC"
 
 
     // execute query

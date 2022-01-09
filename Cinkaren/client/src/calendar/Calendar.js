@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from 'react-dom';
 import "./Calendar.css";
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -22,17 +21,7 @@ import Content from "./appointment-tooltip/Content"
 import Header from "./appointment-tooltip/Header"
 import AppointmentContent from "./appointment/AppointmentContent"
 import CustomAppointment from "./appointment/CustomAppointment"
-import {
-  formatDayScaleDate, 
-  getHoursFromDateString,
-  getWeekNumberFromDate, 
-  getTimeFromDateString,
-  getYearFromDate,
-  getBegginingOfWeek,
-  getEndOfWeek
-} from "../UtilityFunctions";
-import CalendarFilter from "./CalendarFilter";
-import { RouteChildrenProps } from "react-router-dom";
+import {formatDayScaleDate} from "../UtilityFunctions";
 
 class Calendar extends React.Component {
     
@@ -43,76 +32,23 @@ class Calendar extends React.Component {
             gymName: "",
             appointments: [],
             currentDate: new Date(moment()),
-            range: this.getRange(new Date(moment()), window.innerWidth < 769),
-            show: false,
-            userFilter: false,
-            filterBody: {}
+            range: this.getRange(new Date(moment()), window.innerWidth < 769)
         };
         this.cookies = new Cookies();
         this.cookies = this.cookies.getAll();
+        console.log(this.cookies);
         if(this.cookies.userdata && this.cookies.userdata.user) {
           this.userId = this.cookies.userdata.user.id
           this.userName = this.cookies.userdata.user.username;
           this.name = this.cookies.userdata.user.name;
           this.surname = this.cookies.userdata.user.surname;
-        } else if(this.props.user && !props.gymId && !props.showAll) {
+        } else if(this.props.user && !props.gymId) {
           this.redirect = true;
         }
         this.gymId = props.gymId;
-        this.showAll = props.showAll;
         this.getGymName(this.gymId);
         this.updateInterval = 60000;
-        this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
-        this.handleFilterUseCase = this.handleFilterUseCase.bind(this);
-        this.reset = this.reset.bind(this);
     }
-
-    showModal = () => {
-      this.setState({ show: true });
-    };
-  
-    hideModal = () => {
-      this.setState({show: false})
-    };
-
-    handleFilterUseCase = (startDate, endDate, startTime, endTime, userInputTrainer, userInputGym, userInputCategory) => {
-      let body = {};
-      if(startTime && endTime){
-        body = {            
-          from_time: moment(startTime).format('HH:mm').replace(":",""),
-          to_time: moment(endTime).format('HH:mm').replace(":","")
-        }
-      }
-      if(userInputTrainer){
-        body = {...body, trainer_name: userInputTrainer};
-      }
-      if(userInputGym){
-        body = {...body, gym_name: userInputGym};
-      }
-      if(userInputCategory){
-        body = {...body, category_name: userInputCategory};
-      }
-      if (this.props.user) {
-        body = {...body, username: this.userName};
-      }
-      if(body !== {}){
-        this.setState({ show: false, userFilter: true, filterBody: {...body}});
-        fetch('/api/calendar', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },  
-          body: JSON.stringify(body)
-        }).then(response => response.json())
-        .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
-      } else {
-        return (
-          <h3>Unexpected Error</h3>
-        )
-      }
-    }
-
 
     handleResize = (e) => {
       this.setState({ windowWidth: window.innerWidth });
@@ -176,9 +112,12 @@ class Calendar extends React.Component {
         endDate.setHours(23,59,59,59);
         return { startDate: startDate, endDate: endDate };
       } else {
-        let firstDay = getBegginingOfWeek(date);
-        let lastDay = getEndOfWeek(date);
+        let firstDay = date.getDate() - date.getDay();
+        let lastDay = firstDay + 6;
+        console.log(date);
+        firstDay = new Date(date.setDate(firstDay));
         firstDay.setHours(0,0,0,0);
+        lastDay = new Date(date.setDate(lastDay));
         lastDay.setHours(23,59,59,59);
         return {
           startDate: firstDay,
@@ -195,50 +134,9 @@ class Calendar extends React.Component {
       }, this.componentDidMount);
     };
 
-    setScrollbarOffset() {
-      let time = 25;
-      for(const appointment of this.state.appointments) {
-        if(time > getHoursFromDateString(appointment.startDate)){
-          time = getHoursFromDateString(appointment.startDate);
-        }
-      }
-      let elements = document.querySelectorAll("#root > div > section > div > div");
-      if(time < 25){
-        elements[2].scrollTo(0, (time * 2 * 48) - 10);
-      } else {
-        elements[2].scrollTo(0, (moment().hours() * 2 * 48) - 10);
-      }
-    }
-
-    reset(){
-      this.state.userFilter = false;
-      this.componentDidMount();
-    }
-
     componentDidMount() {
       window.addEventListener("resize", this.handleResize);
-      if(this.state.userFilter){
-        fetch('/api/calendar', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.state.filterBody)
-        }).then(response => response.json())
-        .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
-      } else if(this.showAll) {
-        fetch('/api/calendar', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            from: this.state.range.startDate,
-            to: this.state.range.endDate
-          })
-        }).then(response => response.json())
-        .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
-      } else if (this.gymId) {
+      if (this.gymId) {
         fetch('/api/calendar', {
           method: 'POST',
           headers: {
@@ -250,7 +148,7 @@ class Calendar extends React.Component {
             gym_id: this.gymId,
           })
         }).then(response => response.json())
-        .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
+        .then(data => this.setState({appointments: data.events}));
       } else if (this.userName) {
         fetch('/api/calendar', {
           method: 'POST',
@@ -263,11 +161,7 @@ class Calendar extends React.Component {
             username: this.userName,
           })
         }).then(response => response.json())
-        .then(data => this.setState({appointments: data.events}, this.setScrollbarOffset));
-        console.log(JSON.stringify({
-          from: this.state.range.startDate,
-          to: this.state.range.endDate,
-          username: this.userName,}));
+        .then(data => this.setState({appointments: data.events}));
       }
     }
 
@@ -298,16 +192,12 @@ class Calendar extends React.Component {
         return (
             <section className="calendar">
                 {this.redirect && (<Navigate to="/signin"/>)}
-                <h2 className="calendar_name">{this.gymId ? this.state.gymName : this.props.user ? "Môj kalendár" : "Aktuálne tréningy"}</h2> 
-                <div>
-                <button className="filter_button" onClick={this.showModal}>FILTER</button>
-                <CalendarFilter show={this.state.show} handleClose={this.hideModal} handleUseCase={this.handleFilterUseCase} isA={false} isGymView={this.gymId} reset={this.reset}/>
-                </div>
+                <h2 className="calendar_name">{this.gymId ? this.state.gymName : "Môj kalendár"}</h2>
                 <Scheduler data={appointments}>                       
                     <ViewState currentDate={currentDate} onCurrentDateChange={this.currentDateChange}/>
                     {this.getView(windowWidth < 769)} 
                     <Toolbar />
-                      <DateNavigator />
+                    <DateNavigator />
                     <TodayButton />
                     <Appointments
                       appointmentComponent={CustomAppointment}

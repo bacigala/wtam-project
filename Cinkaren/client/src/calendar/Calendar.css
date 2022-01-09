@@ -1,118 +1,146 @@
 .calendar {
-    height: calc(100vh - 160px - 60px);
-}
-
-.calendar_name {
-    position: absolute;
-    left: 80%;
-}
-
-.filter_button {
-    align-items: center;
-    position: absolute;
-    left: 50%;
-    margin-block-start: 15px;
-    margin-block-end: 15px;
-    padding: 6.4px 16px;
-    border-radius: 4px;
-    border: 1px solid rgba(0, 0, 0, 0.23);
-    cursor: pointer;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: 500;
-    line-height: 1.75;
-    z-index: 5;
-    font-size: 0.875rem;
-    min-width: 64px;
-    box-sizing: border-box;
-    letter-spacing: 0.02857em;
-}
-
-/* SCROLL BARS */
-* ::-webkit-scrollbar, .popup ::-webkit-scrollbar {
-    width: 14px;
-}
-  
-* ::-webkit-scrollbar-track, .popup ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
-    border-radius: 10px;
-}
-   
-* ::-webkit-scrollbar-thumb, .popup ::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 10px 10px green;
-    border-radius: 10px;
-    border: 2px solid transparent;
-}
-
-* ::-webkit-scrollbar-thumb:hover, .popup ::-webkit-scrollbar-thumb:hover {
-    box-shadow: inset 0 0 10px 10px darkgreen; 
-}
-
-.headerPopup {
-    background-color: #d81e5b;
-    border: 5px solid white;
-}
-
-.headerPopup button {
-    position: absolute;
-    color: white;
-    padding: 10px;
-}
-
-.title {
-    color: white;
-    font-weight: bold;
-    margin: auto;
-    padding: 5px;
+    height: calc(100vh - 160px - 140px);
 }
 
 .popup {
-    height: auto !important;
-    width: auto !important; 
-    min-width: auto !important;
-    max-width: auto !important;
-    padding: 10px;
+    height: 600px !important;
+    width: 700px !important; 
+    min-width: 700px !important;
+    max-width: 700px !important;
     display: grid;
-    grid-gap: 10px;
-    justify-content: space-evenly;
-    align-content: space-around;
-    grid-template:
-        'plan      trainer'
-        'attendees details'
-    ;
 }
 
-.Layout-popover-734, .jss393, .Layout-popover-729, .Layout-popover-158{
-    width: auto !important; 
-    min-width: auto !important;
-    max-width: auto !important;
+.headerPopup {
+    display: flex !important;
 }
 
-.plan, .attendees {
+.Header-flexContainer-761 {
+    grid-column: 2/ 2 !important;
+    grid-row: 1 / 1 !important;
+}
+
+.title {
+    margin-bottom: 0;
     background-color: green;
     text-align: center;
     color: white;
     width: 350px;
-    height: 250px;
-    margin: 0;
+    margin: 10px 255px 12px 0;
+    border-radius: 25px 0px 25px 0px;
+    -moz-box-shadow:    0 5px 5px -2px gray;
+    -webkit-box-shadow: 0 5px 5px -2px gray;
+    box-shadow:         0 5px 5px -2px gray;
+    text-align: center;
+    font-weight: bold;
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+}
+
+.Layout-popover-734, .jss393, .Layout-popover-729, .Layout-popover-158{
+    width: 700px !important; 
+    min-width: 700px !important;
+    max-width: 700px !important;
+}
+
+.gymName, .plan, .entered {
+    background-color: green;
+    text-align: center;
+    color: white;
+    width: 350px;
+    margin: 0 0 12px 25px;
     border-radius: 25px 0px 25px 0px;
     -moz-box-shadow:    0 5px 5px -2px gray;
     -webkit-box-shadow: 0 5px 5px -2px gray;
     box-shadow:         0 5px 5px -2px gray;
 }
 
-.plan {
-    grid-area: plan;
+.day, .from, .to, .date, .trainer {
+    background-color: green;
+    text-align: center;
+    color: white;
+    width: 200px;
+    margin: 0 0 12px 0;
+    border-radius: 25px 0px 25px 0px;
+    -moz-box-shadow:    0 5px 5px -2px gray;
+    -webkit-box-shadow: 0 5px 5px -2px gray;
+    box-shadow:         0 5px 5px -2px gray;
 }
 
-.attendees {
-    grid-area: attendees;
+.day, .from, .to, .date {
+    font-size: 20px;
+    height: 30px;
+}
+
+.gymName {
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+}
+
+.plan {
+    grid-column: 1 / 1;
+    grid-row: 2 / 2;
+}
+
+.entered {
+    grid-column: 1 / 1;
+    grid-row: 3 / 8;
+}
+
+.trainer {
+    grid-column: 2 / 2;
+    grid-row: 2 / 2;
+    height: 250px;
+}
+
+.day {
+    grid-column: 2 / 2;
+    grid-row: 3 / 3;
+}
+
+.date {
+    grid-column: 2 / 2;
+    grid-row: 4 / 4;
+}
+
+.from {
+    grid-column: 2 / 2;
+    grid-row: 5 / 5;
+}
+
+.to {
+    grid-column: 2 / 2;
+    grid-row: 6 / 6;
+}
+
+.sign {
+    grid-column: 2 / 2;
+    grid-row: 7 / 7;
+}
+.plan, .entered {
+    height: 250px;
+}
+.entered div {
+    display: flex; 
+    justify-content: space-between;
 }
 
 .titleOfList {
+    margin-top: 2.5px;
+    margin-bottom: 5px;
     font-size: 18px;
     font-weight: 600;
+    width: 150px;
     margin: 15px 0 0 15px;
     text-align: start;
+}
+
+.numOfEntered {
+    background-color: white;
+    color:black;
+    width: 75px;
+    margin: 15px 15px 0 0;
+    border-radius: 25px 0 25px 0;
+    border: 2px solid black;
 }
 
 .list {
@@ -129,38 +157,12 @@
 }
 
 .list li {
-    background-color: #d7f2ba;
-    color:rgb(35, 57, 91);
-    font-weight: normal;
+    background-color: green;
+    color: white;
     text-align: center;
     list-style: none;
     margin-top: 10px;
     border-radius: 25px 0px 25px 0px;
-}
-
-.numOfAttendees {
-    color:#d7f2ba;
-    font-weight: 600;
-    margin: 15px 15px 0 0;
-}
-
-.attendees div {
-    display: flex;
-    justify-content: space-between;
-}
-
-.trainer {
-    grid-area: trainer;
-    background-color: green;
-    text-align: center;
-    color: white;
-    width: 200px;
-    margin: 0 0 12px 0;
-    border-radius: 25px 0px 25px 0px;
-    -moz-box-shadow:    0 5px 5px -2px gray;
-    -webkit-box-shadow: 0 5px 5px -2px gray;
-    box-shadow:         0 5px 5px -2px gray;
-    height: 250px;
 }
 
 .trainer .imageWrapper {
@@ -184,38 +186,16 @@
 }
 
 .trainer button {
+    background-color: white;
     border-radius: 90px;
-    border: 1px solid #d7f2ba;
-    color: #d7f2ba;
-    background-color: transparent;
-    font-size: 1em;
-    font-weight: normal;
-    padding: 5px 15px;
+    border-color: black;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    width: 130px;
     -moz-box-shadow:    0 1px 10px -2px black;
     -webkit-box-shadow: 0 1px 10px -2px black;
     box-shadow:         0 1px 10px -2px black;
-}
-
-.details {
-    grid-area: details;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: space-around;
-}
-
-.details p {
-    background-color: #d7f2ba;
-    font-size: 1em;
-    text-align: center;
-    color: green;
-    width: 200px;
-    margin: 0;
-    padding: 3px;
-    border-radius: 25px 0px 25px 0px;
-    -moz-box-shadow:    0 5px 5px -2px gray;
-    -webkit-box-shadow: 0 5px 5px -2px gray;
-    box-shadow:         0 5px 5px -2px gray;
 }
 
 .sign {
@@ -225,7 +205,7 @@
     border-radius: 90px;
     border-color: green;
     color: white;
-    font-size: 1.1em;
+    font-size: 20px;
     width: 130px;
     margin-left: 37px;
     -moz-box-shadow:    0 5px 5px -2px gray;
@@ -240,63 +220,53 @@
     border: 1px solid black;
 }
 
-.appointmentError {
-    display: block;
-    position: absolute;
-    border: 3px solid red;
-    background-color: white;
-    bottom: 0;   
-    font-size: 1em;
-    color: red;
-    font-weight: bold;
-    width: calc(100% - 26px);
-    text-align: center;
-}
-
-
-/* ***** ***** ***** ***** ***** BEGIN: EVENTS IN CALENDAR ***** ***** ***** ***** ***** */
-.appointment {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 5px;
-    background-color: rgb(35, 57, 91);
-    overflow: hidden;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .appointment_name {
-    display: block;
-    margin: 0;
-    font-size: 1.3em;
-    white-space: normal;
-    color: rgb(189, 228, 168);
-}
-
-.appointment_time_from, .appointment_time_to, .appointment_trainer {
-    display: block;
-    margin: 0;
-    font-size: 14px;
+    font-size: 16px;
+    margin-bottom: 0;
+    margin-top: 2px;
     word-wrap: break-word;
     white-space: normal;
 }
 
-/* events under 1 hour */
-.shortAppointment > p {
-    font-size: 0.9em;
+.appointment_time_from, .appointment_time_to, .appointment_trainer {
+    font-size: 14px;
+    margin-bottom: 0;
+    margin-top: 2px;
+    word-wrap: break-word;
+    white-space: normal;
 }
-.shortAppointment > .appointment_name {
-    font-size: 1em;
+
+.appointment {
+    overflow: auto;
+    text-align: center;
 }
-/* ***** ***** ***** ***** ***** END: EVENTS IN CALENDAR ***** ***** ***** ***** ***** */
 
+.calendar_name {
+    position: absolute;
+    left: 70%;
+}
 
+/* width */
+.calendar ::-webkit-scrollbar {
+    width: 10px;
+}
+  
+  /* Track */
+.calendar ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+   
+  /* Handle */
+.calendar ::-webkit-scrollbar-thumb {
+    background: green; 
+    border-radius: 10px;
+}
+
+  /* Handle on hover */
+.calendar ::-webkit-scrollbar-thumb:hover {
+    background: darkgreen; 
+}
 @media only screen and (max-width: 768px) {
     .calendar {
         height: calc(100vh - 100px - 140px);
@@ -311,34 +281,97 @@
         width: 350px !important; 
         min-width: 350px !important;
         max-width: 350px !important;
-        display: block;
-        margin: 0;
-        padding: 0;
-        overflow-y: auto;
     }
 
     .Layout-popover-734, .jss393, .Layout-popover-729, .Layout-popover-158{
         width: 350px !important; 
         min-width: 350px !important;
         max-width: 350px !important;
-        overflow-y: hidden !important;
+    }
+
+    .gymName, .plan, .entered {
+        background-color: green;
+        text-align: center;
+        color: white;
+        width: 300px;
+        margin: 0 0 12px 25px;
+    }
+    
+    .day, .from, .to, .date, .trainer {
+        background-color: green;
+        text-align: center;
+        color: white;
+        width: 300px;
+        margin: 0 0 12px 25px;
+        border-radius: 25px 0px 25px 0px;
+        -moz-box-shadow:    0 5px 5px -2px gray;
+        -webkit-box-shadow: 0 5px 5px -2px gray;
+        box-shadow:         0 5px 5px -2px gray;
+    }
+    
+    .gymName {
+        grid-column: 1 / 1;
+        grid-row: 1 / 1;
+    }
+    
+    .plan {
+        grid-column: 1 / 1;
+        grid-row: 2 / 2;
+    }
+    
+    .entered {
+        grid-column: 1 / 1;
+        grid-row: 3 / 3;
+    }
+    
+    .trainer {
+        grid-column: 1 / 1;
+        grid-row: 4 / 4;
+    }
+    
+    .day {
+        grid-column: 1 / 1;
+        grid-row: 5 / 5;
+    }
+    
+    .date {
+        grid-column: 1 / 1;
+        grid-row: 6 / 6;
+    }
+    
+    .from {
+        grid-column: 1 / 1;
+        grid-row: 7 / 7;
+    }
+    
+    .to {
+        grid-column: 1 / 1;
+        grid-row: 8 / 8;
+    }
+    
+    .sign {
+        grid-column: 1 / 1;
+        grid-row: 9 / 9;
     }
 
     .title {
-        margin: auto;
-    }
-
-    .plan, .attendees, .trainer {
+        margin-bottom: 0;
+        background-color: green;
+        text-align: center;
+        color: white;
         width: 300px;
-        margin: 10px auto;
-        padding: 3px;
-    }
-
-    .details p {
-        margin: 10px auto;
+        margin: 10px 0 12px 0;
+        border-radius: 25px 0px 25px 0px;
+        -moz-box-shadow:    0 5px 5px -2px gray;
+        -webkit-box-shadow: 0 5px 5px -2px gray;
+        box-shadow:         0 5px 5px -2px gray;
+        text-align: center;
+        font-weight: bold;
+        grid-column: 1 / 1;
+        grid-row: 1 / 1;
     }
 
     .sign {
-        margin: 10px auto;;
+        margin-left: 30%;
     }
 }
