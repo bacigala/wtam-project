@@ -14,8 +14,8 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView, reset})
   const [userInputGym, setUserInputGym] = useState('');
   const [userInputCategory, setUserInputCategory] = useState('');
   
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const [startTime, setStartTime] = useState(new Date().setHours(0, 0, 0));
+  const [endTime, setEndTime] = useState(new Date().setHours(23, 30, 0));
 
   const[errorMessage, setErrorMessage] = useState('');
 
@@ -24,8 +24,8 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView, reset})
     setUserInputGym('');
     setUserInputCategory('');
     setDateRange([null, null]);
-    setStartTime(new Date());
-    setEndTime(new Date());
+    setStartTime(new Date().setHours(0, 0, 0));
+    setEndTime(new Date().setHours(23, 30, 0));
     reset();
   };
 
@@ -43,6 +43,7 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView, reset})
                 onChange={(update) => {
                     setDateRange(update);
                 }}
+                autoComplete="off"
                 placeholderText="Dátumový rozsah"
                 className="time_picker_overlay"
                 dateFormat="dd/MM/yyyy" 
@@ -57,8 +58,8 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView, reset})
                   showTimeSelectOnly
                   timeIntervals={30}
                   timeCaption="Time"
-                  placeholderText="Denný filter od:"
-                  dateFormat="hh:mm aa"
+                  dateFormat="HH:mm"
+                  timeFormat="HH:mm"
                   className="time_picker_overlay"
               />
             </div>
@@ -72,19 +73,21 @@ let CalendarFilter = ({handleUseCase, handleClose, show, isB, isGymView, reset})
                     showTimeSelectOnly
                     timeIntervals={30}
                     timeCaption="Time"
-                    dateFormat="hh:mm aa"
+                    timeFormat="HH:mm"
+                    dateFormat="HH:mm"
                     className="time_picker_overlay"
                 />
             </div>
             <div>
-              <label for="Trener" className="label">Trener</label>
+              <label for="Trener" className="label">Trener <b>(optional)</b></label>
               <input type="text" id="Trener" placeholder="Hľadanie podľa mena trénera" className="time_picker_overlay" value={userInputTrainer} onChange= 
               {(e) => setUserInputTrainer(e.target.value)}/>
             </div>
-            {!isGymView && <div><label for="Gym" className="label">Gym</label><input type="text" id="Gym" placeholder="Hľadanie podľa mena gymu" className="time_picker_overlay" value={userInputGym} onChange= 
+            {!isGymView && <div><label for="Gym" className="label">Gym <b>(optional)</b></label><input type="text" id="Gym" placeholder="Hľadanie podľa mena gymu" 
+            className="time_picker_overlay" value={userInputGym} onChange= 
             {(e) => setUserInputGym(e.target.value)}/></div>}
             <div>
-              <label for="Category" className="label">Kategoria</label>
+              <label for="Category" className="label">Kategoria <b>(optional)</b></label>
               <input type="text" id="Category" placeholder="Hľadanie podľa kategórie tréningu" className="time_picker_overlay" value={userInputCategory} onChange= 
               {(e) => setUserInputCategory(e.target.value)}/>
             </div>
